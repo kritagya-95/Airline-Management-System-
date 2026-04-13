@@ -1,6 +1,5 @@
-127.0.0.1 - - [13/Apr/2026:11:43:07 +0545] "GET /cargocpc/index.html HTTP/1.1" 200 124
-0:0:0:0:0:0:0:1 - - [13/Apr/2026:11:43:15 +0545] "GET /favicon.ico HTTP/1.1" 404 683
-0:0:0:0:0:0:0:1 - - [13/Apr/2026:11:43:44 +0545] "GET /SkyLine/login HTTP/1.1" 200 2383
-0:0:0:0:0:0:0:1 - - [13/Apr/2026:11:43:44 +0545] "GET /SkyLine/static/css/main.css HTTP/1.1" 304 -
-0:0:0:0:0:0:0:1 - - [13/Apr/2026:11:43:44 +0545] "GET /SkyLine/static/css/auth.css HTTP/1.1" 304 -
-0:0:0:0:0:0:0:1 - - [13/Apr/2026:11:44:03 +0545] "GET /SkyLine/register HTTP/1.1" 200 3786
+127.0.0.1 - - [13/Apr/2026:14:48:34 +0545] "GET /cargocpc/index.html HTTP/1.1" 200 124
+0:0:0:0:0:0:0:1 - - [13/Apr/2026:14:49:05 +0545] "GET /SkyLine/login HTTP/1.1" 200 2383
+0:0:0:0:0:0:0:1 - - [13/Apr/2026:14:49:05 +0545] "GET /SkyLine/static/css/main.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [13/Apr/2026:14:49:05 +0545] "GET /SkyLine/static/css/auth.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [13/Apr/2026:14:49:05 +0545] "GET /favicon.ico HTTP/1.1" 404 683
