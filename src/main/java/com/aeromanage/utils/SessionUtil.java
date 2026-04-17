@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpSession;
 /**
  * SessionUtil — utility class for session management in SkyLine project.
  */
-public class SessionUtil {
+public class   SessionUtil {
 
     public static void setAttribute(HttpServletRequest request, String key, Object value) {
         HttpSession session = request.getSession();
