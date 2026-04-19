@@ -1,11 +1,11 @@
-package com.aeromanage.utils;
+/**package com.aeromanage.utils;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * PasswordUtil — BCrypt password hashing for SkyLine Airlines.
  */
-public class PasswordUtil {
+/**public class PasswordUtil {
 
     private static final int COST = 10;
 
@@ -17,4 +17,4 @@ public class PasswordUtil {
     public static boolean checkPassword(String passwordTyped, String hashedPassword) {
         return BCrypt.checkpw(passwordTyped, hashedPassword);
     }
-}
+}*/

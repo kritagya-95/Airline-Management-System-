@@ -1,4 +1,4 @@
-package com.aeromanage.utils;
+/**package com.aeromanage.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpSession;
 /**
  * SessionUtil — utility class for session management in SkyLine project.
  */
-public class   SessionUtil {
+/**public class   SessionUtil {
 
     public static void setAttribute(HttpServletRequest request, String key, Object value) {
         HttpSession session = request.getSession();
@@ -28,4 +28,4 @@ public class   SessionUtil {
             session.invalidate();
         }
     }
-}
+}*/
