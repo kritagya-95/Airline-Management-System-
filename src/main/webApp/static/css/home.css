@@ -1,0 +1,177 @@
+/* home.css - SkyLine Home Page */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 10;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-image {
+    height: 50px;
+}
+
+.search-bar {
+    padding: 10px 20px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+}
+
+/* ==================== HERO SECTION WITH BACKGROUND IMAGE ==================== */
+.hero {
+    position: relative;
+    height: 550px;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('${pageContext.request.contextPath}/static/images/Air.png');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.75);           /* Makes image slightly darker */
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(139, 0, 0, 0.65), rgba(139, 0, 0, 0.55)); /* Dim Red Overlay */
+    z-index: 1;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 2;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.8);
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.hero-content h2 {
+    font-size: 34px;
+    font-weight: 500;
+}
+
+/* Search Container */
+.search-container {
+    margin: -60px auto 60px;
+    max-width: 1100px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 5;
+}
+
+.search-box {
+    background: #8B0000;
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.search-form {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    min-width: 180px;
+}
+
+.search-btn {
+    padding: 15px 40px;
+    background: white;
+    color: #8B0000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Popular Flights */
+.flight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 0 50px;
+}
+
+.flight-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.flight-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.price {
+    color: #8B0000;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.book-btn {
+    width: 100%;
+    padding: 12px;
+    background: #8B0000;
+    color: white;
+    border: none;
+    margin-top: 10px;
+}
+
+/* Footer */
+footer {
+    background: #f8f9fa;
+    padding: 50px 30px;
+    margin-top: 80px;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+    }
+    .hero-content h1 {
+        font-size: 36px;
+    }
+}
