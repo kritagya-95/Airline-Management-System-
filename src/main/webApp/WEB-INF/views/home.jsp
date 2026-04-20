@@ -29,7 +29,9 @@
 
 <!-- Hero Section with Air.png as Background + Dim Red Overlay -->
 <section class="hero">
-    <div class="hero-background"></div>
+    <img src="${pageContext.request.contextPath}/static/images/Air.jpg"
+         alt="SkyLine Plane" class="hero-image">
+
     <div class="hero-content">
         <h1>PLANNING YOUR FAMILY TRIP</h1>
         <h2>FLY BETTER, FLY WITH US</h2>
@@ -52,11 +54,12 @@
 
 <!-- Popular Flights Section -->
 <section class="popular-flights">
-    <h2>POPULAR FLIGHT DEALS ON SKYLINE AIRLINES</h2>
+    <h2><u> POPULAR FLIGHT DEALS ON SKYLINE AIRLINES</u></h2>
 
     <div class="flight-grid">
+
         <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/Air.png" alt="Flight">
+            <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
             <h3>Nepal (Nep) to London (UK)</h3>
             <p>Depart: May 24</p>
             <p class="price">NPR 338,000</p>
@@ -65,7 +68,7 @@
         </div>
 
         <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/Air.png" alt="Flight">
+            <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
             <h3>Nepal (Nep) to Italy (IT)</h3>
             <p>Depart: June 01</p>
             <p class="price">NPR 345,000</p>
@@ -74,13 +77,23 @@
         </div>
 
         <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/Air.png" alt="Flight">
+            <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
             <h3>Nepal (Nep) to Spain (ES)</h3>
             <p>Depart: June 10</p>
             <p class="price">NPR 410,000</p>
             <p class="class">One way • Economy Class</p>
             <button class="book-btn">Book Now</button>
         </div>
+
+        <div class="flight-card">
+            <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
+            <h3>Nepal (Nep) to Spain (ES)</h3>
+            <p>Depart: June 10</p>
+            <p class="price">NPR 410,000</p>
+            <p class="class">One way • Economy Class</p>
+            <button class="book-btn">Book Now</button>
+        </div>
+
     </div>
 </section>
 

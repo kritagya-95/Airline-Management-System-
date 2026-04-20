@@ -41,10 +41,10 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('${pageContext.request.contextPath}/static/images/Air.png');
+    background-image: url('../images/Air.jpg');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.75);           /* Makes image slightly darker */
+    filter: brightness(0.75);           /* Dim the image */
 }
 
 .hero::before {
@@ -79,7 +79,6 @@
     font-size: 34px;
     font-weight: 500;
 }
-
 /* Search Container */
 .search-container {
     margin: -60px auto 60px;
