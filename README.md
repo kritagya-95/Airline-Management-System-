@@ -1,4 +1,4 @@
-# ✈️ SkyLine — Airline Reservation & Management System
+#SkyLine — Airline Reservation & Management System
 
 > **Module:** CC5054NP — Advanced Programming and Technology  
 > **Group:** Java Hut
@@ -223,9 +223,3 @@ The compiled WAR is output to `target/SkyLine-Airline-System-1.0-SNAPSHOT.war`.
 | 4 | Binod Tamang |
 | 5 | Prajesh Thapa |
 | 6 | Aditya Ale Magar |
-
----
-
-## License
-
-This project was developed for academic purposes as part of **CC5054NP — Advanced Programming and Technology**.
