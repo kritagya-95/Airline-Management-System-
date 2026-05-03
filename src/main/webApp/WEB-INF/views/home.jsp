@@ -15,16 +15,28 @@
 <header class="header">
     <div class="logo">
         <img src="${pageContext.request.contextPath}/static/images/logo.png"
-             alt="SkyLine" class="logo-image">
-        <h1>SKYLINE</h1>
+             class="logo-image" alt="SkyLine Logo"/>
+        <span>SkyLine</span>
     </div>
-    <nav>
-        <a href="#">Book</a>
-        <a href="#">Manage</a>
-        <a href="#">Experience</a>
-        <input type="text" placeholder="Search flights..." class="search-bar">
-        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Log Out</a>
+
+    <nav class="nav-links">
+        <a href="${pageContext.request.contextPath}/home">Home</a>
+        <a href="#">Flights</a>
+        <a href="#">About</a>
     </nav>
+
+    <div class="header-auth">
+        <c:choose>
+            <c:when test="${not empty user}">
+                <span class="welcome-text">Welcome, <c:out value="${user.fullName}"/></span>
+                <a href="${pageContext.request.contextPath}/logout" class="btn-outline">Log Out</a>
+            </c:when>
+            <c:otherwise>
+                <a href="${pageContext.request.contextPath}/login"    class="btn-outline">Log In</a>
+                <a href="${pageContext.request.contextPath}/register" class="btn-primary">Sign Up</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </header>
 
 <!-- Hero Section with Air.png as Background + Dim Red Overlay -->
@@ -54,7 +66,7 @@
 
 <!-- Popular Flights Section -->
 <section class="popular-flights">
-    <h2><u> POPULAR FLIGHT DEALS ON SKYLINE AIRLINES</u></h2>
+    <h2><u>POPULAR FLIGHT DEALS ON SKYLINE AIRLINES</u></h2>
 
     <div class="flight-grid">
 

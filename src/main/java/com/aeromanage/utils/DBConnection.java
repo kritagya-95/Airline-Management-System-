@@ -9,9 +9,9 @@ import java.sql.SQLException;
  */
 public class DBConnection {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/aeromanage_db?useSSL=false&serverTimezone=UTC";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";   // Change if you have a password
+    private static final String DB_URL      = "jdbc:mysql://localhost:3306/skyline_airlines?useSSL=false&serverTimezone=UTC";
+    private static final String DB_USER     = "root";
+    private static final String DB_PASSWORD = "";   // XAMPP default = no password
 
     static {
         try {
