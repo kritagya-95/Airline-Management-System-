@@ -69,7 +69,7 @@ public class RegisterServlet extends HttpServlet {
         user.setPhone(phone);
         user.setPassword(PasswordUtil.hashPassword(password));  // Hash password before saving
         user.setRole("PASSENGER");
-        user.setStatus("PENDING");   // Admin must approve registration
+        user.setStatus("PENDING");
 
         // Save user to database
         boolean isSaved = userDao.save(user);

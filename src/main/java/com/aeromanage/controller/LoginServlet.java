@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        // TODO: Store User in Session (Very Important for Milestone 1)
+
         // This line is required for session management and role-based access
         SessionUtil.setAttribute(request, "user", user);
 
