@@ -1,7 +1,4 @@
--- =============================================================
---  SKYLINE AIRLINES — Full Database Schema
--- =============================================================
-
+-- Database--
 CREATE DATABASE IF NOT EXISTS skyline_airlines
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
@@ -27,7 +24,19 @@ CREATE TABLE airlines (
                           logo_url     VARCHAR(255)
 );
 
--- 3. AIRCRAFT
+-- 3. USERS (must be here before bookings, cancellations, staff, etc.)
+CREATE TABLE users (
+                       user_id    INT          AUTO_INCREMENT PRIMARY KEY,
+                       full_name  VARCHAR(100) NOT NULL,
+                       email      VARCHAR(150) NOT NULL UNIQUE,
+                       password   VARCHAR(255) NOT NULL,
+                       phone      VARCHAR(20),
+                       role       ENUM('ADMIN','PASSENGER','STAFF') NOT NULL DEFAULT 'PASSENGER',
+                       status     ENUM('PENDING','APPROVED','REJECTED') NOT NULL DEFAULT 'PENDING',
+                       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 4. AIRCRAFT
 CREATE TABLE aircraft (
                           aircraft_id    INT         AUTO_INCREMENT PRIMARY KEY,
                           airline_id     INT         NOT NULL,
@@ -41,7 +50,7 @@ CREATE TABLE aircraft (
                               REFERENCES airlines(airline_id) ON DELETE CASCADE
 );
 
--- 4. FLIGHTS
+-- 5. FLIGHTS
 CREATE TABLE flights (
                          flight_id          INT           AUTO_INCREMENT PRIMARY KEY,
                          airline_id         INT           NOT NULL,
@@ -56,13 +65,13 @@ CREATE TABLE flights (
                          base_business_fare DECIMAL(10,2) NOT NULL DEFAULT 0.00,
                          base_first_fare    DECIMAL(10,2) NOT NULL DEFAULT 0.00,
                          created_at         TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                         CONSTRAINT fk_flight_airline  FOREIGN KEY (airline_id)         REFERENCES airlines(airline_id),
-                         CONSTRAINT fk_flight_aircraft FOREIGN KEY (aircraft_id)        REFERENCES aircraft(aircraft_id),
-                         CONSTRAINT fk_flight_origin   FOREIGN KEY (origin_airport_id)  REFERENCES airports(airport_id),
-                         CONSTRAINT fk_flight_dest     FOREIGN KEY (dest_airport_id)    REFERENCES airports(airport_id)
+                         CONSTRAINT fk_flight_airline  FOREIGN KEY (airline_id)        REFERENCES airlines(airline_id),
+                         CONSTRAINT fk_flight_aircraft FOREIGN KEY (aircraft_id)       REFERENCES aircraft(aircraft_id),
+                         CONSTRAINT fk_flight_origin   FOREIGN KEY (origin_airport_id) REFERENCES airports(airport_id),
+                         CONSTRAINT fk_flight_dest     FOREIGN KEY (dest_airport_id)   REFERENCES airports(airport_id)
 );
 
--- 5. SEATS
+-- 6. SEATS
 CREATE TABLE seats (
                        seat_id     INT        AUTO_INCREMENT PRIMARY KEY,
                        aircraft_id INT        NOT NULL,
@@ -73,18 +82,18 @@ CREATE TABLE seats (
                            REFERENCES aircraft(aircraft_id) ON DELETE CASCADE
 );
 
--- 6. FLIGHT SEAT AVAILABILITY
+-- 7. FLIGHT SEAT AVAILABILITY
 CREATE TABLE flight_seat_availability (
-                                          availability_id INT       AUTO_INCREMENT PRIMARY KEY,
-                                          flight_id       INT       NOT NULL,
-                                          seat_id         INT       NOT NULL,
+                                          availability_id INT        AUTO_INCREMENT PRIMARY KEY,
+                                          flight_id       INT        NOT NULL,
+                                          seat_id         INT        NOT NULL,
                                           is_available    TINYINT(1) NOT NULL DEFAULT 1,
                                           UNIQUE KEY uq_flight_seat (flight_id, seat_id),
                                           CONSTRAINT fk_fsa_flight FOREIGN KEY (flight_id) REFERENCES flights(flight_id) ON DELETE CASCADE,
                                           CONSTRAINT fk_fsa_seat   FOREIGN KEY (seat_id)   REFERENCES seats(seat_id)     ON DELETE CASCADE
 );
 
--- 7. BOOKINGS
+-- 8. BOOKINGS
 CREATE TABLE bookings (
                           booking_id     INT           AUTO_INCREMENT PRIMARY KEY,
                           user_id        INT           NOT NULL,
@@ -99,7 +108,7 @@ CREATE TABLE bookings (
                           CONSTRAINT fk_booking_flight FOREIGN KEY (flight_id) REFERENCES flights(flight_id)
 );
 
--- 8. BOOKING PASSENGERS
+-- 9. BOOKING PASSENGERS
 CREATE TABLE booking_passengers (
                                     passenger_id INT          AUTO_INCREMENT PRIMARY KEY,
                                     booking_id   INT          NOT NULL,
@@ -112,7 +121,7 @@ CREATE TABLE booking_passengers (
                                     CONSTRAINT fk_bp_seat    FOREIGN KEY (seat_id)    REFERENCES seats(seat_id)
 );
 
--- 9. PAYMENTS
+-- 10. PAYMENTS
 CREATE TABLE payments (
                           payment_id     INT           AUTO_INCREMENT PRIMARY KEY,
                           booking_id     INT           NOT NULL UNIQUE,
@@ -126,7 +135,7 @@ CREATE TABLE payments (
                               REFERENCES bookings(booking_id) ON DELETE CASCADE
 );
 
--- 10. TICKETS
+-- 11. TICKETS
 CREATE TABLE tickets (
                          ticket_id     INT         AUTO_INCREMENT PRIMARY KEY,
                          booking_id    INT         NOT NULL,
@@ -138,7 +147,7 @@ CREATE TABLE tickets (
                          CONSTRAINT fk_ticket_passenger FOREIGN KEY (passenger_id) REFERENCES booking_passengers(passenger_id)
 );
 
--- 11. CANCELLATIONS
+-- 12. CANCELLATIONS
 CREATE TABLE cancellations (
                                cancellation_id     INT       AUTO_INCREMENT PRIMARY KEY,
                                booking_id          INT       NOT NULL UNIQUE,
@@ -147,11 +156,11 @@ CREATE TABLE cancellations (
                                cancellation_status ENUM('REQUESTED','APPROVED','REJECTED') NOT NULL DEFAULT 'REQUESTED',
                                requested_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                processed_at        TIMESTAMP,
-                               CONSTRAINT fk_cancel_booking FOREIGN KEY (booking_id)  REFERENCES bookings(booking_id),
+                               CONSTRAINT fk_cancel_booking FOREIGN KEY (booking_id)   REFERENCES bookings(booking_id),
                                CONSTRAINT fk_cancel_user    FOREIGN KEY (cancelled_by) REFERENCES users(user_id)
 );
 
--- 12. REFUNDS
+-- 13. REFUNDS
 CREATE TABLE refunds (
                          refund_id       INT           AUTO_INCREMENT PRIMARY KEY,
                          cancellation_id INT           NOT NULL UNIQUE,
@@ -164,7 +173,7 @@ CREATE TABLE refunds (
                          CONSTRAINT fk_refund_payment FOREIGN KEY (payment_id)      REFERENCES payments(payment_id)
 );
 
--- 13. STAFF
+-- 14. STAFF
 CREATE TABLE staff (
                        staff_id      INT         AUTO_INCREMENT PRIMARY KEY,
                        user_id       INT         NOT NULL UNIQUE,
@@ -175,7 +184,7 @@ CREATE TABLE staff (
                        CONSTRAINT fk_staff_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
--- 14. FLIGHT STATUS LOG
+-- 15. FLIGHT STATUS LOG
 CREATE TABLE flight_status_log (
                                    log_id     INT          AUTO_INCREMENT PRIMARY KEY,
                                    flight_id  INT          NOT NULL,
@@ -188,7 +197,7 @@ CREATE TABLE flight_status_log (
                                    CONSTRAINT fk_fsl_user   FOREIGN KEY (changed_by) REFERENCES users(user_id)
 );
 
--- 15. NOTIFICATIONS
+-- 16. NOTIFICATIONS
 CREATE TABLE notifications (
                                notification_id INT          AUTO_INCREMENT PRIMARY KEY,
                                user_id         INT          NOT NULL,
@@ -199,7 +208,7 @@ CREATE TABLE notifications (
                                CONSTRAINT fk_notif_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
--- 16. AUDIT LOGS
+-- 17. AUDIT LOGS
 CREATE TABLE audit_logs (
                             audit_id    INT          AUTO_INCREMENT PRIMARY KEY,
                             user_id     INT,
@@ -212,7 +221,7 @@ CREATE TABLE audit_logs (
                             CONSTRAINT fk_audit_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL
 );
 
--- 17. REPORTS
+-- 18. REPORTS
 CREATE TABLE reports (
                          report_id    INT          AUTO_INCREMENT PRIMARY KEY,
                          report_name  VARCHAR(150) NOT NULL,
@@ -224,16 +233,16 @@ CREATE TABLE reports (
                          CONSTRAINT fk_report_user FOREIGN KEY (generated_by) REFERENCES users(user_id)
 );
 
--- =============================================================
--- SAMPLE DATA
--- =============================================================
+
+-- SAMPLE DATA--
+
 
 INSERT INTO airports (iata_code, airport_name, city, country, timezone) VALUES
-                                                                            ('KTM', 'Tribhuvan International Airport',      'Kathmandu', 'Nepal',    'Asia/Kathmandu'),
-                                                                            ('DEL', 'Indira Gandhi International Airport',  'New Delhi',  'India',   'Asia/Kolkata'),
-                                                                            ('DXB', 'Dubai International Airport',          'Dubai',      'UAE',     'Asia/Dubai'),
-                                                                            ('DOH', 'Hamad International Airport',          'Doha',       'Qatar',   'Asia/Qatar'),
-                                                                            ('BKK', 'Suvarnabhumi Airport',                 'Bangkok',    'Thailand','Asia/Bangkok');
+                                                                            ('KTM', 'Tribhuvan International Airport',     'Kathmandu', 'Nepal',    'Asia/Kathmandu'),
+                                                                            ('DEL', 'Indira Gandhi International Airport', 'New Delhi',  'India',   'Asia/Kolkata'),
+                                                                            ('DXB', 'Dubai International Airport',         'Dubai',      'UAE',     'Asia/Dubai'),
+                                                                            ('DOH', 'Hamad International Airport',         'Doha',       'Qatar',   'Asia/Qatar'),
+                                                                            ('BKK', 'Suvarnabhumi Airport',                'Bangkok',    'Thailand','Asia/Bangkok');
 
 INSERT INTO airlines (iata_code, airline_name, country) VALUES
                                                             ('RA', 'Nepal Airlines', 'Nepal'),
@@ -257,12 +266,9 @@ INSERT INTO flights (airline_id, aircraft_id, flight_number, origin_airport_id, 
                                                                                                       (1, 2, 'RA202', 2, 1, '2025-06-01 12:00:00', '2025-06-01 13:30:00', 'SCHEDULED',  8500.00,  25000.00),
                                                                                                       (3, 3, 'EK612', 1, 3, '2025-06-02 22:30:00', '2025-06-03 01:30:00', 'SCHEDULED', 45000.00, 120000.00);
 
-INSERT INTO staff (user_id, employee_code, designation, department, hire_date) VALUES
-    (4, 'EMP-001', 'Gate Agent', 'Ground Operations', '2023-01-15');
 
--- =============================================================
--- VIEWS
--- =============================================================
+-- VIEWS--
+
 
 CREATE OR REPLACE VIEW v_flight_search AS
 SELECT
