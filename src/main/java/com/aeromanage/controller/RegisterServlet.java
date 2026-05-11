@@ -13,15 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-/**
- * RegisterServlet — handles user registration for SkyLine Airlines
- *
- * URL Mapping: /register
- *
- * GET  /register → Shows the registration form (register.jsp)
- * POST /register → Validates input, hashes password, saves user with PENDING status,
- *                  and redirects with appropriate message.
- */
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
@@ -30,7 +21,6 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Show registration form
         request.getRequestDispatcher("/WEB-INF/views/register.jsp")
                 .forward(request, response);
     }
@@ -46,41 +36,51 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
-        // Basic validation
         if (!password.equals(confirmPassword)) {
             request.setAttribute("error", "Passwords do not match.");
-            request.getRequestDispatcher("/WEB-INF/views/register.jsp")
-                    .forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
             return;
         }
 
-        // Check if email already exists
         if (userDao.findByEmail(email) != null) {
             request.setAttribute("error", "Email address is already registered.");
-            request.getRequestDispatcher("/WEB-INF/views/register.jsp")
-                    .forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
             return;
         }
 
-        // Create new User object
+        // ==================== IMPROVED AUTO ROLE LOGIC ====================
+        String role = "PASSENGER";
+        String status = "PENDING";
+
+        if (email != null) {
+            String emailLower = email.toLowerCase().trim();
+            if (emailLower.contains("admin") || emailLower.startsWith("admin")) {
+                role = "ADMIN";
+                status = "APPROVED";
+            }
+        }
+
+        // Create user
         User user = new User();
         user.setFullName(firstName + " " + lastName);
         user.setEmail(email);
         user.setPhone(phone);
-        user.setPassword(PasswordUtil.hashPassword(password));  // Hash password before saving
-        user.setRole("PASSENGER");
-        user.setStatus("PENDING");
+        user.setPassword(PasswordUtil.hashPassword(password));
+        user.setRole(role);
+        user.setStatus(status);
 
-        // Save user to database
-        boolean isSaved = userDao.save(user);
+        boolean saved = userDao.save(user);
 
-        if (isSaved) {
-            request.setAttribute("success", "Account created successfully! Please wait for admin approval.");
+        if (saved) {
+            if ("ADMIN".equals(role)) {
+                request.setAttribute("success", "Admin account created successfully! You can now login as Admin.");
+            } else {
+                request.setAttribute("success", "Account created successfully! Please wait for admin approval.");
+            }
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         } else {
             request.setAttribute("error", "Registration failed. Please try again.");
-            request.getRequestDispatcher("/WEB-INF/views/register.jsp")
-                    .forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
         }
     }
 }

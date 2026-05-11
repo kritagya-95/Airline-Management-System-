@@ -13,11 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-/**
- * AdminDashboardServlet — serves the admin dashboard.
- * URL: /admin/dashboard
- * Protected by AuthFilter — only ADMIN role can access.
- */
 @WebServlet("/admin/dashboard")
 public class AdminDashboardServlet extends HttpServlet {
 
@@ -27,26 +22,25 @@ public class AdminDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Get logged-in admin from session
-        User admin = (User) SessionUtil.getAttribute(request, "user");
-        request.setAttribute("admin", admin);
+        User user = (User) SessionUtil.getAttribute(request, "user");
 
-        // Stats cards
+        // Security Check
+        if (user == null || !"ADMIN".equals(user.getRole())) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        request.setAttribute("admin", user);
+
+        // Dashboard data
         request.setAttribute("totalUsers",    adminDao.countUsers());
         request.setAttribute("totalFlights",  adminDao.countFlights());
         request.setAttribute("totalBookings", adminDao.countBookings());
         request.setAttribute("pendingUsers",  adminDao.countPendingUsers());
 
-        // Pending user approvals list
         request.setAttribute("pendingUserList", adminDao.getPendingUsers());
-
-        // Recent bookings
         request.setAttribute("recentBookings", adminDao.getRecentBookings(5));
-
-        // All flights
         request.setAttribute("flightList", adminDao.getAllFlights());
-
-        // All users
         request.setAttribute("userList", adminDao.getAllUsers());
 
         request.getRequestDispatcher("/WEB-INF/views/admin/dashboard.jsp")
