@@ -21,7 +21,7 @@ import java.io.IOException;
  *
  * GET  /login  → Shows the login form (login.jsp)
  * POST /login  → Processes login credentials, verifies password,
- *                stores user in session, and redirects accordingly.
+ *                stores user in session, and redirects by role.
  */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -31,7 +31,14 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Forward to login page when user accesses /login via GET
+
+        // If already logged in, skip the login page
+        User existing = (User) SessionUtil.getAttribute(request, "user");
+        if (existing != null) {
+            response.sendRedirect(request.getContextPath() + "/home");
+            return;
+        }
+
         request.getRequestDispatcher("/WEB-INF/views/login.jsp")
                 .forward(request, response);
     }
@@ -40,14 +47,38 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String email = request.getParameter("email");
+        String email    = request.getParameter("email");
         String password = request.getParameter("password");
 
+        // Basic null/empty check
+        if (email == null || email.trim().isEmpty() ||
+                password == null || password.trim().isEmpty()) {
+            request.setAttribute("error", "Email and password are required.");
+            request.getRequestDispatcher("/WEB-INF/views/login.jsp")
+                    .forward(request, response);
+            return;
+        }
+
         // Find user by email
-        User user = userDao.findByEmail(email);
+        User user = userDao.findByEmail(email.trim());
 
         if (user == null) {
             request.setAttribute("error", "Invalid email or password.");
+            request.getRequestDispatcher("/WEB-INF/views/login.jsp")
+                    .forward(request, response);
+            return;
+        }
+
+        // Check account status before verifying password
+        if ("PENDING".equals(user.getStatus())) {
+            request.setAttribute("error", "Your account is pending admin approval. Please wait.");
+            request.getRequestDispatcher("/WEB-INF/views/login.jsp")
+                    .forward(request, response);
+            return;
+        }
+
+        if ("REJECTED".equals(user.getStatus())) {
+            request.setAttribute("error", "Your account has been rejected. Please contact support.");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp")
                     .forward(request, response);
             return;
@@ -61,15 +92,19 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-
-        // This line is required for session management and role-based access
+        // Store user in session
         SessionUtil.setAttribute(request, "user", user);
 
-        // Redirect based on user role
-        if ("ADMIN".equals(user.getRole())) {
-            response.sendRedirect(request.getContextPath() + "/admin/dashboard");
-        } else {
-            response.sendRedirect(request.getContextPath() + "/home");
+        // Redirect based on role
+        switch (user.getRole()) {
+            case "ADMIN":
+                response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+                break;
+            case "STAFF":
+                response.sendRedirect(request.getContextPath() + "/staff/dashboard");
+                break;
+            default:
+                response.sendRedirect(request.getContextPath() + "/home");
         }
     }
 }

@@ -1,5 +1,3 @@
-
-
 USE skyline_airlines;
 
 -- password = "Admin@123" BCrypt hashed
