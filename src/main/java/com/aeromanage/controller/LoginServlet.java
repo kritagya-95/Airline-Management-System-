@@ -39,13 +39,13 @@ public class LoginServlet extends HttpServlet {
         User user = userDao.findByEmail(email.trim());
 
         if (user == null) {
-            System.out.println("❌ No user found with email: " + email);
+            System.out.println("No user found with email: " + email);
             request.setAttribute("error", "Invalid email or password.");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
             return;
         }
 
-        System.out.println("✅ User found!");
+        System.out.println("User found!");
         System.out.println("Full Name : " + user.getFullName());
         System.out.println("Role      : " + user.getRole());
         System.out.println("Status    : " + user.getStatus());
@@ -54,14 +54,14 @@ public class LoginServlet extends HttpServlet {
         System.out.println("Password match: " + passwordCorrect);
 
         if (!passwordCorrect) {
-            System.out.println("❌ Password is incorrect");
+            System.out.println("Password is incorrect");
             request.setAttribute("error", "Invalid email or password.");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
             return;
         }
 
         // Success
-        System.out.println("🎉 Login Successful!");
+        System.out.println("Login Successful!");
         SessionUtil.setAttribute(request, "user", user);
 
         if ("ADMIN".equals(user.getRole())) {
