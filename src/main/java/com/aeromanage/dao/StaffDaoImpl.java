@@ -152,4 +152,100 @@ public class StaffDaoImpl implements StaffDao {
         }
         return map;
     }
+
+    @Override
+    public List<Map<String, Object>> getAllFlights() {
+        String sql = """
+        SELECT f.flight_id, f.flight_number, al.airline_name,
+               oa.iata_code AS origin_code, oa.city AS origin_city,
+               da.iata_code AS dest_code,   da.city AS dest_city,
+               f.departure_time, f.arrival_time, f.status,
+               f.base_economy_fare, f.base_business_fare,
+               (SELECT COUNT(*) FROM flight_seat_availability
+                WHERE flight_id = f.flight_id AND is_available = 0) AS booked_seats
+        FROM flights f
+        JOIN airlines al ON al.airline_id = f.airline_id
+        JOIN airports oa ON oa.airport_id = f.origin_airport_id
+        JOIN airports da ON da.airport_id = f.dest_airport_id
+        ORDER BY f.departure_time DESC
+        """;
+        return fetchMaps(sql);
+    }
+
+    @Override
+    public List<Map<String, Object>> getFlightStatusHistory() {
+        String sql = """
+        SELECT fsl.log_id, fsl.old_status, fsl.new_status,
+               fsl.reason, fsl.changed_at,
+               f.flight_number,
+               oa.iata_code AS origin_code,
+               da.iata_code AS dest_code,
+               u.full_name  AS changed_by_name
+        FROM flight_status_log fsl
+        JOIN flights  f  ON f.flight_id  = fsl.flight_id
+        JOIN airports oa ON oa.airport_id = f.origin_airport_id
+        JOIN airports da ON da.airport_id = f.dest_airport_id
+        LEFT JOIN users u ON u.user_id   = fsl.changed_by
+        ORDER BY fsl.changed_at DESC
+        LIMIT 50
+        """;
+        return fetchMaps(sql);
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllPassengers() {
+        String sql = """
+        SELECT u.user_id, u.full_name, u.email, u.phone,
+               u.status, u.created_at,
+               COUNT(b.booking_id) AS total_bookings
+        FROM users u
+        LEFT JOIN bookings b ON b.user_id = u.user_id
+        WHERE u.role = 'PASSENGER'
+        GROUP BY u.user_id
+        ORDER BY u.created_at DESC
+        """;
+        return fetchMaps(sql);
+    }
+
+    @Override
+    public List<Map<String, Object>> getRecentBookings() {
+        String sql = """
+        SELECT b.booking_id, b.booking_ref, b.booking_status,
+               b.class, b.num_passengers, b.total_fare, b.created_at,
+               u.full_name  AS passenger_name, u.email,
+               f.flight_number, f.departure_time,
+               oa.iata_code AS from_code,
+               da.iata_code AS to_code
+        FROM bookings b
+        JOIN users    u  ON u.user_id     = b.user_id
+        JOIN flights  f  ON f.flight_id   = b.flight_id
+        JOIN airports oa ON oa.airport_id = f.origin_airport_id
+        JOIN airports da ON da.airport_id = f.dest_airport_id
+        ORDER BY b.created_at DESC
+        LIMIT 20
+        """;
+        return fetchMaps(sql);
+    }
+
+    @Override
+    public List<Map<String, Object>> getCancelledBookings() {
+        String sql = """
+        SELECT b.booking_id, b.booking_ref, b.total_fare,
+               b.class, b.created_at,
+               u.full_name  AS passenger_name, u.email,
+               f.flight_number, f.departure_time,
+               oa.iata_code AS from_code,
+               da.iata_code AS to_code,
+               c.reason, c.cancellation_status, c.requested_at
+        FROM bookings b
+        JOIN users        u  ON u.user_id     = b.user_id
+        JOIN flights      f  ON f.flight_id   = b.flight_id
+        JOIN airports     oa ON oa.airport_id = f.origin_airport_id
+        JOIN airports     da ON da.airport_id = f.dest_airport_id
+        LEFT JOIN cancellations c ON c.booking_id = b.booking_id
+        WHERE b.booking_status = 'CANCELLED'
+        ORDER BY b.created_at DESC
+        """;
+        return fetchMaps(sql);
+    }
 }

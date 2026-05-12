@@ -30,9 +30,18 @@ public class StaffDashboardServlet extends HttpServlet {
         }
 
         request.setAttribute("staff",                user);
+
+        // Existing
         request.setAttribute("todayFlights",         staffDao.getTodayFlights());
         request.setAttribute("totalPassengersToday", staffDao.countPassengersToday());
         request.setAttribute("totalTodayFlights",    staffDao.countTodayFlights());
+
+        // New
+        request.setAttribute("allFlights",           staffDao.getAllFlights());
+        request.setAttribute("statusHistory",        staffDao.getFlightStatusHistory());
+        request.setAttribute("passengerList",        staffDao.getAllPassengers());
+        request.setAttribute("recentBookings",       staffDao.getRecentBookings());
+        request.setAttribute("cancelledBookings",    staffDao.getCancelledBookings());
 
         request.getRequestDispatcher("/WEB-INF/views/staff/staffDashboard.jsp")
                 .forward(request, response);
