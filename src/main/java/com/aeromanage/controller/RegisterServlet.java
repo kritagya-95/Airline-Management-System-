@@ -3,6 +3,7 @@ package com.aeromanage.controller;
 import com.aeromanage.dao.UserDao;
 import com.aeromanage.dao.UserDaoImpl;
 import com.aeromanage.entity.User;
+import com.aeromanage.utils.DBConnection;
 import com.aeromanage.utils.PasswordUtil;
 
 import jakarta.servlet.ServletException;
@@ -12,6 +13,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
@@ -94,6 +98,11 @@ public class RegisterServlet extends HttpServlet {
         boolean saved = userDao.save(user);
 
         if (saved) {
+            // ====================== AUTO STAFF INSERT ======================
+            if ("STAFF".equals(role)) {
+                autoCreateStaffRecord(user.getUserId());
+            }
+
             request.setAttribute("success", successMessage);
             request.getRequestDispatcher("/WEB-INF/views/login.jsp")
                     .forward(request, response);
@@ -101,6 +110,29 @@ public class RegisterServlet extends HttpServlet {
             request.setAttribute("error", "Registration failed. Please try again.");
             request.getRequestDispatcher("/WEB-INF/views/register.jsp")
                     .forward(request, response);
+        }
+    }
+
+    // ====================== AUTO CREATE STAFF RECORD ======================
+    private void autoCreateStaffRecord(int userId) {
+        String sql = """
+            INSERT INTO staff (user_id, employee_code, designation, department, hire_date)
+            VALUES (?, ?, ?, ?, CURDATE())
+            """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+            ps.setString(2, "EMP" + String.format("%03d", userId));   // Example: EMP007
+            ps.setString(3, "Staff Member");
+            ps.setString(4, "Operations");
+
+            ps.executeUpdate();
+            System.out.println("Auto-created staff record for user_id: " + userId);
+
+        } catch (SQLException e) {
+            System.err.println("Failed to create staff record (but user was created): " + e.getMessage());
         }
     }
 }
