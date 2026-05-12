@@ -48,11 +48,16 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        // ====================== AUTO ADMIN LOGIC ======================
-        String emailLower = email.toLowerCase().trim();
-        boolean isAdmin = emailLower.endsWith("@skyline.admin.com");
 
-        String role = isAdmin ? "ADMIN" : "PASSENGER";
+
+// ====================== AUTO ADMIN LOGIC ======================
+        String emailLower = email.toLowerCase().trim();
+        String adminKey = request.getParameter("adminKey");
+
+        boolean isAdmin = emailLower.endsWith("@skyline.admin.com")
+                && "JavaHut-SkyLine".equals(adminKey);
+
+        String role   = isAdmin ? "ADMIN"    : "PASSENGER";
         String status = isAdmin ? "APPROVED" : "PENDING";
 
         User user = new User();

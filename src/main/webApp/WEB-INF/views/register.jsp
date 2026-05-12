@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/auth.css" />
 </head>
 
+<div class="form-group">
+    <label for="adminKey">Admin Registration Key (leave blank if passenger)</label>
+    <input type="password" id="adminKey" name="adminKey"
+           placeholder="Enter key if registering as admin"/>
+</div>
+
 <body>
 <div class="auth-page">
 
