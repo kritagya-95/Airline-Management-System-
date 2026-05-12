@@ -36,7 +36,7 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
-        if (!password.equals(confirmPassword)) {
+        if (password == null || !password.equals(confirmPassword)) {
             request.setAttribute("error", "Passwords do not match.");
             request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
             return;
@@ -48,22 +48,16 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        // ==================== IMPROVED AUTO ROLE LOGIC ====================
-        String role = "PASSENGER";
-        String status = "PENDING";
+        // ====================== AUTO ADMIN LOGIC ======================
+        String emailLower = email.toLowerCase().trim();
+        boolean isAdmin = emailLower.endsWith("@skyline.admin.com");
 
-        if (email != null) {
-            String emailLower = email.toLowerCase().trim();
-            if (emailLower.contains("admin") || emailLower.startsWith("admin")) {
-                role = "ADMIN";
-                status = "APPROVED";
-            }
-        }
+        String role = isAdmin ? "ADMIN" : "PASSENGER";
+        String status = isAdmin ? "APPROVED" : "PENDING";
 
-        // Create user
         User user = new User();
         user.setFullName(firstName + " " + lastName);
-        user.setEmail(email);
+        user.setEmail(email.trim());
         user.setPhone(phone);
         user.setPassword(PasswordUtil.hashPassword(password));
         user.setRole(role);
@@ -72,10 +66,10 @@ public class RegisterServlet extends HttpServlet {
         boolean saved = userDao.save(user);
 
         if (saved) {
-            if ("ADMIN".equals(role)) {
-                request.setAttribute("success", "Admin account created successfully! You can now login as Admin.");
+            if (isAdmin) {
+                request.setAttribute("success", "Admin account created successfully! You can login now.");
             } else {
-                request.setAttribute("success", "Account created successfully! Please wait for admin approval.");
+                request.setAttribute("success", " Account created successfully! Please wait for admin approval.");
             }
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         } else {
