@@ -64,10 +64,16 @@ public class LoginServlet extends HttpServlet {
         System.out.println("Login Successful!");
         SessionUtil.setAttribute(request, "user", user);
 
-        if ("ADMIN".equals(user.getRole())) {
-            response.sendRedirect(request.getContextPath() + "/admin/dashboard");
-        } else {
-            response.sendRedirect(request.getContextPath() + "/home");
+        // Redirect based on role
+        switch (user.getRole()) {
+            case "ADMIN":
+                response.sendRedirect(request.getContextPath() + "/admin/dashboard");
+                break;
+            case "STAFF":
+                response.sendRedirect(request.getContextPath() + "/staff/dashboard");
+                break;
+            default:
+                response.sendRedirect(request.getContextPath() + "/home");
         }
     }
 

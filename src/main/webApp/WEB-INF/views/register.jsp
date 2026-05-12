@@ -407,7 +407,7 @@
         const key      = document.getElementById("adminKeyInput").value.trim();
         const errorMsg = document.getElementById("adminModalError");
 
-        if (key === "JavaHut-SkyLine") {
+        if (key === "JavaHut-SkyLine Admin") {
             document.getElementById("adminKeyHidden").value = key;
             document.getElementById("adminModal").classList.remove("active");
             document.getElementById("registerForm").submit();
@@ -422,7 +422,7 @@
         const key      = document.getElementById("staffKeyInput").value.trim();
         const errorMsg = document.getElementById("staffModalError");
 
-        if (key === "Java-Hut Staff") {
+        if (key === "Java-Hut Skyline Staff") {
             document.getElementById("staffKeyHidden").value = key;
             document.getElementById("staffModal").classList.remove("active");
             document.getElementById("registerForm").submit();
