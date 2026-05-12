@@ -1,0 +1,51 @@
+/* staff.css - SkyLine Staff Dashboard */
+
+.staff-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+.staff-sidebar {
+    width: 260px;
+    background: linear-gradient(180deg, #1e3a8a, #1e40af);
+    color: white;
+    position: fixed;
+    height: 100vh;
+    padding: 20px 0;
+    box-shadow: 3px 0 10px rgba(0,0,0,0.1);
+}
+
+.staff-main {
+    margin-left: 260px;
+    flex: 1;
+    padding: 30px;
+}
+
+.staff-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.staff-table th {
+    background: #1e40af;
+    color: white;
+}
+
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.search-box {
+    max-width: 500px;
+}

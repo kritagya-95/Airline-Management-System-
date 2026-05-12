@@ -206,6 +206,17 @@
     color: #333;
 }
 
+/* ── SECTION COUNT LABEL ─────────────────────────────── */
+.section-count {
+    font-size: 13px;
+    color: #888;
+}
+
+.section-count strong {
+    color: #8B0000;
+    font-weight: 700;
+}
+
 .btn-add {
     padding: 8px 18px;
     background: #8B0000;
@@ -327,6 +338,14 @@
     color: white;
 }
 
+/* ── FLIGHT TABLE — city sub-label ──────────────────── */
+.admin-table td small {
+    display: block;
+    font-size: 11px;
+    color: #999;
+    margin-top: 2px;
+}
+
 /* ── EMPTY STATE ─────────────────────────────────────── */
 .empty-state {
     padding: 40px;
@@ -341,10 +360,17 @@
 }
 
 @media (max-width: 768px) {
-    .sidebar { width: 100%; height: auto; position: relative; }
-    .admin-main { margin-left: 0; padding: 20px; }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .admin-main {
+        margin-left: 0;
+        padding: 20px;
+    }
     .admin-layout { flex-direction: column; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stats-grid   { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 480px) {
