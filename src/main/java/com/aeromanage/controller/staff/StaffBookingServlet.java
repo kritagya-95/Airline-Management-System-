@@ -12,9 +12,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Map;
 
-@WebServlet("/staff/dashboard")
-public class StaffDashboardServlet extends HttpServlet {
+@WebServlet("/staff/booking")
+public class StaffBookingServlet extends HttpServlet {
 
     private final StaffDao staffDao = new StaffDaoImpl();
 
@@ -29,6 +30,21 @@ public class StaffDashboardServlet extends HttpServlet {
             return;
         }
 
+        String ref = request.getParameter("ref");
+
+        if (ref != null && !ref.trim().isEmpty()) {
+            Map<String, Object> booking =
+                    staffDao.findBookingByReference(ref.trim().toUpperCase());
+
+            if (booking != null) {
+                request.setAttribute("booking", booking);
+            } else {
+                request.setAttribute("bookingError",
+                        "No booking found with reference: " + ref.trim().toUpperCase());
+            }
+        }
+
+        request.setAttribute("searchRef",            ref);
         request.setAttribute("staff",                user);
         request.setAttribute("todayFlights",         staffDao.getTodayFlights());
         request.setAttribute("totalPassengersToday", staffDao.countPassengersToday());

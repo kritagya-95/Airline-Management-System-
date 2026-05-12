@@ -29,37 +29,60 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String password = request.getParameter("password");
+        String firstName       = request.getParameter("firstName");
+        String lastName        = request.getParameter("lastName");
+        String email           = request.getParameter("email");
+        String phone           = request.getParameter("phone");
+        String password        = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
+        String adminKey        = request.getParameter("adminKey");
+        String staffKey        = request.getParameter("staffKey");
 
+        // Password match check
         if (password == null || !password.equals(confirmPassword)) {
             request.setAttribute("error", "Passwords do not match.");
-            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/register.jsp")
+                    .forward(request, response);
             return;
         }
 
+        // Email already registered check
         if (userDao.findByEmail(email) != null) {
             request.setAttribute("error", "Email address is already registered.");
-            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/register.jsp")
+                    .forward(request, response);
             return;
         }
 
-
-
-// ====================== AUTO ADMIN LOGIC ======================
+        // ── ROLE LOGIC ───
         String emailLower = email.toLowerCase().trim();
-        String adminKey = request.getParameter("adminKey");
 
-        boolean isAdmin = emailLower.endsWith("@skyline.admin.com")
-                && "JavaHut-SkyLine".equals(adminKey);
+        String role;
+        String status;
+        String successMessage;
 
-        String role   = isAdmin ? "ADMIN"    : "PASSENGER";
-        String status = isAdmin ? "APPROVED" : "PENDING";
+        if (emailLower.endsWith("@skyline.admin.com")
+                && "JavaHut-SkyLine Admin".equals(adminKey)) {
+            // Admin registration
+            role           = "ADMIN";
+            status         = "APPROVED";
+            successMessage = "Admin account created successfully! You can login now.";
 
+        } else if (emailLower.endsWith("@skyline.staff.com")
+                && "Java-Hut Skyline Staff".equals(staffKey)) {
+            // Staff registration
+            role           = "STAFF";
+            status         = "APPROVED";
+            successMessage = "Staff account created successfully! You can login now.";
+
+        } else {
+            // Normal passenger
+            role           = "PASSENGER";
+            status         = "PENDING";
+            successMessage = "Account created successfully! Please wait for admin approval.";
+        }
+
+        // Build and save user
         User user = new User();
         user.setFullName(firstName + " " + lastName);
         user.setEmail(email.trim());
@@ -71,15 +94,13 @@ public class RegisterServlet extends HttpServlet {
         boolean saved = userDao.save(user);
 
         if (saved) {
-            if (isAdmin) {
-                request.setAttribute("success", "Admin account created successfully! You can login now.");
-            } else {
-                request.setAttribute("success", " Account created successfully! Please wait for admin approval.");
-            }
-            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+            request.setAttribute("success", successMessage);
+            request.getRequestDispatcher("/WEB-INF/views/login.jsp")
+                    .forward(request, response);
         } else {
             request.setAttribute("error", "Registration failed. Please try again.");
-            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/register.jsp")
+                    .forward(request, response);
         }
     }
 }

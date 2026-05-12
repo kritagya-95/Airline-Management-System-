@@ -7,13 +7,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SkyLine - Create Account</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/auth.css" />
     <style>
 
-        /* ── LEFT PANEL OVERRIDES ───────────────────────── */
+        /* ── LEFT PANEL ─────────────────────────────────── */
         .auth-left {
             flex: 0 0 38%;
             min-width: unset;
@@ -77,7 +76,7 @@
             line-height: 1.7;
         }
 
-        /* ── RIGHT PANEL OVERRIDES ──────────────────────── */
+        /* ── RIGHT PANEL ────────────────────────────────── */
         .auth-form {
             flex: 1;
             min-width: unset;
@@ -120,10 +119,7 @@
             to   { transform: scale(1);   opacity: 1; }
         }
 
-        .modal-icon {
-            font-size: 44px;
-            margin-bottom: 16px;
-        }
+        .modal-icon { font-size: 44px; margin-bottom: 16px; }
 
         .modal-box h3 {
             font-family: 'Cinzel', serif;
@@ -166,9 +162,7 @@
             font-family: 'Chivo', sans-serif;
         }
 
-        .modal-error.show {
-            display: block;
-        }
+        .modal-error.show { display: block; }
 
         .btn-verify {
             width: 100%;
@@ -214,13 +208,17 @@
                 padding: 40px 30px;
             }
         }
+
+        @media (max-width: 500px) {
+            .form-row { flex-direction: column; gap: 0; }
+        }
     </style>
 </head>
 
 <body>
 <div class="auth-page">
 
-    <!-- ── LEFT PANEL — Branding ── -->
+    <!-- ── LEFT PANEL ── -->
     <div class="auth-left">
         <div class="logo">
             <img src="${pageContext.request.contextPath}/static/images/logo.png"
@@ -234,7 +232,7 @@
         </p>
     </div>
 
-    <!-- ── RIGHT PANEL — Form ── -->
+    <!-- ── RIGHT PANEL ── -->
     <div class="auth-form">
         <form id="registerForm"
               action="${pageContext.request.contextPath}/register"
@@ -302,12 +300,11 @@
                 </label>
             </div>
 
-            <!-- Hidden admin key — filled by popup -->
-            <input type="hidden" name="adminKey"
-                   id="adminKeyHidden" value=""/>
+            <!-- Hidden fields — filled by popups -->
+            <input type="hidden" name="adminKey" id="adminKeyHidden" value=""/>
+            <input type="hidden" name="staffKey" id="staffKeyHidden" value=""/>
 
-            <button type="button" class="btn-login"
-                    onclick="handleSubmit()">
+            <button type="button" class="btn-login" onclick="handleSubmit()">
                 Create Account
             </button>
 
@@ -320,31 +317,56 @@
 
 </div>
 
-<!-- ── ADMIN KEY POPUP ── -->
+<!-- ══ ADMIN KEY POPUP ══ -->
 <div class="modal-overlay" id="adminModal">
     <div class="modal-box">
         <div class="modal-icon">🔐</div>
-        <h3>Admin Verification Required</h3>
+        <h3>Admin Verification</h3>
         <p>
             You are registering with an admin email.<br/>
             Please enter your Admin Registration Key to continue.
         </p>
         <input type="password" id="adminKeyInput"
                placeholder="Enter Admin Registration Key"/>
-        <p class="modal-error" id="modalError">
-            Incorrect key. Please try again.
+        <p class="modal-error" id="adminModalError">
+            ❌ Incorrect key. Please try again.
         </p>
         <button class="btn-verify" onclick="verifyAdminKey()">
             Verify &amp; Register
         </button>
         <br/>
-        <button class="btn-cancel" onclick="closeModal()">
+        <button class="btn-cancel" onclick="cancelModal('adminModal')">
+            Cancel — Register as Passenger instead
+        </button>
+    </div>
+</div>
+
+<!-- ══ STAFF KEY POPUP ══ -->
+<div class="modal-overlay" id="staffModal">
+    <div class="modal-box">
+        <div class="modal-icon">🛫</div>
+        <h3>Staff Verification</h3>
+        <p>
+            You are registering with a staff email.<br/>
+            Please enter your Staff Registration Key to continue.
+        </p>
+        <input type="password" id="staffKeyInput"
+               placeholder="Enter Staff Registration Key"/>
+        <p class="modal-error" id="staffModalError">
+            ❌ Incorrect key. Please try again.
+        </p>
+        <button class="btn-verify" onclick="verifyStaffKey()">
+            Verify &amp; Register
+        </button>
+        <br/>
+        <button class="btn-cancel" onclick="cancelModal('staffModal')">
             Cancel — Register as Passenger instead
         </button>
     </div>
 </div>
 
 <script>
+    // ── Toggle password visibility ──────────────────────
     function togglePassword() {
         const pwd = document.getElementById("passwordField");
         pwd.type = pwd.type === "password" ? "text" : "password";
@@ -355,6 +377,7 @@
         pwd.type = pwd.type === "password" ? "text" : "password";
     }
 
+    // ── Handle form submit ──────────────────────────────
     function handleSubmit() {
         const form  = document.getElementById("registerForm");
         const email = document.getElementById("emailField").value.toLowerCase().trim();
@@ -365,19 +388,26 @@
         }
 
         if (email.endsWith("@skyline.admin.com")) {
-            document.getElementById("adminModal").classList.add("active");
-            document.getElementById("adminKeyInput").focus();
+            openModal("adminModal", "adminKeyInput");
+        } else if (email.endsWith("@skyline.staff.com")) {
+            openModal("staffModal", "staffKeyInput");
         } else {
             form.submit();
         }
     }
 
+    // ── Open modal ──────────────────────────────────────
+    function openModal(modalId, inputId) {
+        document.getElementById(modalId).classList.add("active");
+        document.getElementById(inputId).focus();
+    }
+
+    // ── Verify admin key ────────────────────────────────
     function verifyAdminKey() {
         const key      = document.getElementById("adminKeyInput").value.trim();
-        const errorMsg = document.getElementById("modalError");
-        const ADMIN_KEY = "JavaHut-SkyLine";
+        const errorMsg = document.getElementById("adminModalError");
 
-        if (key === ADMIN_KEY) {
+        if (key === "JavaHut-SkyLine") {
             document.getElementById("adminKeyHidden").value = key;
             document.getElementById("adminModal").classList.remove("active");
             document.getElementById("registerForm").submit();
@@ -387,18 +417,45 @@
         }
     }
 
-    function closeModal() {
-        document.getElementById("adminModal").classList.remove("active");
-        document.getElementById("adminKeyInput").value = "";
-        document.getElementById("modalError").classList.remove("show");
+    // ── Verify staff key ────────────────────────────────
+    function verifyStaffKey() {
+        const key      = document.getElementById("staffKeyInput").value.trim();
+        const errorMsg = document.getElementById("staffModalError");
+
+        if (key === "Java-Hut Staff") {
+            document.getElementById("staffKeyHidden").value = key;
+            document.getElementById("staffModal").classList.remove("active");
+            document.getElementById("registerForm").submit();
+        } else {
+            errorMsg.classList.add("show");
+            document.getElementById("staffKeyInput").focus();
+        }
+    }
+
+    // ── Cancel modal — register as passenger instead ────
+    function cancelModal(modalId) {
+        document.getElementById(modalId).classList.remove("active");
+
+        // Clear both key inputs and hidden fields
+        document.getElementById("adminKeyInput").value  = "";
+        document.getElementById("staffKeyInput").value  = "";
         document.getElementById("adminKeyHidden").value = "";
+        document.getElementById("staffKeyHidden").value = "";
+        document.getElementById("adminModalError").classList.remove("show");
+        document.getElementById("staffModalError").classList.remove("show");
+
+        // Submit as normal passenger
         document.getElementById("registerForm").submit();
     }
 
+    // ── Enter key inside popups ─────────────────────────
     document.addEventListener("keydown", function(e) {
-        const modal = document.getElementById("adminModal");
-        if (e.key === "Enter" && modal.classList.contains("active")) {
+        if (e.key !== "Enter") return;
+        if (document.getElementById("adminModal").classList.contains("active")) {
             verifyAdminKey();
+        }
+        if (document.getElementById("staffModal").classList.contains("active")) {
+            verifyStaffKey();
         }
     });
 </script>
