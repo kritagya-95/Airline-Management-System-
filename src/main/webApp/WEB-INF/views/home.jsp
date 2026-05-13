@@ -22,7 +22,7 @@
 
     <nav class="nav-links">
         <div class="nav-dropdown">
-            <a href="#" class="nav-link"><h3>Book</h3> <span class="arrow">▾</span></a>
+            <a href="#" class="nav-link">Book <span class="arrow">▾</span></a>
             <div class="dropdown-menu">
                 <a href="#">Search Flights</a>
                 <a href="#">Book a Flight</a>
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="nav-dropdown">
-            <a href="#" class="nav-link"><h2>Manage</h2> <span class="arrow">▾</span></a>
+            <a href="#" class="nav-link">Manage <span class="arrow">▾</span></a>
             <div class="dropdown-menu">
                 <a href="#">My Bookings</a>
                 <a href="#">Cancel Booking</a>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="nav-dropdown">
-            <a href="#" class="nav-link"><h2>Experience</h2> <span class="arrow">▾</span></a>
+            <a href="#" class="nav-link">Experience <span class="arrow">▾</span></a>
             <div class="dropdown-menu">
                 <a href="#">Popular Routes</a>
                 <a href="#">Partner Airlines</a>
@@ -56,11 +56,14 @@
             <c:choose>
                 <c:when test="${not empty user}">
                     <span class="welcome-text">👤 <c:out value="${user.fullName}"/></span>
-                    <a href="${pageContext.request.contextPath}/logout" class="btn-header-login">Log Out</a>
+                    <a href="${pageContext.request.contextPath}/logout"
+                       class="btn-header-login">Log Out</a>
                 </c:when>
                 <c:otherwise>
                     <a href="${pageContext.request.contextPath}/login"
-                       class="btn-header-login">Log in / Sign Up</a>
+                       class="btn-header-login">Log In</a>
+                    <a href="${pageContext.request.contextPath}/register"
+                       class="btn-header-signup">Sign Up</a>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -71,7 +74,7 @@
 <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-        <h1>Planning your family trip</h1>
+        <h1>Planning Your Family Trip</h1>
         <h2>Fly Better, Fly With US</h2>
     </div>
 </section>
@@ -85,14 +88,16 @@
                 <label>From</label>
                 <div class="search-input-wrap">
                     <span class="field-icon">📍</span>
-                    <input type="text" name="from" placeholder="Select Origin" class="search-input"/>
+                    <input type="text" name="from"
+                           placeholder="Select Origin" class="search-input"/>
                 </div>
             </div>
             <div class="search-field">
                 <label>To</label>
                 <div class="search-input-wrap">
                     <span class="field-icon">📍</span>
-                    <input type="text" name="to" placeholder="Select Destination" class="search-input"/>
+                    <input type="text" name="to"
+                           placeholder="Select Destination" class="search-input"/>
                 </div>
             </div>
             <div class="search-field">
@@ -111,7 +116,7 @@
             </div>
             <div class="search-field search-btn-wrap">
                 <button type="submit" class="search-btn">
-                    <span>🔍</span> Search
+                    🔍 Search
                 </button>
             </div>
         </form>
@@ -122,7 +127,6 @@
 <section class="popular-section">
     <h2 class="section-title">Popular Flight Deals on SkyLine Airlines</h2>
 
-    <!-- Filter row -->
     <div class="flight-filter">
         <div class="filter-field">
             <label>From</label>
@@ -142,7 +146,6 @@
         </div>
     </div>
 
-    <!-- Flight cards from database -->
     <div class="flight-grid" id="flightGrid">
         <c:choose>
             <c:when test="${empty flights}">
@@ -160,9 +163,11 @@
                         </div>
                         <div class="flight-card-body">
                             <h3 class="flight-card-title">
-                                <c:out value="${f.origin_city}"/> (<c:out value="${f.origin_code}"/>)
+                                <c:out value="${f.origin_city}"/>
+                                (<c:out value="${f.origin_code}"/>)
                                 to
-                                <c:out value="${f.dest_city}"/> (<c:out value="${f.dest_code}"/>)
+                                <c:out value="${f.dest_city}"/>
+                                (<c:out value="${f.dest_code}"/>)
                             </h3>
                             <p class="flight-card-depart">
                                 Depart: <c:out value="${f.departure_time}"/>
@@ -170,7 +175,9 @@
                             <p class="flight-card-price">
                                 NPR <c:out value="${f.base_economy_fare}"/>
                             </p>
-                            <p class="flight-card-class">One way &bull; Economy Class</p>
+                            <p class="flight-card-class">
+                                One way &bull; Economy Class
+                            </p>
                             <c:choose>
                                 <c:when test="${not empty user}">
                                     <a href="${pageContext.request.contextPath}/booking?flightId=${f.flight_id}">
@@ -195,23 +202,23 @@
 <section class="info-section">
     <div class="info-grid">
         <div class="info-col">
-            <h3 class="info-heading">About Us</h3>
+            <h4 class="info-heading">About Us</h4>
             <a href="#" class="info-link">About SkyLine</a>
             <a href="#" class="info-link">Information</a>
         </div>
         <div class="info-col">
-            <h3 class="info-heading">Book &amp; Manage</h3>
+            <h4 class="info-heading">Book &amp; Manage</h4>
             <a href="#" class="info-link">Search Flights</a>
             <a href="#" class="info-link">Manage Booking</a>
             <a href="#" class="info-link">Schedule</a>
         </div>
         <div class="info-col">
-            <h3 class="info-heading">Where we FLY?</h3>
+            <h4 class="info-heading">Where we FLY?</h4>
             <a href="#" class="info-link">Popular Flights</a>
             <a href="#" class="info-link">Partner Airlines</a>
         </div>
         <div class="info-col">
-            <h3  class="info-heading">Prepare To Travel</h3>
+            <h4 class="info-heading">Prepare To Travel</h4>
             <a href="#" class="info-link">Luggage Guidelines</a>
             <a href="#" class="info-link">Airport Information</a>
             <a href="#" class="info-link">First Time Travelers</a>
@@ -226,43 +233,42 @@
         <div class="footer-logo">
             <img src="${pageContext.request.contextPath}/static/images/logo.png"
                  class="footer-logo-img" alt="SkyLine"/>
-            <span class="footer-logo-text"><h2>SkyLine</h2></span>
+            <span class="footer-logo-text">SkyLine</span>
         </div>
         <p class="footer-copy">&copy; 2026 SkyLine Airlines. All Right Reserved</p>
-        <div class="footer-social">
-            <a href="#" class="social-link">f</a>
-            <a href="#" class="social-link">ig</a>
-            <a href="#" class="social-link">𝕏</a>
+        <div class="social-icons">
+            <a href="#" target="_blank"><img src="${pageContext.request.contextPath}/static/images/facebook.png" alt="Facebook" width="28"></a>
+            <a href="#" target="_blank"><img src="${pageContext.request.contextPath}/static/images/twitter.png" alt="Twitter" width="28"></a>
+            <a href="#" target="_blank"><img src="${pageContext.request.contextPath}/static/images/instagram.png" alt="Instagram" width="28"></a>
         </div>
     </div>
 </footer>
 
 <script>
-    // Filter flight cards by from/to input
     function filterCards() {
-        const from = document.getElementById("filterFrom").value.toLowerCase();
-        const to   = document.getElementById("filterTo").value.toLowerCase();
+        const from  = document.getElementById("filterFrom").value.toLowerCase();
+        const to    = document.getElementById("filterTo").value.toLowerCase();
         const cards = document.querySelectorAll(".flight-card");
-
         cards.forEach(card => {
-            const cardFrom = card.dataset.from.toLowerCase();
-            const cardTo   = card.dataset.to.toLowerCase();
-            const matchFrom = from === "" || cardFrom.includes(from);
-            const matchTo   = to   === "" || cardTo.includes(to);
-            card.style.display = (matchFrom && matchTo) ? "block" : "none";
+            const cf = card.dataset.from.toLowerCase();
+            const ct = card.dataset.to.toLowerCase();
+            card.style.display =
+                (from === "" || cf.includes(from)) &&
+                (to   === "" || ct.includes(to))
+                    ? "block" : "none";
         });
     }
 
-    // Dropdown toggle on click
-    document.querySelectorAll(".nav-dropdown").forEach(dropdown => {
-        dropdown.addEventListener("click", function(e) {
+    document.querySelectorAll(".nav-dropdown").forEach(dd => {
+        dd.addEventListener("click", function(e) {
             e.stopPropagation();
             this.classList.toggle("open");
         });
     });
 
     document.addEventListener("click", () => {
-        document.querySelectorAll(".nav-dropdown").forEach(d => d.classList.remove("open"));
+        document.querySelectorAll(".nav-dropdown").forEach(d =>
+            d.classList.remove("open"));
     });
 </script>
 
