@@ -372,6 +372,31 @@
     </main>
 </div>
 
+<footer class="prof-footer">
+    <div class="prof-footer-inner">
+        <div class="prof-footer-logo">
+            <img src="${pageContext.request.contextPath}/static/images/logo.png"
+                 class="prof-footer-logo-img" alt="SkyLine"/>
+            <span class="prof-footer-logo-text">SkyLine</span>
+        </div>
+        <p class="prof-footer-copy">&copy; 2026 SkyLine Airlines. All rights reserved.</p>
+        <div class="prof-footer-social">
+            <a href="#" class="prof-social-link" target="_blank">
+                <img src="${pageContext.request.contextPath}/static/images/facebook.png"
+                     alt="Facebook" width="20"/>
+            </a>
+            <a href="#" class="prof-social-link" target="_blank">
+                <img src="${pageContext.request.contextPath}/static/images/twitter.png"
+                     alt="Twitter" width="20"/>
+            </a>
+            <a href="#" class="prof-social-link" target="_blank">
+                <img src="${pageContext.request.contextPath}/static/images/instagram.png"
+                     alt="Instagram" width="20"/>
+            </a>
+        </div>
+    </div>
+</footer>
+
 <script>
     // Highlight active sidebar link on scroll
     const sections = document.querySelectorAll(

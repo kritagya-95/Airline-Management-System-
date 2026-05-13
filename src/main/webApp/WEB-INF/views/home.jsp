@@ -252,22 +252,30 @@
 </section>
 
 <!-- ══ FOOTER ══ -->
-<footer class="footer">
-    <div class="footer-inner">
-        <div class="footer-logo">
+<footer class="prof-footer">
+    <div class="prof-footer-inner">
+        <div class="prof-footer-logo">
             <img src="${pageContext.request.contextPath}/static/images/logo.png"
-                 class="footer-logo-img" alt="SkyLine"/>
-            <span class="footer-logo-text"><h1>SkyLine</h1></span>
+                 class="prof-footer-logo-img" alt="SkyLine"/>
+            <span class="prof-footer-logo-text">SkyLine</span>
         </div>
-        <p class="footer-copy">&copy; 2026 SkyLine Airlines. All Right Reserved</p>
-        <div class="social-icons">
-            <a href="#" target="_blank"><img src="${pageContext.request.contextPath}/static/images/facebook.png" alt="Facebook" width="28"></a>
-            <a href="#" target="_blank"><img src="${pageContext.request.contextPath}/static/images/twitter.png" alt="Twitter" width="28"></a>
-            <a href="#" target="_blank"><img src="${pageContext.request.contextPath}/static/images/instagram.png" alt="Instagram" width="28"></a>
+        <p class="prof-footer-copy">&copy; 2026 SkyLine Airlines. All rights reserved.</p>
+        <div class="prof-footer-social">
+            <a href="#" class="prof-social-link" target="_blank">
+                <img src="${pageContext.request.contextPath}/static/images/facebook.png"
+                     alt="Facebook" width="20"/>
+            </a>
+            <a href="#" class="prof-social-link" target="_blank">
+                <img src="${pageContext.request.contextPath}/static/images/twitter.png"
+                     alt="Twitter" width="20"/>
+            </a>
+            <a href="#" class="prof-social-link" target="_blank">
+                <img src="${pageContext.request.contextPath}/static/images/instagram.png"
+                     alt="Instagram" width="20"/>
+            </a>
         </div>
     </div>
 </footer>
-
 <script>
     function filterCards() {
         const from  = document.getElementById("filterFrom").value.toLowerCase();
