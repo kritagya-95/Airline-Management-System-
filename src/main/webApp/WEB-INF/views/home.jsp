@@ -55,7 +55,8 @@
         <div class="header-auth">
             <c:choose>
                 <c:when test="${not empty user}">
-                    <span class="welcome-text">👤 <c:out value="${user.fullName}"/></span>
+                    <a href="${pageContext.request.contextPath}/profile"
+                       class="welcome-text-link">👤 <c:out value="${user.fullName}"/></a>
                     <a href="${pageContext.request.contextPath}/logout"
                        class="btn-header-login">Log Out</a>
                 </c:when>

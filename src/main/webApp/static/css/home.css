@@ -1,5 +1,21 @@
 /* home.css — SkyLine Airlines Home Page */
 
+.welcome-text-link {
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.welcome-text-link:hover {
+    color: #8B0000;
+    text-decoration: underline;
+}
+
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
