@@ -17,12 +17,12 @@
     <div class="header-logo">
         <img src="${pageContext.request.contextPath}/static/images/logo.png"
              class="logo-image" alt="SkyLine Logo"/>
-        <span class="logo-text">SkyLine</span>
+        <span class="logo-text"><h1>SkyLine</h1></span>
     </div>
 
     <nav class="nav-links">
         <div class="nav-dropdown">
-            <a href="#" class="nav-link">Book <span class="arrow">▾</span></a>
+            <a href="#" class="nav-link"><h2>Book</h2> <span class="arrow">▾</span></a>
             <div class="dropdown-menu">
                 <a href="#">Search Flights</a>
                 <a href="#">Book a Flight</a>
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="nav-dropdown">
-            <a href="#" class="nav-link">Manage <span class="arrow">▾</span></a>
+            <a href="#" class="nav-link"><h2>Manage</h2> <span class="arrow">▾</span></a>
             <div class="dropdown-menu">
                 <a href="#">My Bookings</a>
                 <a href="#">Cancel Booking</a>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="nav-dropdown">
-            <a href="#" class="nav-link">Experience <span class="arrow">▾</span></a>
+            <a href="#" class="nav-link"><h2>Experience</h2> <span class="arrow">▾</span></a>
             <div class="dropdown-menu">
                 <a href="#">Popular Routes</a>
                 <a href="#">Partner Airlines</a>
@@ -49,7 +49,7 @@
 
     <div class="header-right">
         <div class="header-search">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon"></span>
             <input type="text" placeholder="Search" class="header-search-input"/>
         </div>
         <div class="header-auth">
@@ -75,19 +75,19 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1>Planning Your Family Trip</h1>
-        <h2>Fly Better, Fly With US</h2>
+        <h1>Fly Better, Fly With US</h1>
     </div>
 </section>
 
 <!-- ══ SEARCH BOX ══ -->
 <div class="search-container">
     <div class="search-box">
-        <h3 class="search-title">Search and Book for Our FLIGHTS online</h3>
+        <h1 class="search-title">Search and Book for Our FLIGHTS online</h1>
         <form class="search-form" action="${pageContext.request.contextPath}/flights" method="get">
             <div class="search-field">
                 <label>From</label>
                 <div class="search-input-wrap">
-                    <span class="field-icon">📍</span>
+                    <span class="field-icon"></span>
                     <input type="text" name="from"
                            placeholder="Select Origin" class="search-input"/>
                 </div>
@@ -95,7 +95,7 @@
             <div class="search-field">
                 <label>To</label>
                 <div class="search-input-wrap">
-                    <span class="field-icon">📍</span>
+                    <span class="field-icon"></span>
                     <input type="text" name="to"
                            placeholder="Select Destination" class="search-input"/>
                 </div>
@@ -103,20 +103,20 @@
             <div class="search-field">
                 <label>Departure</label>
                 <div class="search-input-wrap">
-                    <span class="field-icon">📅</span>
+                    <span class="field-icon"></span>
                     <input type="date" name="departure" class="search-input"/>
                 </div>
             </div>
             <div class="search-field">
                 <label>Return</label>
                 <div class="search-input-wrap">
-                    <span class="field-icon">📅</span>
+                    <span class="field-icon"></span>
                     <input type="date" name="returnDate" class="search-input"/>
                 </div>
             </div>
             <div class="search-field search-btn-wrap">
                 <button type="submit" class="search-btn">
-                    🔍 Search
+                    Search
                 </button>
             </div>
         </form>
@@ -131,7 +131,7 @@
         <div class="filter-field">
             <label>From</label>
             <div class="filter-input-wrap">
-                <span>📍</span>
+                <span></span>
                 <input type="text" id="filterFrom" placeholder="Input Origin"
                        class="filter-input" oninput="filterCards()"/>
             </div>
@@ -139,7 +139,7 @@
         <div class="filter-field">
             <label>To</label>
             <div class="filter-input-wrap">
-                <span>📍</span>
+                <span></span>
                 <input type="text" id="filterTo" placeholder="Input Destination"
                        class="filter-input" oninput="filterCards()"/>
             </div>
@@ -157,9 +157,32 @@
                          data-from="${f.origin_city}"
                          data-to="${f.dest_city}">
                         <div class="flight-card-img">
-                            <img src="${pageContext.request.contextPath}/static/images/${f.dest_city}.jpg"
-                                 alt="${f.dest_city}"
-                                 onerror="this.src='${pageContext.request.contextPath}/static/images/Air.jpg'"/>
+                            <c:choose>
+                                <c:when test="${f.origin_city == 'Kathmandu' && f.dest_city == 'New Delhi'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Delhi.jpg" alt="Delhi">
+                                </c:when>
+                                <c:when test="${f.origin_city == 'New Delhi' && f.dest_city == 'Kathmandu'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Kathmandu.jpg" alt="Kathmandu">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'Dubai'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/dubai.jpg" alt="Dubai">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'London'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/london.jpg" alt="London">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'Rome'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Rome.jpg" alt="Rome">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'Madrid'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/madrid.jpg" alt="Madrid">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'Frankfurt'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Frankfurt.jpg" alt="Frankfurt">
+                                </c:when>
+                                <c:otherwise>
+                                    <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                         <div class="flight-card-body">
                             <h3 class="flight-card-title">
@@ -202,27 +225,27 @@
 <section class="info-section">
     <div class="info-grid">
         <div class="info-col">
-            <h4 class="info-heading">About Us</h4>
-            <a href="#" class="info-link">About SkyLine</a>
-            <a href="#" class="info-link">Information</a>
+            <h3 class="info-heading">About Us</h3>
+            <a href="#" class="info-link"><h4>About SkyLine</h4></a>
+            <a href="#" class="info-link"><h4>Information</h4></a>
         </div>
         <div class="info-col">
-            <h4 class="info-heading">Book &amp; Manage</h4>
-            <a href="#" class="info-link">Search Flights</a>
-            <a href="#" class="info-link">Manage Booking</a>
-            <a href="#" class="info-link">Schedule</a>
+            <h3 class="info-heading">Book &amp; Manage</h3>
+            <a href="#" class="info-link"><h4>Search Flights</h4></a>
+            <a href="#" class="info-link"><h4>Manage Booking</h4></a>
+            <a href="#" class="info-link"><h4>Schedule</h4></a>
         </div>
         <div class="info-col">
-            <h4 class="info-heading">Where we FLY?</h4>
-            <a href="#" class="info-link">Popular Flights</a>
-            <a href="#" class="info-link">Partner Airlines</a>
+            <h3 class="info-heading">Where we FLY?</h3>
+            <a href="#" class="info-link"><h4>Popular Flights</h4></a>
+            <a href="#" class="info-link"><h4>Partner Airlines</h4></a>
         </div>
         <div class="info-col">
-            <h4 class="info-heading">Prepare To Travel</h4>
-            <a href="#" class="info-link">Luggage Guidelines</a>
-            <a href="#" class="info-link">Airport Information</a>
-            <a href="#" class="info-link">First Time Travelers</a>
-            <a href="#" class="info-link">Visa &amp; Documents</a>
+            <h3 class="info-heading">Prepare To Travel</h3>
+            <a href="#" class="info-link"><h4>Luggage Guidelines</h4></a>
+            <a href="#" class="info-link"><h4>Airport Information</h4></a>
+            <a href="#" class="info-link"><h4>First Time Travelers</h4></a>
+            <a href="#" class="info-link"><h4>Visa &amp; Documents</h4></a>
         </div>
     </div>
 </section>
@@ -233,7 +256,7 @@
         <div class="footer-logo">
             <img src="${pageContext.request.contextPath}/static/images/logo.png"
                  class="footer-logo-img" alt="SkyLine"/>
-            <span class="footer-logo-text">SkyLine</span>
+            <span class="footer-logo-text"><h1>SkyLine</h1></span>
         </div>
         <p class="footer-copy">&copy; 2026 SkyLine Airlines. All Right Reserved</p>
         <div class="social-icons">
