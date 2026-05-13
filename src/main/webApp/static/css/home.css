@@ -1,4 +1,4 @@
-/* home.css - SkyLine Airlines Home Page */
+/* home.css — SkyLine Airlines Home Page */
 
 * {
     margin: 0;
@@ -8,303 +8,677 @@
 
 body {
     font-family: 'Chivo', sans-serif;
-    background-color: #f8f9fa;
+    background: #faf7f2;
     color: #333;
 }
 
-/* ==================== HEADER ==================== */
+/* ══ HEADER ══════════════════════════════════════════════ */
 .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 15px 60px;
-    background: white;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 200;
 }
 
-.logo {
+/* Logo */
+.header-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 26px;
-    font-weight: 700;
-    color: #8B0000;
+    gap: 10px;
+    text-decoration: none;
 }
 
 .logo-image {
-    height: 48px;
+    height: 38px;
 }
 
-.nav-menu a {
-    margin: 0 22px;
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-}
-
-.nav-menu a:hover {
+.logo-text {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
     color: #8B0000;
+    letter-spacing: 0.06em;
 }
 
-.header-right {
+/* Nav */
+.nav-links {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 8px;
 }
 
-.search-bar {
-    padding: 10px 20px;
-    width: 280px;
-    border: 1px solid #ddd;
-    border-radius: 30px;
-    font-size: 15px;
-}
-
-.btn-login, .btn-signup {
-    padding: 10px 24px;
-    border-radius: 30px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.btn-login {
-    color: #8B0000;
-    border: 2px solid #8B0000;
-}
-
-.btn-signup {
-    background: #8B0000;
-    color: white;
-}
-
-/* ==================== HERO SECTION ==================== */
-.hero {
+.nav-dropdown {
     position: relative;
-    height: 620px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8B0000;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    background: #fdf0f0;
+    text-decoration: none;
+}
+
+.arrow {
+    font-size: 11px;
+    color: #8B0000;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    min-width: 180px;
+    z-index: 300;
     overflow: hidden;
 }
 
-.hero-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.68);
+.nav-dropdown.open .dropdown-menu {
+    display: block;
 }
 
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+.dropdown-menu a {
+    display: block;
+    padding: 11px 18px;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.dropdown-menu a:hover {
+    background: #fdf0f0;
+    color: #8B0000;
+    text-decoration: none;
+}
+
+/* Header right */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-search {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 6px 14px;
+}
+
+.search-icon {
+    font-size: 13px;
+    color: #888;
+}
+
+.header-search-input {
+    border: none;
+    background: transparent;
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    color: #333;
+    outline: none;
+    width: 110px;
+}
+
+.header-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.welcome-text {
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    color: #555;
+}
+
+.btn-header-login {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #8B0000;
+    text-decoration: none;
+    padding: 7px 16px;
+    border: 1.5px solid #8B0000;
+    border-radius: 20px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-header-login:hover {
+    background: #8B0000;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* ══ HERO ═════════════════════════════════════════════════ */
+.hero {
+    position: relative;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(139, 0, 0, 0.72), rgba(139, 0, 0, 0.58));
+    height: 420px;
+    background: url('../images/Air.jpg') center center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+            to right,
+            rgba(80, 0, 0, 0.72) 0%,
+            rgba(139, 0, 0, 0.45) 60%,
+            rgba(0,0,0,0.10) 100%
+    );
     z-index: 1;
 }
 
 .hero-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
+    position: relative;
     z-index: 2;
+    padding: 0 60px;
+    color: #fff;
 }
 
 .hero-content h1 {
     font-family: 'Cinzel', serif;
-    font-size: 62px;
+    font-size: 42px;
     font-weight: 700;
-    margin-bottom: 15px;
-    letter-spacing: 2px;
+    letter-spacing: 0.04em;
+    text-transform: capitalize;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.35);
 }
 
 .hero-content h2 {
     font-family: 'Cinzel', serif;
-    font-size: 38px;
-    font-weight: 400;
-    letter-spacing: 1px;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
-/* ==================== SEARCH CONTAINER ==================== */
+/* ══ SEARCH BOX ═══════════════════════════════════════════ */
 .search-container {
-    margin: -70px auto 80px;
-    max-width: 1100px;
-    padding: 0 20px;
-    z-index: 5;
+    display: flex;
+    justify-content: center;
+    padding: 0 40px;
+    margin-top: -30px;
+    position: relative;
+    z-index: 10;
 }
 
 .search-box {
     background: #8B0000;
-    color: white;
-    padding: 35px 40px;
-    border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    border-radius: 14px;
+    padding: 28px 36px 32px;
+    width: 100%;
+    max-width: 1100px;
+    box-shadow: 0 10px 40px rgba(139,0,0,0.25);
 }
 
-.search-box h3 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 22px;
-    font-weight: 600;
+.search-title {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    letter-spacing: 0.03em;
 }
 
 .search-form {
     display: flex;
-    gap: 15px;
+    align-items: flex-end;
+    gap: 12px;
     flex-wrap: wrap;
-    justify-content: center;
+}
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    min-width: 140px;
+}
+
+.search-field label {
+    font-family: 'Chivo', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.04em;
+}
+
+.search-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.field-icon {
+    font-size: 14px;
+    flex-shrink: 0;
 }
 
 .search-input {
-    padding: 14px 18px;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    min-width: 180px;
+    background: transparent;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    width: 100%;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+/* Date input fix */
+.search-input[type="date"] {
+    color: #555;
+}
+
+.search-btn-wrap {
+    flex: 0 0 auto;
+    min-width: unset;
 }
 
 .search-btn {
-    padding: 14px 40px;
-    background: white;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 28px;
+    background: #fff;
     color: #8B0000;
     border: none;
     border-radius: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+    height: 44px;
 }
 
-/* ==================== POPULAR FLIGHTS ==================== */
-.popular-flights {
-    padding: 0 60px 80px;
+.search-btn:hover {
+    background: #f5e0e0;
 }
 
-.popular-flights h2 {
+/* ══ POPULAR FLIGHTS SECTION ══════════════════════════════ */
+.popular-section {
+    padding: 60px 60px 70px;
+}
+
+.section-title {
     font-family: 'Cinzel', serif;
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 50px;
+    font-size: 22px;
+    font-weight: 700;
     color: #8B0000;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    margin-bottom: 32px;
+    letter-spacing: 0.04em;
 }
 
+/* Filter row */
+.flight-filter {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 200px;
+}
+
+.filter-field label {
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+}
+
+.filter-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #fff;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    padding: 9px 12px;
+    transition: border-color 0.2s;
+}
+
+.filter-input-wrap:focus-within {
+    border-color: #8B0000;
+}
+
+.filter-input {
+    border: none;
+    background: transparent;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    width: 100%;
+}
+
+/* Flight grid — 3 columns */
 .flight-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
 }
 
+.no-flights {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    padding: 40px;
+}
+
+/* Flight Card */
 .flight-card {
-    background: white;
+    background: #fff;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.09);
+    transition: transform 0.22s, box-shadow 0.22s;
+    display: flex;
+    flex-direction: column;
 }
 
 .flight-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(139,0,0,0.14);
 }
 
-.flight-card img {
+/* Card image area */
+.flight-card-img {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.flight-card h3 {
-    padding: 15px 15px 5px;
-    font-size: 18px;
-}
-
-.price {
-    color: #8B0000;
-    font-weight: 700;
-    font-size: 19px;
-    padding: 0 15px;
-}
-
-.book-btn {
-    width: 100%;
-    padding: 14px;
-    background: #8B0000;
-    color: white;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-/* ==================== FOOTER ==================== */
-.footer {
-    background: #111;
-    color: #ddd;
-    padding: 60px 60px 30px;
-}
-
-.footer-content {
+    height: 180px;
+    background: linear-gradient(135deg, #c0392b, #8B0000);
     display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* If you add real <img> tags inside .flight-card-img later */
+.flight-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.flight-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Card body */
+.flight-card-body {
+    padding: 16px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.flight-card-title {
+    font-family: 'Chivo', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #222;
+    line-height: 1.35;
+    margin-bottom: 2px;
+}
+
+.flight-card-depart {
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    color: #666;
+}
+
+.flight-card-price {
+    font-family: 'Chivo', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #8B0000;
+    margin-top: 4px;
+}
+
+.flight-card-class {
+    font-family: 'Chivo', sans-serif;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+/* Book Now button */
+.book-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #8B0000;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s;
+    margin-top: auto;
+    letter-spacing: 0.03em;
+}
+
+.book-btn:hover {
+    background: #660000;
+}
+
+/* Make anchor wrapping book-btn fill full width */
+.flight-card-body a {
+    display: block;
+    text-decoration: none;
+    margin-top: auto;
+}
+
+/* ══ INFO SECTION (above footer) ══════════════════════════ */
+.info-section {
+    background: #faf7f2;
+    border-top: 1px solid #e8e0d5;
+    padding: 48px 80px 40px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+}
+
+.info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #8B0000;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+.info-link {
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.15s;
+    line-height: 1.6;
+}
+
+.info-link:hover {
+    color: #8B0000;
+    text-decoration: none;
+}
+
+/* ══ FOOTER ═══════════════════════════════════════════════ */
+.footer {
+    background: #faf7f2;
+    border-top: 1.5px solid #ddd;
+    padding: 22px 80px;
+}
+
+.footer-inner {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: flex-start;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 16px;
 }
 
 .footer-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
-    color: #8B0000;
-    font-size: 24px;
-    font-weight: 700;
+    gap: 10px;
 }
 
 .footer-logo-img {
-    height: 50px;
+    height: 36px;
 }
 
-.footer-links {
+.footer-logo-text {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #8B0000;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.footer-copy {
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    color: #777;
+    text-align: center;
+    flex: 1;
+}
+
+.footer-social {
     display: flex;
-    gap: 60px;
-    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.footer-links h4 {
-    color: white;
-    margin-bottom: 15px;
-    font-size: 16px;
-}
-
-.footer-bottom {
-    margin-top: 60px;
-    padding-top: 25px;
-    border-top: 1px solid #333;
+.social-link {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid #bbb;
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
 }
 
-.social-icons a {
-    font-size: 24px;
-    margin-left: 18px;
-    color: #ddd;
+.social-link:hover {
+    border-color: #8B0000;
+    color: #8B0000;
+    text-decoration: none;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
-    .hero-content h1 { font-size: 48px; }
-    .hero-content h2 { font-size: 32px; }
+/* ══ RESPONSIVE ══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .flight-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 768px) {
-    .header { padding: 15px 30px; }
-    .nav-menu { display: none; }
+    .header { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { height: 300px; }
+    .hero-content { padding: 0 30px; }
+    .hero-content h1 { font-size: 28px; }
+    .hero-content h2 { font-size: 20px; }
+    .search-container { padding: 0 20px; margin-top: -20px; }
+    .search-box { padding: 20px 20px 24px; }
     .search-form { flex-direction: column; }
+    .search-btn-wrap { width: 100%; }
+    .search-btn { width: 100%; justify-content: center; }
+    .popular-section { padding: 40px 20px 50px; }
+    .flight-grid { grid-template-columns: 1fr; }
+    .info-section { padding: 36px 30px 30px; }
+    .info-grid { grid-template-columns: 1fr 1fr; }
+    .footer { padding: 18px 30px; }
+    .footer-copy { text-align: left; }
+}
+
+@media (max-width: 480px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .hero-content h1 { font-size: 22px; }
+    .hero-content h2 { font-size: 16px; }
 }
