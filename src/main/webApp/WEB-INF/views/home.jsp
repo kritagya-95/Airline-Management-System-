@@ -3,162 +3,268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkyLine - Airlines</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/home.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Chivo:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SkyLine Airlines</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/home.css"/>
 </head>
 <body>
 
-<!-- ==================== HEADER ==================== -->
+<!-- ══ HEADER ══ -->
 <header class="header">
-    <div class="logo">
-        <img src="${pageContext.request.contextPath}/static/images/logo.png" alt="SkyLine" class="logo-image">
-        <span>SkyLine</span>
+    <div class="header-logo">
+        <img src="${pageContext.request.contextPath}/static/images/logo.png"
+             class="logo-image" alt="SkyLine Logo"/>
+        <span class="logo-text">SkyLine</span>
     </div>
 
-    <nav class="nav-menu">
-        <a href="#">Book</a>
-        <a href="#">Manage</a>
-        <a href="#">Experience</a>
+    <nav class="nav-links">
+        <div class="nav-dropdown">
+            <a href="#" class="nav-link"><h3>Book</h3> <span class="arrow">▾</span></a>
+            <div class="dropdown-menu">
+                <a href="#">Search Flights</a>
+                <a href="#">Book a Flight</a>
+                <a href="#">Manage Booking</a>
+            </div>
+        </div>
+        <div class="nav-dropdown">
+            <a href="#" class="nav-link"><h2>Manage</h2> <span class="arrow">▾</span></a>
+            <div class="dropdown-menu">
+                <a href="#">My Bookings</a>
+                <a href="#">Cancel Booking</a>
+                <a href="#">Flight Schedule</a>
+            </div>
+        </div>
+        <div class="nav-dropdown">
+            <a href="#" class="nav-link"><h2>Experience</h2> <span class="arrow">▾</span></a>
+            <div class="dropdown-menu">
+                <a href="#">Popular Routes</a>
+                <a href="#">Partner Airlines</a>
+                <a href="#">Travel Guide</a>
+            </div>
+        </div>
     </nav>
 
     <div class="header-right">
-        <a href="${pageContext.request.contextPath}/login" class="btn-login">Log In</a>
-        <a href="${pageContext.request.contextPath}/register" class="btn-signup">Sign Up</a>
+        <div class="header-search">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search" class="header-search-input"/>
+        </div>
+        <div class="header-auth">
+            <c:choose>
+                <c:when test="${not empty user}">
+                    <span class="welcome-text">👤 <c:out value="${user.fullName}"/></span>
+                    <a href="${pageContext.request.contextPath}/logout" class="btn-header-login">Log Out</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="${pageContext.request.contextPath}/login"
+                       class="btn-header-login">Log in / Sign Up</a>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </div>
 </header>
 
-<!-- ==================== HERO SECTION ==================== -->
+<!-- ══ HERO ══ -->
 <section class="hero">
-    <img src="${pageContext.request.contextPath}/static/images/Air.jpg"
-         alt="SkyLine Plane" class="hero-image">
-
+    <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1>Planning your family trip</h1>
         <h2>Fly Better, Fly With US</h2>
     </div>
 </section>
 
-<!-- ==================== SEARCH BAR ==================== -->
+<!-- ══ SEARCH BOX ══ -->
 <div class="search-container">
     <div class="search-box">
-        <h3>Search and Book for Our Flights Online</h3>
-        <div class="search-form">
-            <input type="text" placeholder="From" class="search-input">
-            <input type="text" placeholder="To" class="search-input">
-            <input type="date" class="search-input">
-            <input type="date" class="search-input">
-            <button class="search-btn">Search</button>
-        </div>
+        <h3 class="search-title">Search and Book for Our FLIGHTS online</h3>
+        <form class="search-form" action="${pageContext.request.contextPath}/flights" method="get">
+            <div class="search-field">
+                <label>From</label>
+                <div class="search-input-wrap">
+                    <span class="field-icon">📍</span>
+                    <input type="text" name="from" placeholder="Select Origin" class="search-input"/>
+                </div>
+            </div>
+            <div class="search-field">
+                <label>To</label>
+                <div class="search-input-wrap">
+                    <span class="field-icon">📍</span>
+                    <input type="text" name="to" placeholder="Select Destination" class="search-input"/>
+                </div>
+            </div>
+            <div class="search-field">
+                <label>Departure</label>
+                <div class="search-input-wrap">
+                    <span class="field-icon">📅</span>
+                    <input type="date" name="departure" class="search-input"/>
+                </div>
+            </div>
+            <div class="search-field">
+                <label>Return</label>
+                <div class="search-input-wrap">
+                    <span class="field-icon">📅</span>
+                    <input type="date" name="returnDate" class="search-input"/>
+                </div>
+            </div>
+            <div class="search-field search-btn-wrap">
+                <button type="submit" class="search-btn">
+                    <span>🔍</span> Search
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
-<!-- ==================== POPULAR FLIGHTS ==================== -->
-<section class="popular-flights">
-    <h2>Popular Flight Deals on SkyLine Airlines</h2>
+<!-- ══ POPULAR FLIGHTS ══ -->
+<section class="popular-section">
+    <h2 class="section-title">Popular Flight Deals on SkyLine Airlines</h2>
 
-    <div class="flight-grid">
-        <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/Kathmandu.jpg" alt="Kathmandu to Frankfurt">
-            <h3>Kathmandu (KTM) to Frankfurt (FRA)</h3>
-            <p>Depart: 2025-06-08</p>
-            <p class="price">NPR 560,375</p>
-            <p class="class">One way • Economy Class</p>
-            <button class="book-btn">Book Now</button>
+    <!-- Filter row -->
+    <div class="flight-filter">
+        <div class="filter-field">
+            <label>From</label>
+            <div class="filter-input-wrap">
+                <span>📍</span>
+                <input type="text" id="filterFrom" placeholder="Input Origin"
+                       class="filter-input" oninput="filterCards()"/>
+            </div>
         </div>
-
-        <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/madrid.jpg" alt="Kathmandu to Madrid">
-            <h3>Kathmandu (KTM) to Madrid (MAD)</h3>
-            <p>Depart: 2025-06-07</p>
-            <p class="price">NPR 410,000</p>
-            <p class="class">One way • Economy Class</p>
-            <button class="book-btn">Book Now</button>
+        <div class="filter-field">
+            <label>To</label>
+            <div class="filter-input-wrap">
+                <span>📍</span>
+                <input type="text" id="filterTo" placeholder="Input Destination"
+                       class="filter-input" oninput="filterCards()"/>
+            </div>
         </div>
+    </div>
 
-        <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/Rome.jpg" alt="Kathmandu to Rome">
-            <h3>Kathmandu (KTM) to Rome (FCO)</h3>
-            <p>Depart: 2025-06-06</p>
-            <p class="price">NPR 345,000</p>
-            <p class="class">One way • Economy Class</p>
-            <button class="book-btn">Book Now</button>
+    <!-- Flight cards from database -->
+    <div class="flight-grid" id="flightGrid">
+        <c:choose>
+            <c:when test="${empty flights}">
+                <div class="no-flights">No flights available at the moment.</div>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="f" items="${flights}">
+                    <div class="flight-card"
+                         data-from="${f.origin_city}"
+                         data-to="${f.dest_city}">
+                        <div class="flight-card-img">
+                            <img src="${pageContext.request.contextPath}/static/images/${f.dest_city}.jpg"
+                                 alt="${f.dest_city}"
+                                 onerror="this.src='${pageContext.request.contextPath}/static/images/Air.jpg'"/>
+                        </div>
+                        <div class="flight-card-body">
+                            <h3 class="flight-card-title">
+                                <c:out value="${f.origin_city}"/> (<c:out value="${f.origin_code}"/>)
+                                to
+                                <c:out value="${f.dest_city}"/> (<c:out value="${f.dest_code}"/>)
+                            </h3>
+                            <p class="flight-card-depart">
+                                Depart: <c:out value="${f.departure_time}"/>
+                            </p>
+                            <p class="flight-card-price">
+                                NPR <c:out value="${f.base_economy_fare}"/>
+                            </p>
+                            <p class="flight-card-class">One way &bull; Economy Class</p>
+                            <c:choose>
+                                <c:when test="${not empty user}">
+                                    <a href="${pageContext.request.contextPath}/booking?flightId=${f.flight_id}">
+                                        <button class="book-btn">Book Now</button>
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${pageContext.request.contextPath}/login">
+                                        <button class="book-btn">Book Now</button>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</section>
+
+<!-- ══ INFO SECTION ══ -->
+<section class="info-section">
+    <div class="info-grid">
+        <div class="info-col">
+            <h3 class="info-heading">About Us</h3>
+            <a href="#" class="info-link">About SkyLine</a>
+            <a href="#" class="info-link">Information</a>
         </div>
-
-        <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/london.jpg" alt="Kathmandu to London">
-            <h3>Kathmandu (KTM) to London (LHR)</h3>
-            <p>Depart: 2025-06-05</p>
-            <p class="price">NPR 338,000</p>
-            <p class="class">One way • Economy Class</p>
-            <button class="book-btn">Book Now</button>
+        <div class="info-col">
+            <h3 class="info-heading">Book &amp; Manage</h3>
+            <a href="#" class="info-link">Search Flights</a>
+            <a href="#" class="info-link">Manage Booking</a>
+            <a href="#" class="info-link">Schedule</a>
         </div>
-
-        <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/dubai.jpg" alt="Kathmandu to Dubai">
-            <h3>Kathmandu (KTM) to Dubai (DXB)</h3>
-            <p>Depart: 2025-06-02</p>
-            <p class="price">NPR 450,000</p>
-            <p class="class">One way • Economy Class</p>
-            <button class="book-btn">Book Now</button>
+        <div class="info-col">
+            <h3 class="info-heading">Where we FLY?</h3>
+            <a href="#" class="info-link">Popular Flights</a>
+            <a href="#" class="info-link">Partner Airlines</a>
         </div>
-
-        <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/Delhi.jpg" alt="New Delhi to Kathmandu">
-            <h3>New Delhi (DEL) to Kathmandu (KTM)</h3>
-            <p>Depart: 2025-06-01</p>
-            <p class="price">NPR 85,000</p>
-            <p class="class">One way • Economy Class</p>
-            <button class="book-btn">Book Now</button>
+        <div class="info-col">
+            <h3  class="info-heading">Prepare To Travel</h3>
+            <a href="#" class="info-link">Luggage Guidelines</a>
+            <a href="#" class="info-link">Airport Information</a>
+            <a href="#" class="info-link">First Time Travelers</a>
+            <a href="#" class="info-link">Visa &amp; Documents</a>
         </div>
     </div>
 </section>
 
-<!-- ==================== FOOTER ==================== -->
+<!-- ══ FOOTER ══ -->
 <footer class="footer">
-    <div class="footer-content">
+    <div class="footer-inner">
         <div class="footer-logo">
-            <img src="${pageContext.request.contextPath}/static/images/logo.png" alt="SkyLine" class="footer-logo-img">
-            <span>SkyLine</span>
+            <img src="${pageContext.request.contextPath}/static/images/logo.png"
+                 class="footer-logo-img" alt="SkyLine"/>
+            <span class="footer-logo-text"><h2>SkyLine</h2></span>
         </div>
-
-        <div class="footer-links">
-            <div>
-                <h4>About Us</h4>
-                <p>About SkyLine</p>
-                <p>Information</p>
-            </div>
-            <div>
-                <h4>Book & Manage</h4>
-                <p>Search Flights</p>
-                <p>Manage Booking</p>
-                <p>Schedule</p>
-            </div>
-            <div>
-                <h4>Where We Fly?</h4>
-                <p>Popular Flights</p>
-                <p>Partner Airlines</p>
-            </div>
-            <div>
-                <h4>Prepare To Travel</h4>
-                <p>Luggage Guidelines</p>
-                <p>Airport Information</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>© 2026 SkyLine Airlines. All Rights Reserved.</p>
-        <div class="social-icons">
-            <a href="#">📘</a>
-            <a href="#">🐦</a>
-            <a href="#">📷</a>
+        <p class="footer-copy">&copy; 2026 SkyLine Airlines. All Right Reserved</p>
+        <div class="footer-social">
+            <a href="#" class="social-link">f</a>
+            <a href="#" class="social-link">ig</a>
+            <a href="#" class="social-link">𝕏</a>
         </div>
     </div>
 </footer>
+
+<script>
+    // Filter flight cards by from/to input
+    function filterCards() {
+        const from = document.getElementById("filterFrom").value.toLowerCase();
+        const to   = document.getElementById("filterTo").value.toLowerCase();
+        const cards = document.querySelectorAll(".flight-card");
+
+        cards.forEach(card => {
+            const cardFrom = card.dataset.from.toLowerCase();
+            const cardTo   = card.dataset.to.toLowerCase();
+            const matchFrom = from === "" || cardFrom.includes(from);
+            const matchTo   = to   === "" || cardTo.includes(to);
+            card.style.display = (matchFrom && matchTo) ? "block" : "none";
+        });
+    }
+
+    // Dropdown toggle on click
+    document.querySelectorAll(".nav-dropdown").forEach(dropdown => {
+        dropdown.addEventListener("click", function(e) {
+            e.stopPropagation();
+            this.classList.toggle("open");
+        });
+    });
+
+    document.addEventListener("click", () => {
+        document.querySelectorAll(".nav-dropdown").forEach(d => d.classList.remove("open"));
+    });
+</script>
 
 </body>
 </html>
