@@ -11,5 +11,7 @@ public interface UserDao {
 
     boolean save(User user);
 
-    // You can add more methods later (findById, update, etc.)
+    User findById(int userId);
+
+    boolean update(User user);
 }

@@ -5,55 +5,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkyLine - Home</title>
+    <title>SkyLine - Airlines</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/home.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Chivo:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- Top Navigation -->
+<!-- ==================== HEADER ==================== -->
 <header class="header">
     <div class="logo">
-        <img src="${pageContext.request.contextPath}/static/images/logo.png"
-             class="logo-image" alt="SkyLine Logo"/>
+        <img src="${pageContext.request.contextPath}/static/images/logo.png" alt="SkyLine" class="logo-image">
         <span>SkyLine</span>
     </div>
 
-    <nav class="nav-links">
-        <a href="${pageContext.request.contextPath}/home">Home</a>
-        <a href="#">Flights</a>
-        <a href="#">About</a>
+    <nav class="nav-menu">
+        <a href="#">Book</a>
+        <a href="#">Manage</a>
+        <a href="#">Experience</a>
     </nav>
 
-    <div class="header-auth">
-        <c:choose>
-            <c:when test="${not empty user}">
-                <span class="welcome-text">Welcome, <c:out value="${user.fullName}"/></span>
-                <a href="${pageContext.request.contextPath}/logout" class="btn-outline">Log Out</a>
-            </c:when>
-            <c:otherwise>
-                <a href="${pageContext.request.contextPath}/login"    class="btn-outline">Log In</a>
-                <a href="${pageContext.request.contextPath}/register" class="btn-primary">Sign Up</a>
-            </c:otherwise>
-        </c:choose>
+    <div class="header-right">
+        <input type="text" placeholder="Search flights..." class="search-bar">
+        <a href="${pageContext.request.contextPath}/login" class="btn-login">Log In</a>
+        <a href="${pageContext.request.contextPath}/register" class="btn-signup">Sign Up</a>
     </div>
 </header>
 
-<!-- Hero Section with Air.png as Background + Dim Red Overlay -->
+<!-- ==================== HERO SECTION ==================== -->
 <section class="hero">
     <img src="${pageContext.request.contextPath}/static/images/Air.jpg"
          alt="SkyLine Plane" class="hero-image">
 
     <div class="hero-content">
-        <h1>PLANNING YOUR FAMILY TRIP</h1>
-        <h2>FLY BETTER, FLY WITH US</h2>
+        <h1>Planning your family trip</h1>
+        <h2>Fly Better, Fly With US</h2>
     </div>
 </section>
 
-<!-- Flight Search Bar -->
+<!-- ==================== SEARCH BAR ==================== -->
 <div class="search-container">
     <div class="search-box">
-        <h3>SEARCH AND BOOK FOR OUR FLIGHTS ONLINE</h3>
+        <h3>Search and Book for Our Flights Online</h3>
         <div class="search-form">
             <input type="text" placeholder="From" class="search-input">
             <input type="text" placeholder="To" class="search-input">
@@ -64,55 +57,90 @@
     </div>
 </div>
 
-<!-- Popular Flights Section -->
+<!-- ==================== POPULAR FLIGHTS ==================== -->
 <section class="popular-flights">
-    <h2><u>POPULAR FLIGHT DEALS ON SKYLINE AIRLINES</u></h2>
+    <h2>Popular Flight Deals on SkyLine Airlines</h2>
 
     <div class="flight-grid">
-
         <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
-            <h3>Nepal (Nep) to London (UK)</h3>
-            <p>Depart: May 24</p>
-            <p class="price">NPR 338,000</p>
+            <img src="${pageContext.request.contextPath}/static/images/Frankfurt.jpg" alt="Kathmandu to Frankfurt">
+            <h3>Kathmandu (KTM) to Frankfurt (FRA)</h3>
+            <p>Depart: 2025-06-08</p>
+            <p class="price">NPR 560,375</p>
             <p class="class">One way • Economy Class</p>
             <button class="book-btn">Book Now</button>
         </div>
 
         <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
-            <h3>Nepal (Nep) to Italy (IT)</h3>
-            <p>Depart: June 01</p>
+            <img src="${pageContext.request.contextPath}/static/images/madrid.jpg" alt="Kathmandu to Madrid">
+            <h3>Kathmandu (KTM) to Madrid (MAD)</h3>
+            <p>Depart: 2025-06-07</p>
+            <p class="price">NPR 410,000</p>
+            <p class="class">One way • Economy Class</p>
+            <button class="book-btn">Book Now</button>
+        </div>
+
+        <div class="flight-card">
+            <img src="${pageContext.request.contextPath}/static/images/Rome.jpg" alt="Kathmandu to Rome">
+            <h3>Kathmandu (KTM) to Rome (FCO)</h3>
+            <p>Depart: 2025-06-06</p>
             <p class="price">NPR 345,000</p>
             <p class="class">One way • Economy Class</p>
             <button class="book-btn">Book Now</button>
         </div>
 
         <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
-            <h3>Nepal (Nep) to Spain (ES)</h3>
-            <p>Depart: June 10</p>
-            <p class="price">NPR 410,000</p>
+            <img src="${pageContext.request.contextPath}/static/images/london.jpg" alt="Kathmandu to London">
+            <h3>Kathmandu (KTM) to London (LHR)</h3>
+            <p>Depart: 2025-06-05</p>
+            <p class="price">NPR 338,000</p>
             <p class="class">One way • Economy Class</p>
             <button class="book-btn">Book Now</button>
         </div>
 
         <div class="flight-card">
-            <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
-            <h3>Nepal (Nep) to Spain (ES)</h3>
-            <p>Depart: June 10</p>
-            <p class="price">NPR 410,000</p>
+            <img src="${pageContext.request.contextPath}/static/images/dubai.jpg" alt="Kathmandu to Dubai">
+            <h3>Kathmandu (KTM) to Dubai (DXB)</h3>
+            <p>Depart: 2025-06-02</p>
+            <p class="price">NPR 450,000</p>
             <p class="class">One way • Economy Class</p>
             <button class="book-btn">Book Now</button>
         </div>
 
+        <div class="flight-card">
+            <img src="${pageContext.request.contextPath}/static/images/Kathmandu.jpg" alt="New Delhi to Kathmandu">
+            <h3>New Delhi (DEL) to Kathmandu (KTM)</h3>
+            <p>Depart: 2025-06-01</p>
+            <p class="price">NPR 85,000</p>
+            <p class="class">One way • Economy Class</p>
+            <button class="book-btn">Book Now</button>
+        </div>
     </div>
 </section>
 
-<!-- Footer -->
-<footer>
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-logo">
+            <img src="${pageContext.request.contextPath}/static/images/logo.png" alt="SkyLine" class="footer-logo-img">
+            <span>SkyLine</span>
+        </div>
+
+        <div class="footer-links">
+            <div><h4>About Us</h4><p>About SkyLine</p><p>Information</p></div>
+            <div><h4>Book & Manage</h4><p>Search Flights</p><p>Manage Booking</p><p>Schedule</p></div>
+            <div><h4>Where We Fly?</h4><p>Popular Flights</p><p>Partner Airlines</p></div>
+            <div><h4>Prepare To Travel</h4><p>Luggage Guidelines</p><p>Airport Information</p></div>
+        </div>
+    </div>
+
     <div class="footer-bottom">
-        <p>&copy; 2026 SkyLine Airlines. All Rights Reserved.</p>
+        <p>© 2026 SkyLine Airlines. All Rights Reserved.</p>
+        <div class="social-icons">
+            <a href="#"></a>
+            <a href="#"></a>
+            <a href="#"></a>
+        </div>
     </div>
 </footer>
 
