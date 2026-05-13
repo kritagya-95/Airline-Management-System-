@@ -85,22 +85,22 @@
             <div class="land-feature-card">
                 <div class="land-feature-icon">🛫</div>
                 <h2>Global Network</h2>
-                <p><h4>Access to 150+ destinations worldwide with seamless connections</h4></p>
+                <p><h5>Access to 150+ destinations worldwide with seamless connections</h5></p>
             </div>
             <div class="land-feature-card">
                 <div class="land-feature-icon">🛡️</div>
                 <h2>Safe &amp; Secure</h2>
-                <p><h4>Top-rated safety standards with comprehensive travel insurance</h4></p>
+                <p><h5>Top-rated safety standards with comprehensive travel insurance</h5></p>
             </div>
             <div class="land-feature-card">
                 <div class="land-feature-icon">🕛</div>
                 <h2>24/7 Support</h2>
-                <p><h4>Round-the-clock customer service for all your travel needs</h4></p>
+                <p><h5>Round-the-clock customer service for all your travel needs</h5></p>
             </div>
             <div class="land-feature-card">
                 <div class="land-feature-icon">💵</div>
                 <h2>Best Prices</h2>
-                <p><h4>Competitive fares with exclusive deals and loyalty rewards</h4></p>
+                <p><h5>Competitive fares with exclusive deals and loyalty rewards</h5></p>
             </div>
         </div>
     </div>
@@ -150,33 +150,28 @@
 <section class="land-info-section">
     <div class="land-info-grid">
         <div class="land-info-col">
-            <h3 class="land-info-heading">About Us</h3>
-            <a href="#" class="land-info-link">About SkyLine</a>
-            <a href="#" class="land-info-link">Newsroom</a>
-            <a href="#" class="land-info-link">Corporate Information</a>
-            <a href="#" class="land-info-link">Tenders</a>
-            <a href="#" class="land-info-link">Careers</a>
+            <h2 class="land-info-heading">About Us</h2>
+            <a href="#" class="land-info-link"><h4>About SkyLine</h4></a>
+            <a href="#" class="land-info-link"><h4>Information</h4></a>
+
         </div>
         <div class="land-info-col">
-            <h3 class="land-info-heading">Book &amp; Manage</h3>
-            <a href="#" class="land-info-link">Search Flights</a>
-            <a href="#" class="land-info-link">Manage Booking</a>
-            <a href="#" class="land-info-link">Flight Schedule</a>
-            <a href="#" class="land-info-link">Cargo</a>
+            <h2 class="land-info-heading">Book &amp; Manage</h2>
+            <a href="#" class="land-info-link"><h4>Search Flights</h4></a>
+            <a href="#" class="land-info-link"><h4>Manage Booking</h4></a>
+            <a href="#" class="land-info-link"><h4>Schedule</h4></a>
         </div>
         <div class="land-info-col">
-            <h3 class="land-info-heading">Where We Fly?</h3>
-            <a href="#" class="land-info-link">Route Map</a>
-            <a href="#" class="land-info-link">Nonstop Flights</a>
-            <a href="#" class="land-info-link">Popular Flights</a>
-            <a href="#" class="land-info-link">Partner Airlines</a>
+            <h2 class="land-info-heading">Where We Fly?</h2>
+            <a href="#" class="land-info-link"><h4>Popular Flights</h4></a>
+            <a href="#" class="land-info-link"><h4>Partner Airlines</h4></a>
         </div>
         <div class="land-info-col">
-            <h3 class="land-info-heading">Prepare To Travel</h3>
-            <a href="#" class="land-info-link">Baggage Guidelines</a>
-            <a href="#" class="land-info-link">Airport Information</a>
-            <a href="#" class="land-info-link">First-time Travellers</a>
-            <a href="#" class="land-info-link">Visas &amp; Documents</a>
+            <h2 class="land-info-heading">Prepare To Travel</h2>
+            <a href="#" class="land-info-link"><h4>Baggage Guidelines</h4></a>
+            <a href="#" class="land-info-link"><h4>Airport Information</h4></a>
+            <a href="#" class="land-info-link"><h4>First-time Travellers</h4></a>
+            <a href="#" class="land-info-link"><h4>Visas &amp; Documents</h4></a>
         </div>
     </div>
 </section>
