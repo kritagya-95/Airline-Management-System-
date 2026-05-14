@@ -28,7 +28,7 @@ body {
     gap: 10px;
 }
 
-.land-logo-img { height: 36px; }
+.land-logo-img { height: 60px; }
 
 .land-logo-text {
     font-family: 'Cinzel', serif;
@@ -472,7 +472,7 @@ body {
     flex: 1;
 }
 
-.land-footer-logo-img { height: 30px; }
+.land-footer-logo-img { height: 60px; }
 
 .land-footer-logo-text {
     font-family: 'Cinzel', serif;

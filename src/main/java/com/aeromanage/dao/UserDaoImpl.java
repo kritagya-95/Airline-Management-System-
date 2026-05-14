@@ -112,6 +112,7 @@ public class UserDaoImpl implements UserDao {
             ps.setString(3, user.getRole());
             ps.setString(4, user.getStatus());
             ps.setInt(5, user.getUserId());
+            ps.setString(6, user.getEmail());
 
             return ps.executeUpdate() > 0;
 

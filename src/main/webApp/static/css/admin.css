@@ -34,7 +34,7 @@
 }
 
 .sidebar-logo-img {
-    height: 36px;
+    height: 60px;
     filter: brightness(2);
 }
 
@@ -378,7 +378,7 @@
     flex: 1;
 }
 
-.prof-footer-logo-img { height: 28px; }
+.prof-footer-logo-img { height: 60px; }
 
 .prof-footer-logo-text {
     font-family: 'Cinzel', serif;

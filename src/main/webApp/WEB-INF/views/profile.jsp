@@ -13,6 +13,18 @@
 </head>
 <body>
 
+<!-- ══ SUCCESS POPUP OVERLAY ══ -->
+<c:if test="${showSuccess}">
+  <div class="prof-popup-overlay" id="successPopup">
+    <div class="prof-popup-box">
+      <div class="prof-popup-icon">✅</div>
+      <h3 class="prof-popup-title">Profile Updated!</h3>
+      <p class="prof-popup-msg">Your profile has been updated successfully.</p>
+      <button class="prof-popup-close" onclick="closePopup()">Close</button>
+    </div>
+  </div>
+</c:if>
+
 <!-- ══ HEADER ══ -->
 <header class="prof-header">
   <div class="prof-header-logo">
@@ -37,7 +49,6 @@
 <!-- ══ PROFILE BANNER ══ -->
 <div class="prof-banner">
   <div class="prof-banner-inner">
-    <%-- Generate initials from full name --%>
     <div class="prof-avatar">
       <c:set var="nameParts" value="${fn:split(user.fullName, ' ')}"/>
       <c:choose>
@@ -79,21 +90,20 @@
       <div id="view-mode" class="prof-info-grid">
         <div class="prof-info-item">
           <span class="prof-info-label">👤 First Name</span>
-          <span class="prof-info-value" id="view-firstname">
-                        <%-- Split full name to get first name --%>
-                        <c:out value="${fn:split(user.fullName, ' ')[0]}"/>
-                    </span>
+          <span class="prof-info-value">
+            <c:out value="${fn:split(user.fullName, ' ')[0]}"/>
+          </span>
         </div>
         <div class="prof-info-item">
           <span class="prof-info-label">👤 Last Name</span>
-          <span class="prof-info-value" id="view-lastname">
-                        <c:choose>
-                          <c:when test="${fn:length(fn:split(user.fullName, ' ')) >= 2}">
-                            <c:out value="${fn:split(user.fullName, ' ')[1]}"/>
-                          </c:when>
-                          <c:otherwise>—</c:otherwise>
-                        </c:choose>
-                    </span>
+          <span class="prof-info-value">
+            <c:choose>
+              <c:when test="${fn:length(fn:split(user.fullName, ' ')) >= 2}">
+                <c:out value="${fn:split(user.fullName, ' ')[1]}"/>
+              </c:when>
+              <c:otherwise>—</c:otherwise>
+            </c:choose>
+          </span>
         </div>
         <div class="prof-info-item">
           <span class="prof-info-label">✉️ Email</span>
@@ -102,13 +112,13 @@
         <div class="prof-info-item">
           <span class="prof-info-label">📞 Phone</span>
           <span class="prof-info-value">
-                        <c:choose>
-                          <c:when test="${not empty user.phone}">
-                            <c:out value="${user.phone}"/>
-                          </c:when>
-                          <c:otherwise>—</c:otherwise>
-                        </c:choose>
-                    </span>
+            <c:choose>
+              <c:when test="${not empty user.phone}">
+                <c:out value="${user.phone}"/>
+              </c:when>
+              <c:otherwise>—</c:otherwise>
+            </c:choose>
+          </span>
         </div>
       </div>
 
@@ -117,9 +127,6 @@
             action="${pageContext.request.contextPath}/profile/update"
             method="post" style="display:none;">
 
-        <c:if test="${not empty successMsg}">
-          <div class="prof-flash-success">✅ <c:out value="${successMsg}"/></div>
-        </c:if>
         <c:if test="${not empty errorMsg}">
           <div class="prof-flash-error">❌ <c:out value="${errorMsg}"/></div>
         </c:if>
@@ -135,9 +142,9 @@
             <label>Last Name</label>
             <input type="text" name="lastName"
                    value="<c:choose>
-                                   <c:when test='${fn:length(fn:split(user.fullName, \" \")) >= 2}'>${fn:split(user.fullName, ' ')[1]}</c:when>
-                                   <c:otherwise></c:otherwise>
-                               </c:choose>"/>
+                     <c:when test='${fn:length(fn:split(user.fullName, \" \")) >= 2}'>${fn:split(user.fullName, ' ')[1]}</c:when>
+                     <c:otherwise></c:otherwise>
+                   </c:choose>"/>
           </div>
           <div class="prof-edit-field">
             <label>Email</label>
@@ -185,9 +192,9 @@
           <div>
             <p class="prof-setting-label">Account Status</p>
             <p class="prof-setting-value">
-                            <span class="prof-status-badge ${user.status.toLowerCase()}">
-                                <c:out value="${user.status}"/>
-                            </span>
+              <span class="prof-status-badge ${user.status.toLowerCase()}">
+                <c:out value="${user.status}"/>
+              </span>
             </p>
           </div>
         </div>
@@ -279,6 +286,22 @@
 </footer>
 
 <script>
+  // Show popup automatically if update was successful
+  window.addEventListener('load', function () {
+    const popup = document.getElementById('successPopup');
+    if (popup) {
+      popup.style.display = 'flex';
+    }
+  });
+
+  // Close popup
+  function closePopup() {
+    const popup = document.getElementById('successPopup');
+    if (popup) {
+      popup.style.display = 'none';
+    }
+  }
+
   // Tab switching
   function showTab(tabId, btn) {
     document.querySelectorAll('.prof-tab-panel').forEach(p => p.style.display = 'none');

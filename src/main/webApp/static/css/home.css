@@ -44,7 +44,7 @@ body {
     gap: 10px;
 }
 
-.logo-image { height: 38px; }
+.logo-image { height: 1px; }
 
 .logo-text {
     font-family: 'Cinzel', serif;
@@ -595,7 +595,7 @@ body {
     flex: 1;
 }
 
-.prof-footer-logo-img { height: 28px; }
+.prof-footer-logo-img { height: 60px; }
 
 .prof-footer-logo-text {
     font-family: 'Cinzel', serif;
