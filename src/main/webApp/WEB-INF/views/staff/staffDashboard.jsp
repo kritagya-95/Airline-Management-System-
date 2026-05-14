@@ -35,8 +35,14 @@
         </nav>
 
         <div class="staff-sidebar-footer">
-            <p class="staff-name">👋 <strong><c:out value="${staff.fullName}"/></strong></p>
+            <!-- Clickable Staff Profile -->
+            <a href="${pageContext.request.contextPath}/staff/profile" class="staff-user-link">
+                <span class="user-icon">👤</span>
+                <span class="staff-name"><strong><c:out value="${staff.fullName}"/></strong></span>
+            </a>
+
             <p class="staff-role">STAFF</p>
+
             <a href="${pageContext.request.contextPath}/logout"
                class="staff-btn-logout">Log Out</a>
         </div>

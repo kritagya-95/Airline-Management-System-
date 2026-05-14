@@ -36,7 +36,12 @@
         </nav>
 
         <div class="sidebar-footer">
-            <p class="admin-name">👤 <c:out value="${admin.fullName}"/></p>
+            <!-- Clickable Admin Profile -->
+            <a href="${pageContext.request.contextPath}/admin/profile" class="admin-user-link">
+                <span class="user-icon">👤</span>
+                <span class="admin-name"><c:out value="${admin.fullName}"/></span>
+            </a>
+
             <a href="${pageContext.request.contextPath}/logout"
                class="btn-logout">Log Out</a>
         </div>

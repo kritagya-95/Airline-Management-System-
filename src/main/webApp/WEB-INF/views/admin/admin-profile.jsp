@@ -6,77 +6,100 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Admin Profile — SkyLine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+    <title>My Profile - SkyLine Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Chivo:wght@300;400;500;600&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/admin-profile.css"/>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="prof-header">
-    <div class="prof-header-logo">
-        <a href="${pageContext.request.contextPath}/admin/dashboard">
-            <img src="${pageContext.request.contextPath}/static/images/logo.png" class="prof-logo-img" alt="SkyLine"/>
-            <span class="prof-logo-text">SkyLine</span>
-        </a>
-    </div>
-    <nav class="prof-nav">
-        <a href="${pageContext.request.contextPath}/admin/dashboard" class="prof-nav-link">Dashboard</a>
-        <a href="${pageContext.request.contextPath}/admin/profile" class="prof-nav-link active">My Profile</a>
-    </nav>
-    <a href="${pageContext.request.contextPath}/logout" class="prof-btn-logout">Logout</a>
-</header>
+<div class="admin-profile-container">
 
-<!-- BANNER -->
-<div class="prof-banner admin-banner">
-    <div class="prof-avatar">
-        ${fn:substring(user.fullName, 0, 2)}
-    </div>
-    <h1><c:out value="${user.fullName}"/></h1>
-    <p class="role-badge admin">ADMINISTRATOR</p>
-</div>
+    <!-- Top Navigation -->
+    <header class="admin-top-nav">
+        <div class="logo">
+            <img src="${pageContext.request.contextPath}/static/images/logo.png" alt="SkyLine"/>
+            <span>SKYLINE</span>
+        </div>
+        <nav>
+            <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
+            <a href="${pageContext.request.contextPath}/admin/profile" class="active">My Profile</a>
+        </nav>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Logout</a>
+    </header>
 
-<div class="prof-main-content">
-    <div class="prof-card">
-        <div class="prof-card-header">
-            <h2>Personal Information</h2>
-            <button class="prof-btn-edit" onclick="toggleEdit()">✏️ Edit Profile</button>
+    <!-- Red Banner -->
+    <div class="profile-banner">
+        <div class="avatar-circle">
+            ${fn:substring(user.fullName, 0, 2)}
+        </div>
+        <h1><c:out value="${user.fullName}"/></h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="profile-content">
+        <div class="tabs">
+            <button class="tab active">Overview</button>
+           <!-- <button class="tab">Settings</button>-->
         </div>
 
-        <!-- View Mode -->
-        <div id="view-mode" class="prof-info-grid">
-            <div class="prof-info-item"><span class="label">Full Name</span><span><c:out value="${user.fullName}"/></span></div>
-            <div class="prof-info-item"><span class="label">Email</span><span><c:out value="${user.email}"/></span></div>
-            <div class="prof-info-item"><span class="label">Phone</span><span><c:out value="${user.phone}" default="Not Provided"/></span></div>
-            <div class="prof-info-item"><span class="label">Role</span><span class="role-badge admin">ADMIN</span></div>
-        </div>
+        <div class="info-card">
+            <div class="card-header">
+                <h2>Personal Information</h2>
+                <button class="edit-btn" onclick="toggleEdit()">
+                    <span>✏️</span> Edit
+                </button>
+            </div>
 
-        <!-- Edit Mode -->
-        <form id="edit-mode" class="prof-edit-form"
-              action="${pageContext.request.contextPath}/admin/profile/update"
-              method="post" style="display:none;">
-
-            <div class="prof-edit-grid">
-                <div class="prof-edit-field">
-                    <label>Full Name</label>
-                    <input type="text" name="fullName" value="<c:out value='${user.fullName}'/>" required/>
+            <!-- View Mode -->
+            <div id="view-mode" class="info-grid">
+                <div class="info-row">
+                    <span class="info-label">First Name</span>
+                    <span class="info-value"><c:out value="${fn:split(user.fullName, ' ')[0]}"/></span>
                 </div>
-                <div class="prof-edit-field">
-                    <label>Email</label>
-                    <input type="email" name="email" value="<c:out value='${user.email}'/>" required/>
+                <div class="info-row">
+                    <span class="info-label">Last Name</span>
+                    <span class="info-value">
+                        <c:choose>
+                            <c:when test="${fn:length(fn:split(user.fullName, ' ')) > 1}">
+                                <c:out value="${fn:split(user.fullName, ' ')[1]}"/>
+                            </c:when>
+                            <c:otherwise>—</c:otherwise>
+                        </c:choose>
+                    </span>
                 </div>
-                <div class="prof-edit-field">
-                    <label>Phone Number</label>
-                    <input type="tel" name="phone" value="<c:out value='${user.phone}'/>"/>
+                <div class="info-row">
+                    <span class="info-label">Email</span>
+                    <span class="info-value"><c:out value="${user.email}"/></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Phone</span>
+                    <span class="info-value"><c:out value="${user.phone}" default="Not Provided"/></span>
                 </div>
             </div>
 
-            <div class="prof-edit-actions">
-                <button type="submit" class="prof-btn-save">Save Changes</button>
-                <button type="button" class="prof-btn-cancel" onclick="toggleEdit()">Cancel</button>
-            </div>
-        </form>
+            <!-- Edit Mode -->
+            <form id="edit-mode" class="edit-form" action="${pageContext.request.contextPath}/admin/profile/update" method="post" style="display: none;">
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="fullName" value="<c:out value='${user.fullName}'/>" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" value="<c:out value='${user.email}'/>" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" name="phone" value="<c:out value='${user.phone}'/>"/>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                    <button type="button" class="cancel-btn" onclick="toggleEdit()">Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -88,7 +111,7 @@
             view.style.display = 'none';
             edit.style.display = 'block';
         } else {
-            view.style.display = 'grid';
+            view.style.display = 'block';
             edit.style.display = 'none';
         }
     }
