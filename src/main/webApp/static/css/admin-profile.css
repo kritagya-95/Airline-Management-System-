@@ -1,4 +1,4 @@
-/* admin-profile.css */
+/* admin-profile.css - Modern Admin Profile */
 
 * {
     margin: 0;
@@ -9,139 +9,174 @@
 body {
     font-family: 'Chivo', sans-serif;
     background-color: #f8f9fa;
-    color: #333;
 }
 
-/* Header */
-.prof-header {
+/* Top Navigation */
+.admin-top-nav {
     background: white;
-    padding: 15px 60px;
+    padding: 15px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
-.prof-logo-img {
-    height: 45px;
-}
-
-.prof-logo-text {
-    font-size: 26px;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
     font-weight: 700;
     color: #8B0000;
 }
 
-.prof-nav a {
+.logo img {
+    height: 40px;
+}
+
+.admin-top-nav nav a {
     margin: 0 20px;
     text-decoration: none;
     color: #333;
     font-weight: 500;
 }
 
-.prof-nav a.active {
+.admin-top-nav nav a.active {
     color: #8B0000;
     font-weight: 600;
 }
 
-.prof-btn-logout {
+.logout-btn {
+    padding: 8px 20px;
+    border: 2px solid #8B0000;
     color: #8B0000;
-    font-weight: 600;
     text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
 }
 
-/* Banner */
-.prof-banner {
+/* Red Banner */
+.profile-banner {
     background: linear-gradient(135deg, #8B0000, #5C0000);
     color: white;
-    padding: 70px 0;
-    text-align: center;
+    padding: 50px 40px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
 }
 
-.prof-avatar {
-    width: 110px;
-    height: 110px;
+.avatar-circle {
+    width: 90px;
+    height: 90px;
     background: rgba(255,255,255,0.25);
-    color: white;
-    font-size: 38px;
-    font-weight: bold;
     border-radius: 50%;
-    margin: 0 auto 15px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    flex-shrink: 0;
 }
 
-.role-badge {
-    display: inline-block;
-    padding: 6px 20px;
-    border-radius: 30px;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.admin {
-    background: rgba(255,255,255,0.25);
+.profile-banner h1 {
+    font-size: 32px;
+    font-weight: 700;
 }
 
 /* Main Content */
-.prof-main-content {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px;
+.profile-content {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 40px;
 }
 
-.prof-card {
+.tabs {
+    margin-bottom: 25px;
+}
+
+.tab {
+    padding: 12px 28px;
+    border: none;
+    background: #f1f1f1;
+    margin-right: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: #8B0000;
+    color: white;
+}
+
+/* Info Card */
+.info-card {
     background: white;
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.08);
     padding: 35px;
 }
 
-.prof-card-header {
+.card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
 }
 
-.prof-btn-edit {
-    background: none;
-    border: 2px solid #8B0000;
-    color: #8B0000;
-    padding: 8px 20px;
-    border-radius: 30px;
+.edit-btn {
+    background: #8B0000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.prof-info-grid {
+/* Info Grid */
+.info-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 25px;
 }
 
-.prof-info-item {
-    margin-bottom: 18px;
+.info-row {
+    display: flex;
+    flex-direction: column;
 }
 
-.label {
-    font-weight: 600;
-    color: #555;
-    display: block;
+.info-label {
+    font-size: 14px;
+    color: #666;
     margin-bottom: 6px;
 }
 
-/* Edit Form */
-.prof-edit-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+.info-value {
+    font-size: 16px;
+    font-weight: 500;
 }
 
-.prof-edit-field input {
+/* Edit Form */
+.edit-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-group input {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
@@ -149,26 +184,27 @@ body {
     font-size: 16px;
 }
 
-.prof-edit-actions {
+.form-actions {
     margin-top: 30px;
     display: flex;
     gap: 15px;
 }
 
-.prof-btn-save {
+.save-btn {
     background: #8B0000;
     color: white;
     border: none;
-    padding: 12px 32px;
+    padding: 12px 30px;
     border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
 }
 
-.prof-btn-cancel {
+.cancel-btn {
     background: #f1f1f1;
     color: #333;
     border: none;
-    padding: 12px 32px;
+    padding: 12px 30px;
     border-radius: 8px;
     cursor: pointer;
 }

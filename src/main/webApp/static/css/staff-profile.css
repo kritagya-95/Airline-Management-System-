@@ -110,8 +110,8 @@ body {
 
 .prof-btn-edit {
     background: none;
-    border: 2px solid #1E88E5;
-    color: #1E88E5;
+    border: 2px solid #8B0000;
+    color: #8B0000;
     padding: 8px 20px;
     border-radius: 30px;
     cursor: pointer;
@@ -156,7 +156,7 @@ body {
 }
 
 .prof-btn-save {
-    background: #1E88E5;
+    background: #8B0000;
     color: white;
     border: none;
     padding: 12px 32px;
