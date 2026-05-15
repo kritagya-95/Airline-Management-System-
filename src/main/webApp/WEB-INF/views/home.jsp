@@ -41,9 +41,9 @@
         <div class="nav-dropdown">
             <a href="#" class="nav-link"><h2>Experience</h2> <span class="arrow">▾</span></a>
             <div class="dropdown-menu">
-                <a href="#">Popular Routes</a>
-                <a href="#">Partner Airlines</a>
-                <a href="#">Travel Guide</a>
+                <a href="${pageContext.request.contextPath}/popular-routes">Popular Routes</a>
+                <a href="${pageContext.request.contextPath}/partner-airlines">Partner Airlines</a>
+                <a href="${pageContext.request.contextPath}/travel-guide">Travel Guide</a>
             </div>
         </div>
     </nav>
@@ -229,7 +229,7 @@
         <div class="info-col">
             <h3 class="info-heading">About Us</h3>
             <a href="${pageContext.request.contextPath}/aboutus-airline" class="info-link"><h4>About SkyLine</h4></a>
-            <a href="#" class="info-link"><h4>Information</h4></a>
+            <a href="${pageContext.request.contextPath}/information" class="info-link"><h4>Information</h4></a>
         </div>
         <div class="info-col">
             <h3 class="info-heading">Book &amp; Manage</h3>
@@ -239,8 +239,8 @@
         </div>
         <div class="info-col">
             <h3 class="info-heading">Where we FLY?</h3>
-            <a href="#" class="info-link"><h4>Popular Flights</h4></a>
-            <a href="#" class="info-link"><h4>Partner Airlines</h4></a>
+            <a href="${pageContext.request.contextPath}/popular-routes" class="info-link"><h4>Popular Flights</h4></a>
+            <a href="${pageContext.request.contextPath}/partner-airlines" class="info-link"><h4>Partner Airlines</h4></a>
         </div>
         <div class="info-col">
             <h3 class="info-heading">Prepare To Travel</h3>

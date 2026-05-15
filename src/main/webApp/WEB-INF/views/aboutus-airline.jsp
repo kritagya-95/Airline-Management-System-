@@ -104,7 +104,7 @@
             <div class="land-checklist">
                 <div class="land-check-col">
                     <div class="land-check-item">
-                        <span class="land-check-icon">ðŸŽ¯</span> Instant booking confirmation
+                        <span class="land-check-icon">🎯</span> Instant booking confirmation
                     </div>
                     <div class="land-check-item">
                         <span class="land-check-icon">ðŸŽ¯</span> Free seat selection
@@ -140,7 +140,7 @@
         <div class="land-info-col">
             <h2 class="land-info-heading">About Us</h2>
             <a href="${pageContext.request.contextPath}/aboutus-airline" class="land-info-link"><h4>About SkyLine</h4></a>
-            <a href="#" class="land-info-link"><h4>Information</h4></a>
+            <a href="${pageContext.request.contextPath}/information" class="land-info-link"><h4>Information</h4></a>
 
         </div>
         <div class="land-info-col">
@@ -151,8 +151,8 @@
         </div>
         <div class="land-info-col">
             <h2 class="land-info-heading">Where We Fly?</h2>
-            <a href="#" class="land-info-link"><h4>Popular Flights</h4></a>
-            <a href="#" class="land-info-link"><h4>Partner Airlines</h4></a>
+            <a href="${pageContext.request.contextPath}/popular-routes" class="land-info-link"><h4>Popular Flights</h4></a>
+            <a href="${pageContext.request.contextPath}/partner-airlines" class="land-info-link"><h4>Partner Airlines</h4></a>
         </div>
         <div class="land-info-col">
             <h2 class="land-info-heading">Prepare To Travel</h2>

@@ -517,10 +517,230 @@ body {
     border-color: #8B0000;
 }
 
+.travel-page-section {
+    background: #faf7f2;
+    padding: 56px 42px 76px;
+}
+
+.route-card-grid,
+.partner-card-grid,
+.developer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.route-card,
+.partner-card,
+.developer-card {
+    background: #faf7f2;
+    border: 1px solid #ede8e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.route-card {
+    background: #fff;
+}
+
+.route-card-img {
+    height: 118px;
+    overflow: hidden;
+}
+
+.route-card-img img,
+.partner-card-img img,
+.developer-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.route-card-body,
+.partner-card-body,
+.developer-card div {
+    padding: 18px 20px;
+}
+
+.route-card-body h2,
+.partner-card-body h2,
+.developer-card h2 {
+    font-family: 'Chivo', sans-serif;
+    font-size: 18px;
+    color: #07101f;
+    margin-bottom: 12px;
+}
+
+.route-card-body p,
+.partner-card-body p,
+.developer-card p {
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.55;
+    margin-bottom: 8px;
+}
+
+.route-card-price {
+    font-weight: 700;
+    font-size: 18px !important;
+    color: #8B0000 !important;
+    margin: 14px 0 10px;
+}
+
+.route-card-class {
+    color: #777 !important;
+}
+
+.route-card-btn {
+    display: block;
+    width: 100%;
+    padding: 13px 16px;
+    background: #980000;
+    color: #fff;
+    border-radius: 7px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 18px;
+}
+
+.route-card-btn:hover {
+    background: #700000;
+    color: #fff;
+    text-decoration: none;
+}
+
+.travel-muted {
+    color: #777 !important;
+}
+
+.travel-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #777;
+    font-size: 16px;
+    padding: 30px;
+}
+
+.partner-card {
+    background: #fffdfa;
+    border: 2px solid #ecdcd4;
+}
+
+.partner-card-img {
+    height: 160px;
+    overflow: hidden;
+}
+
+.partner-card-body {
+    padding: 24px 28px 28px;
+}
+
+.partner-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.partner-code {
+    width: 58px;
+    height: 58px;
+    border-radius: 12px;
+    background: #8B0000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Chivo', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.partner-country {
+    color: #00834b;
+    background: #d8f8e6;
+    border-radius: 16px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.partner-note {
+    background: #fff8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: #17233a !important;
+    margin: 20px 0 !important;
+}
+
+.partner-network {
+    color: #334155 !important;
+    margin-top: 18px;
+}
+
+.partner-network::before {
+    content: "";
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border: 2px solid #8B0000;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: -2px;
+}
+
+.developer-card {
+    background: #fffdfa;
+}
+
+.developer-photo {
+    position: relative;
+    height: 230px;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.developer-photo::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 45%;
+    background: linear-gradient(to top, rgba(139,0,0,0.9), rgba(139,0,0,0));
+}
+
+.developer-photo span {
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    z-index: 1;
+    display: inline-block;
+    color: #fff;
+    background: #8B0000;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.developer-card div:not(.developer-photo) {
+    min-height: 146px;
+}
+
 /* ══ RESPONSIVE ═════════════════════════════════════════ */
 @media (max-width: 1024px) {
     .land-features-grid { grid-template-columns: repeat(2, 1fr); }
     .land-info-grid      { grid-template-columns: repeat(2, 1fr); }
+    .route-card-grid,
+    .partner-card-grid,
+    .developer-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -542,6 +762,10 @@ body {
     .land-footer-logo { justify-content: center; }
     .land-footer-social { justify-content: center; }
     .land-stats   { gap: 32px; }
+    .travel-page-section { padding: 50px 24px; }
+    .route-card-grid,
+    .partner-card-grid,
+    .developer-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
