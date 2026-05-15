@@ -23,6 +23,7 @@ public interface AdminDao {
 
     // ── Flights ────────────────────────────────────────────
     List<Map<String, Object>> getAllFlights();
+    //List<Map<String, Object>> getPopularFlights(int limit);
 
     // ── Bookings ───────────────────────────────────────────
     List<Map<String, Object>> getRecentBookings(int limit);

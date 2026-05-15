@@ -355,7 +355,7 @@ body {
 
 /* ══ POPULAR FLIGHTS ══ */
 .popular-section {
-    padding: 60px 60px 70px;
+    padding: 60px 28px 70px;
 }
 
 .section-title {
@@ -418,7 +418,9 @@ body {
 .flight-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    gap: 26px;
+    max-width: 1110px;
+    margin: 0 auto;
 }
 
 .no-flights {
@@ -431,12 +433,13 @@ body {
 
 .flight-card {
     background: #fff;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.09);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.12);
     transition: transform 0.22s, box-shadow 0.22s;
     display: flex;
     flex-direction: column;
+    min-height: 256px;
 }
 
 .flight-card:hover {
@@ -446,7 +449,7 @@ body {
 
 .flight-card-img {
     width: 100%;
-    height: 180px;
+    height: 104px;
     background: linear-gradient(135deg, #c0392b, #8B0000);
     display: flex;
     align-items: center;
@@ -462,7 +465,7 @@ body {
 }
 
 .flight-card-body {
-    padding: 16px 18px 20px;
+    padding: 12px 14px 14px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -471,7 +474,7 @@ body {
 
 .flight-card-title {
     font-family: 'Chivo', sans-serif;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 700;
     color: #222;
     line-height: 1.35;
@@ -480,13 +483,13 @@ body {
 
 .flight-card-depart {
     font-family: 'Chivo', sans-serif;
-    font-size: 13px;
+    font-size: 10px;
     color: #666;
 }
 
 .flight-card-price {
     font-family: 'Chivo', sans-serif;
-    font-size: 17px;
+    font-size: 13px;
     font-weight: 700;
     color: #8B0000;
     margin-top: 4px;
@@ -494,7 +497,7 @@ body {
 
 .flight-card-class {
     font-family: 'Chivo', sans-serif;
-    font-size: 12px;
+    font-size: 10px;
     color: #888;
     margin-bottom: 10px;
 }
@@ -502,13 +505,13 @@ body {
 .book-btn {
     display: block;
     width: 100%;
-    padding: 12px;
+    padding: 9px 12px;
     background: #8B0000;
     color: #fff;
     border: none;
-    border-radius: 7px;
+    border-radius: 6px;
     font-family: 'Chivo', sans-serif;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 700;
     cursor: pointer;
     text-align: center;

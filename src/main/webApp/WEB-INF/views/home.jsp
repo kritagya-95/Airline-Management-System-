@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -154,9 +155,9 @@
             </c:when>
             <c:otherwise>
                 <c:forEach var="f" items="${flights}">
-                    <div class="flight-card"
-                         data-from="${f.origin_city}"
-                         data-to="${f.dest_city}">
+                    <article class="flight-card"
+                             data-from="${f.origin_city} ${f.origin_code}"
+                             data-to="${f.dest_city} ${f.dest_code}">
                         <div class="flight-card-img">
                             <c:choose>
                                 <c:when test="${f.origin_city == 'Kathmandu' && f.dest_city == 'New Delhi'}">
@@ -197,25 +198,25 @@
                                 Depart: <c:out value="${f.departure_time}"/>
                             </p>
                             <p class="flight-card-price">
-                                NPR <c:out value="${f.base_economy_fare}"/>
+                                NPR <fmt:formatNumber value="${f.base_economy_fare}" pattern="#,##0.00"/>
                             </p>
                             <p class="flight-card-class">
                                 One way &bull; Economy Class
                             </p>
                             <c:choose>
                                 <c:when test="${not empty user}">
-                                    <a href="${pageContext.request.contextPath}/booking?flightId=${f.flight_id}">
-                                        <button class="book-btn">Book Now</button>
+                                    <a class="book-btn" href="${pageContext.request.contextPath}/booking?flightId=${f.flight_id}">
+                                        Book Now
                                     </a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="${pageContext.request.contextPath}/login">
-                                        <button class="book-btn">Book Now</button>
+                                    <a class="book-btn" href="${pageContext.request.contextPath}/login">
+                                        Book Now
                                     </a>
                                 </c:otherwise>
                             </c:choose>
                         </div>
-                    </div>
+                    </article>
                 </c:forEach>
             </c:otherwise>
         </c:choose>

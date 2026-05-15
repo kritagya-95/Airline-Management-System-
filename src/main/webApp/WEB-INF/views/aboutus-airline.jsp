@@ -71,22 +71,22 @@
 
         <div class="land-features-grid">
             <div class="land-feature-card">
-                <div class="land-feature-icon">ðŸ›«</div>
+                <div class="land-feature-icon">🌏</div>
                 <h2>Global Network</h2>
                 <p><h5>Access to 150+ destinations worldwide with seamless connections</h5></p>
             </div>
             <div class="land-feature-card">
-                <div class="land-feature-icon">ðŸ›¡ï¸</div>
+                <div class="land-feature-icon">🛡️</div>
                 <h2>Safe &amp; Secure</h2>
                 <p><h5>Top-rated safety standards with comprehensive travel insurance</h5></p>
             </div>
             <div class="land-feature-card">
-                <div class="land-feature-icon">ðŸ•›</div>
+                <div class="land-feature-icon">🤝</div>
                 <h2>24/7 Support</h2>
                 <p><h5>Round-the-clock customer service for all your travel needs</h5></p>
             </div>
             <div class="land-feature-card">
-                <div class="land-feature-icon">ðŸ’µ</div>
+                <div class="land-feature-icon">💵</div>
                 <h2>Best Prices</h2>
                 <p><h5>Competitive fares with exclusive deals and loyalty rewards</h5></p>
             </div>
