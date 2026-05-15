@@ -25,6 +25,17 @@
   </div>
 </c:if>
 
+<c:if test="${not empty successMsg}">
+  <div class="prof-popup-overlay" id="successPopup">
+    <div class="prof-popup-box">
+      <div class="prof-popup-icon">✅</div>
+      <h3 class="prof-popup-title">Success</h3>
+      <p class="prof-popup-msg"><c:out value="${successMsg}"/></p>
+      <button class="prof-popup-close" onclick="closePopup()">Close</button>
+    </div>
+  </div>
+</c:if>
+
 <!-- ══ HEADER ══ -->
 <header class="prof-header">
   <div class="prof-header-logo">
@@ -201,27 +212,53 @@
         <div class="prof-setting-item">
           <div>
             <p class="prof-setting-label">Role</p>
-            <p class="prof-setting-value"><c:out value="${user.role}"/></p>
+            <p class="prof-setting-value">PASSENGER</p>
           </div>
         </div>
+        <c:if test="${not empty passwordError}">
+          <div class="prof-flash-error">❌ <c:out value="${passwordError}"/></div>
+        </c:if>
+        <c:if test="${not empty deleteError}">
+          <div class="prof-flash-error">❌ <c:out value="${deleteError}"/></div>
+        </c:if>
         <div class="prof-setting-item">
           <div>
             <p class="prof-setting-label">Change Password</p>
             <p class="prof-setting-sub">Update your account password</p>
           </div>
-          <button class="prof-btn-outline-sm">Change</button>
+          <button type="button" class="prof-btn-outline-sm" onclick="openPasswordPopup()">Change</button>
         </div>
         <div class="prof-setting-item danger">
           <div>
             <p class="prof-setting-label">Delete Account</p>
             <p class="prof-setting-sub">Permanently remove your account</p>
           </div>
-          <button class="prof-btn-danger-sm">Delete</button>
+          <form action="${pageContext.request.contextPath}/profile/delete"
+                method="post"
+                onsubmit="return confirm('Delete your account permanently? This cannot be undone.');">
+            <button type="submit" class="prof-btn-danger-sm">Delete</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
+</div>
+
+<div class="prof-popup-overlay" id="passwordPopup">
+  <div class="prof-popup-box">
+    <h3 class="prof-popup-title">Change Password</h3>
+    <form action="${pageContext.request.contextPath}/profile/password" method="post" class="prof-password-form">
+      <label for="newPassword">New Password</label>
+      <input type="password" id="newPassword" name="newPassword" required/>
+      <label for="confirmPassword">Re-enter New Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required/>
+      <div class="prof-popup-actions">
+        <button type="submit" class="prof-popup-close">Save</button>
+        <button type="button" class="prof-btn-cancel" onclick="closePasswordPopup()">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <!-- ══ INFO SECTION ══ -->
@@ -292,11 +329,32 @@
     if (popup) {
       popup.style.display = 'flex';
     }
+    if (${not empty passwordError || not empty deleteError}) {
+      const settingsButton = document.querySelectorAll('.prof-tab')[2];
+      showTab('settings', settingsButton);
+    }
+    if (${not empty passwordError}) {
+      openPasswordPopup();
+    }
   });
 
   // Close popup
   function closePopup() {
     const popup = document.getElementById('successPopup');
+    if (popup) {
+      popup.style.display = 'none';
+    }
+  }
+
+  function openPasswordPopup() {
+    const popup = document.getElementById('passwordPopup');
+    if (popup) {
+      popup.style.display = 'flex';
+    }
+  }
+
+  function closePasswordPopup() {
+    const popup = document.getElementById('passwordPopup');
     if (popup) {
       popup.style.display = 'none';
     }

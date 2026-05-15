@@ -677,3 +677,37 @@ body {
 .prof-popup-close:hover {
     background: #660000;
 }
+
+.prof-password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+}
+
+.prof-password-form label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+}
+
+.prof-password-form input {
+    padding: 12px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    outline: none;
+}
+
+.prof-password-form input:focus {
+    border-color: #8B0000;
+    box-shadow: 0 0 0 3px rgba(139,0,0,0.08);
+}
+
+.prof-popup-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
+}

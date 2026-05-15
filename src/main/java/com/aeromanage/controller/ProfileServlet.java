@@ -1,5 +1,7 @@
 package com.aeromanage.controller;
 
+import com.aeromanage.dao.UserDao;
+import com.aeromanage.dao.UserDaoImpl;
 import com.aeromanage.entity.User;
 import com.aeromanage.utils.SessionUtil;
 
@@ -33,6 +35,8 @@ import java.io.IOException;
 @WebServlet("/profile")
 public class ProfileServlet extends HttpServlet {
 
+    private final UserDao userDao = new UserDaoImpl();
+
     /**
      * Handles GET requests to render the passenger profile view.
      *
@@ -57,6 +61,15 @@ public class ProfileServlet extends HttpServlet {
             return;
         }
 
+        User latestUser = userDao.findById(user.getUserId());
+        if (latestUser == null) {
+            SessionUtil.invalidateSession(request);
+            response.sendRedirect(request.getContextPath() + "/home");
+            return;
+        }
+        user = latestUser;
+        SessionUtil.setAttribute(request, "user", user);
+
         if ("ADMIN".equals(user.getRole())) {
             response.sendRedirect(request.getContextPath() + "/admin/dashboard");
             return;
@@ -73,6 +86,11 @@ public class ProfileServlet extends HttpServlet {
             if (Boolean.TRUE.equals(success)) {
                 request.setAttribute("showSuccess", true);
                 session.removeAttribute("profileUpdateSuccess");
+            }
+            String successMsg = (String) session.getAttribute("profileSuccessMsg");
+            if (successMsg != null) {
+                request.setAttribute("successMsg", successMsg);
+                session.removeAttribute("profileSuccessMsg");
             }
         }
 

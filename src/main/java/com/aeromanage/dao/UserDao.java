@@ -48,6 +48,23 @@ public interface UserDao {
     boolean update(User user);
 
     /**
+     * Updates the stored password hash for the given user.
+     *
+     * @param userId the unique identifier of the user
+     * @param hashedPassword the new BCrypt password hash
+     * @return {@code true} if the password was successfully updated, {@code false} otherwise
+     */
+    boolean updatePassword(int userId, String hashedPassword);
+
+    /**
+     * Deletes a passenger account and dependent booking data.
+     *
+     * @param userId the unique identifier of the passenger user
+     * @return {@code true} if the account was successfully deleted, {@code false} otherwise
+     */
+    boolean deletePassengerAccount(int userId);
+
+    /**
      * Creates an initial staff profile record associated with the given user identifier.
      *
      * <p>Invoked automatically following successful staff account registration to
