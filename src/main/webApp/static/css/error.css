@@ -1,38 +1,109 @@
+/* SkyLine Airlines Branding Palette */
+:root {
+    --brand-burgundy: #800000;    /* The deep red from your logo */
+    --brand-cream: #FDF9F3;       /* The warm off-white background */
+    --brand-gold: #C5A059;        /* Subtle gold for accents */
+    --text-main: #2D2D2D;         /* Professional dark grey */
+    --white: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--brand-cream);
+    margin: 0;
+    padding: 0;
+    font-family: 'Optima', 'Palatino', 'Segoe UI', serif; /* Using serif fonts for that premium airline feel */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+.error-container {
     text-align: center;
-    padding: 100px;
-    color: #333;
-    background-color: #f9f9f9;
+    max-width: 600px;
+    padding: 20px;
+}
+
+/* Floating Airplane Animation */
+.plane-wrapper {
+    font-size: 70px;
+    margin-bottom: 20px;
+    display: inline-block;
+    color: var(--brand-burgundy);
+    animation: flightPath 4s ease-in-out infinite;
+}
+
+@keyframes flightPath {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(15px, -15px) rotate(5deg); }
+    75% { transform: translate(-10px, -10px) rotate(-3deg); }
 }
 
 .error-code {
-    font-size: 80px;
-    font-weight: bold;
-    color: #e74c3c;
-    margin-bottom: 0;
+    font-size: 140px;
+    margin: 0;
+    line-height: 1;
+    color: var(--brand-burgundy);
+    font-weight: 800;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
 }
 
-.error-message {
-    font-size: 24px;
-    color: #7f8c8d;
-    margin-top: 10px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.btn {
+h2 {
+    font-size: 36px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin: 10px 0;
+    color: var(--brand-burgundy);
+    border-bottom: 2px solid var(--brand-gold);
     display: inline-block;
-    margin-top: 30px;
-    padding: 12px 30px;
-    background: #3498db;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+    padding-bottom: 5px;
 }
 
-.btn:hover {
-    background: #2980b9;
+p {
+    font-size: 18px;
+    margin: 25px 0 40px 0;
+    color: var(--text-main);
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Matching your homepage buttons */
+.btn-primary {
+    display: inline-block;
+    padding: 14px 40px;
+    background-color: var(--brand-burgundy);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 30px; /* Rounded pill shape like your Sign Up button */
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: 2px solid var(--brand-burgundy);
+    box-shadow: 0 4px 15px rgba(128, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--brand-burgundy);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(128, 0, 0, 0.3);
+}
+
+/* SkyLine footer-like subtle detail */
+.error-container::after {
+    content: "SkyLine Airlines — Fly Better, Fly With Us";
+    display: block;
+    margin-top: 50px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--brand-gold);
+    text-transform: uppercase;
 }
