@@ -14,54 +14,22 @@ import java.io.IOException;
 
 /**
  * Servlet controller responsible for rendering the admin profile page.
- *
- * <p>Resolves the authenticated admin user from the current session and forwards
- * the request to the admin profile JSP view. Additionally handles consumption of
- * the {@code profileUpdateSuccess} session-scoped flash attribute, which is set
- * by {@link AdminProfileUpdateServlet} following a successful profile update.
- * The flash attribute is removed from the session immediately after being read
- * to ensure single-display behaviour.</p>
- *
- * <p>Access is restricted to authenticated users holding the {@code ADMIN} role.
- * Unauthenticated requests are redirected to the login endpoint. Authenticated
- * non-admin users are redirected to the home page.</p>
- *
- * <p>Mapped to: {@code /admin/profile}</p>
- *
- * @see AdminProfileUpdateServlet
- * @see SessionUtil
+ * * <p>Security (Authentication and Authorization) is now handled by the
+ * AuthenticationFilter. This servlet focuses on data display and session-scoped
+ * flash message consumption.</p>
  */
 @WebServlet("/admin/profile")
 public class AdminProfileServlet extends HttpServlet {
 
-    /**
-     * Handles GET requests to render the admin profile view.
-     *
-     * <p>Validates the authenticated session and role, consumes any pending
-     * flash success attribute from the session, binds the user entity to the
-     * request scope, and forwards to the admin profile JSP.</p>
-     *
-     * @param request  the {@link jakarta.servlet.http.HttpServletRequest} from the client
-     * @param response the {@link jakarta.servlet.http.HttpServletResponse} to the client
-     * @throws ServletException if the servlet encounters a processing error
-     * @throws IOException      if an input/output error occurs during response handling
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // 1. Retrieve the authenticated admin (Guaranteed by AuthenticationFilter)
         User user = (User) SessionUtil.getAttribute(request, "user");
 
-        if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
-
-        if (!"ADMIN".equals(user.getRole())) {
-            response.sendRedirect(request.getContextPath() + "/home");
-            return;
-        }
-
+        // 2. Flash Attribute Consumption
+        // Read and immediately remove the success flag to prevent it from showing again on refresh
         HttpSession session = request.getSession(false);
         if (session != null) {
             Boolean success = (Boolean) session.getAttribute("profileUpdateSuccess");
@@ -71,8 +39,10 @@ public class AdminProfileServlet extends HttpServlet {
             }
         }
 
+        // 3. Bind user data for the JSP
         request.setAttribute("user", user);
 
+        // 4. Forward to the view
         request.getRequestDispatcher("/WEB-INF/views/admin/admin-profile.jsp")
                 .forward(request, response);
     }

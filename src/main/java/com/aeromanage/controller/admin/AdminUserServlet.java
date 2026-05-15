@@ -15,50 +15,25 @@ import java.io.IOException;
 
 /**
  * Servlet controller responsible for processing administrative actions on user accounts.
- *
- * <p>Handles POST requests submitted from the admin dashboard for approving or rejecting
- * pending passenger registrations. All requests are validated for an active admin session
- * prior to processing. On completion, the client is redirected to the dashboard
- * following the Post-Redirect-Get pattern.</p>
- *
- * <p>Mapped to: {@code /admin/users}</p>
- *
- * @see AdminDao
- * @see SessionUtil
+ * * <p>Access security is managed by AuthenticationFilter. This servlet handles
+ * the logic for approving or rejecting user registrations from the admin dashboard.</p>
  */
 @WebServlet("/admin/users")
 public class AdminUserServlet extends HttpServlet {
 
     private final AdminDao adminDao = new AdminDaoImpl();
 
-    /**
-     * Processes user management actions submitted via POST from the admin dashboard.
-     *
-     * <p>Validates the authenticated session and role before executing the requested
-     * action. Supported actions are {@code approve} and {@code reject}, which update
-     * the target user's status in the persistence layer accordingly.</p>
-     *
-     * @param request  the {@link jakarta.servlet.http.HttpServletRequest} containing
-     *                 {@code action} and {@code userId} parameters
-     * @param response the {@link jakarta.servlet.http.HttpServletResponse} used to
-     *                 redirect the client post-execution
-     * @throws ServletException if the servlet encounters a processing error
-     * @throws IOException      if an input/output error occurs during response handling
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        User currentUser = (User) SessionUtil.getAttribute(request, "user");
-
-        if (currentUser == null || !"ADMIN".equals(currentUser.getRole())) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+        // 1. Authentication/Authorization is guaranteed by AuthenticationFilter
+        // No need for 'currentUser == null' or role checks here.
 
         String action    = request.getParameter("action");
         String userIdStr = request.getParameter("userId");
 
+        // 2. Input Validation
         if (userIdStr == null || userIdStr.trim().isEmpty()
                 || action == null || action.trim().isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/admin/dashboard");
@@ -69,12 +44,14 @@ public class AdminUserServlet extends HttpServlet {
         try {
             userId = Integer.parseInt(userIdStr.trim());
         } catch (NumberFormatException e) {
-            System.err.println("[AdminUserServlet] Malformed userId parameter received: " + userIdStr);
+            // Log malformed ID but don't crash
             response.sendRedirect(request.getContextPath() + "/admin/dashboard");
             return;
         }
 
-        switch (action.trim()) {
+        // 3. Logic Execution
+        // Using toLowerCase() makes the action check a bit more robust
+        switch (action.trim().toLowerCase()) {
             case "approve":
                 adminDao.updateUserStatus(userId, "APPROVED");
                 break;
@@ -82,10 +59,11 @@ public class AdminUserServlet extends HttpServlet {
                 adminDao.updateUserStatus(userId, "REJECTED");
                 break;
             default:
-                System.err.println("[AdminUserServlet] Unrecognised action parameter: " + action);
+                // Log unrecognised action if necessary
                 break;
         }
 
+        // 4. PRG Pattern: Redirect back to the dashboard to refresh the lists
         response.sendRedirect(request.getContextPath() + "/admin/dashboard");
     }
 }
