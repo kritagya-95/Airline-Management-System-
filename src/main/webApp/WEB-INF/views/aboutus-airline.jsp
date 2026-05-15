@@ -1,17 +1,17 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>SkyLine Airlines — Fly Beyond Imagination</title>
+    <title>About SkyLine Airlines</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/landing.css"/>
 </head>
 <body>
 
-<!-- ══ HEADER ══ -->
+<!-- HEADER -->
 <header class="land-header">
     <div class="land-logo">
         <img src="${pageContext.request.contextPath}/static/images/logo.png"
@@ -23,35 +23,23 @@
         <a href="#features"  class="land-nav-link"><h2>Features</h2></a>
         <a href="#benefits"  class="land-nav-link"><h2>Benefits</h2></a>
         <a href="#flights"   class="land-nav-link"><h2>Flights</h2></a>
-        <a href="#book"      class="land-nav-link"><h2>Book</h2></a>
+        <a href="${pageContext.request.contextPath}/home" class="land-nav-link"><h2>Home</h2></a>
     </nav>
 
-    <div class="land-header-auth">
-        <a href="${pageContext.request.contextPath}/login"
-           class="land-btn-login">Log In</a>
-        <a href="${pageContext.request.contextPath}/register"
-           class="land-btn-signup">Sign Up</a>
-    </div>
 </header>
 
-<!-- ══ HERO ══ -->
+<!-- HERO -->
 <section class="land-hero" id="book">
     <div class="land-hero-inner">
-        <span class="land-hero-tag">Your Journey Begins Here</span>
+        <span class="land-hero-tag">About SkyLine Airlines</span>
         <h1 class="land-hero-title">
-            Fly Beyond<br/>
-            <span class="land-hero-accent">Imagination</span>
+            Connecting journeys<br/>
+            <span class="land-hero-accent">with care</span>
         </h1>
         <p class="land-hero-desc">
-           <h2> Experience seamless travel with SkyLine. Book your next adventure with exclusive deals,
-            premium service, and destinations across the globe.</h2>
+           <h2>SkyLine Airlines brings together reliable operations, attentive service,
+            and a growing route network for travelers across the globe.</h2>
         </p>
-        <div class="land-hero-btns">
-            <a href="${pageContext.request.contextPath}/register"
-               class="land-btn-primary">Book a Flight →</a>
-            <a href="${pageContext.request.contextPath}/login"
-               class="land-btn-outline">Explore Deals</a>
-        </div>
 
         <!-- Stats -->
         <div class="land-stats">
@@ -71,7 +59,7 @@
     </div>
 </section>
 
-<!-- ══ WHY CHOOSE SKYLINE ══ -->
+<!-- WHY CHOOSE SKYLINE-->
 <section class="land-why" id="features">
     <div class="land-section-inner">
         <h2 class="land-section-title">
@@ -83,22 +71,22 @@
 
         <div class="land-features-grid">
             <div class="land-feature-card">
-                <div class="land-feature-icon">🛫</div>
+                <div class="land-feature-icon">ðŸ›«</div>
                 <h2>Global Network</h2>
                 <p><h5>Access to 150+ destinations worldwide with seamless connections</h5></p>
             </div>
             <div class="land-feature-card">
-                <div class="land-feature-icon">🛡️</div>
+                <div class="land-feature-icon">ðŸ›¡ï¸</div>
                 <h2>Safe &amp; Secure</h2>
                 <p><h5>Top-rated safety standards with comprehensive travel insurance</h5></p>
             </div>
             <div class="land-feature-card">
-                <div class="land-feature-icon">🕛</div>
+                <div class="land-feature-icon">ðŸ•›</div>
                 <h2>24/7 Support</h2>
                 <p><h5>Round-the-clock customer service for all your travel needs</h5></p>
             </div>
             <div class="land-feature-card">
-                <div class="land-feature-icon">💵</div>
+                <div class="land-feature-icon">ðŸ’µ</div>
                 <h2>Best Prices</h2>
                 <p><h5>Competitive fares with exclusive deals and loyalty rewards</h5></p>
             </div>
@@ -106,7 +94,7 @@
     </div>
 </section>
 
-<!-- ══ EVERYTHING YOU NEED ══ -->
+<!-- EVERYTHING YOU NEED -->
 <section class="land-everything" id="benefits">
     <div class="land-everything-inner">
         <div class="land-everything-text">
@@ -116,24 +104,24 @@
             <div class="land-checklist">
                 <div class="land-check-col">
                     <div class="land-check-item">
-                        <span class="land-check-icon">🎯</span> Instant booking confirmation
+                        <span class="land-check-icon">ðŸŽ¯</span> Instant booking confirmation
                     </div>
                     <div class="land-check-item">
-                        <span class="land-check-icon">🎯</span> Free seat selection
+                        <span class="land-check-icon">ðŸŽ¯</span> Free seat selection
                     </div>
                     <div class="land-check-item">
-                        <span class="land-check-icon">🎯</span> Earn rewards on every flight
+                        <span class="land-check-icon">ðŸŽ¯</span> Earn rewards on every flight
                     </div>
                 </div>
                 <div class="land-check-col">
                     <div class="land-check-item">
-                        <span class="land-check-icon">🎯</span> Flexible cancellation policy
+                        <span class="land-check-icon">ðŸŽ¯</span> Flexible cancellation policy
                     </div>
                     <div class="land-check-item">
-                        <span class="land-check-icon">🎯</span> Priority boarding available
+                        <span class="land-check-icon">ðŸŽ¯</span> Priority boarding available
                     </div>
                     <div class="land-check-item">
-                        <span class="land-check-icon">🎯</span> Mobile boarding passes
+                        <span class="land-check-icon">ðŸŽ¯</span> Mobile boarding passes
                     </div>
                 </div>
             </div>
@@ -146,12 +134,12 @@
     </div>
 </section>
 
-<!-- ══ INFO / FOOTER LINKS ══ -->
+<!-- INFO / FOOTER LINKS -->
 <section class="land-info-section">
     <div class="land-info-grid">
         <div class="land-info-col">
             <h2 class="land-info-heading">About Us</h2>
-            <a href="#" class="land-info-link"><h4>About SkyLine</h4></a>
+            <a href="${pageContext.request.contextPath}/aboutus-airline" class="land-info-link"><h4>About SkyLine</h4></a>
             <a href="#" class="land-info-link"><h4>Information</h4></a>
 
         </div>
@@ -176,7 +164,7 @@
     </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
+<!--  FOOTER  -->
 <footer class="land-footer">
     <div class="land-footer-inner">
         <div class="land-footer-logo">

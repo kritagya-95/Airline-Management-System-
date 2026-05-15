@@ -227,7 +227,7 @@
     <div class="info-grid">
         <div class="info-col">
             <h3 class="info-heading">About Us</h3>
-            <a href="#" class="info-link"><h4>About SkyLine</h4></a>
+            <a href="${pageContext.request.contextPath}/aboutus-airline" class="info-link"><h4>About SkyLine</h4></a>
             <a href="#" class="info-link"><h4>Information</h4></a>
         </div>
         <div class="info-col">

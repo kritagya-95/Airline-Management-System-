@@ -266,7 +266,7 @@
   <div class="prof-info-footer-grid">
     <div class="prof-info-col">
       <h4 class="prof-info-heading">About Us</h4>
-      <a href="#" class="prof-info-link">About SkyLine</a>
+      <a href="${pageContext.request.contextPath}/aboutus-airline" class="prof-info-link">About SkyLine</a>
       <a href="#" class="prof-info-link">Newsroom</a>
       <a href="#" class="prof-info-link">Corporate Information</a>
       <a href="#" class="prof-info-link">Tenders</a>
