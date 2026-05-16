@@ -9,8 +9,54 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/landing.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/information.css"/>
+
+    <style>
+        .developer-card { cursor: pointer; transition: all 0.3s ease; }
+        .developer-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(139, 0, 0, 0.2) !important; }
+
+        .developer-popup {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-content {
+            background: white;
+            color: #333;
+            max-width: 480px;
+            width: 92%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+        }
+        .popup-photo img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+        .popup-info {
+            padding: 25px;
+            text-align: center;
+        }
+        .popup-info h2 { margin: 10px 0 5px; color: #8B0000; font-size: 24px; }
+        .popup-role { color: #555; font-weight: 600; margin-bottom: 15px; }
+        .popup-desc { color: #444; line-height: 1.6; margin-bottom: 20px; }
+        .close-btn {
+            padding: 12px 30px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
+
+<!-- HEADER -->
 <header class="land-header">
     <div class="land-logo">
         <img src="${pageContext.request.contextPath}/static/images/logo.png" class="land-logo-img" alt="SkyLine"/>
@@ -34,51 +80,103 @@
 
 <section class="travel-page-section">
     <div class="developer-grid">
-        <article class="developer-card">
+
+        <article class="developer-card" onclick="showDeveloperPopup(0)">
             <div class="developer-photo">
-                <img src="${pageContext.request.contextPath}/static/images/Krits.jpg" alt="Kritagya Shrestha"/>
+                <img src="${pageContext.request.contextPath}/static/images/Krits.jpg" alt="Kritagya"/>
                 <span>CEO</span>
             </div>
-            <div><h2>Kritagya Shrestha</h2><p>Drives the product vision and strategy for SkyLine Airlines, ensuring the platform delivers a seamless, user-friendly, and innovative travel experience while keeping customer satisfaction and business goals at the center of development.</p></div>
+            <div><h2>Kritagya Shrestha</h2><p>Drives the product vision...</p></div>
         </article>
-        <article class="developer-card">
+
+        <article class="developer-card" onclick="showDeveloperPopup(1)">
             <div class="developer-photo">
-                <img src="${pageContext.request.contextPath}/static/images/SujalP.jpg" alt="Sujal Pariyar"/>
+                <img src="${pageContext.request.contextPath}/static/images/SujalP.jpg" alt="SujalP"/>
                 <span>Co-Founder</span>
             </div>
-            <div><h2>Sujal Pariyar</h2><p>Shapes core workflows and helps turn team ideas into usable application features.</p></div>
+            <div><h2>Sujal Pariyar</h2><p>Shapes core workflows...</p></div>
         </article>
-        <article class="developer-card">
+
+        <article class="developer-card" onclick="showDeveloperPopup(2)">
             <div class="developer-photo">
-                <img src="${pageContext.request.contextPath}/static/images/SujalT.jpg" alt="Sujal Tiwari"/>
-                <span>Lead Backend Developer</span>
+                <img src="${pageContext.request.contextPath}/static/images/SujalT.jpg" alt="SujalT"/>
+                <span>Lead Backend</span>
             </div>
-            <div><h2>Sujal Tiwari</h2><p>Works on server-side logic, database coordination, and reliable request handling.</p></div>
+            <div><h2>Sujal Tiwari</h2><p>Works on server-side logic...</p></div>
         </article>
-        <article class="developer-card">
+
+        <article class="developer-card" onclick="showDeveloperPopup(3)">
             <div class="developer-photo">
-                <img src="${pageContext.request.contextPath}/static/images/Binod.jpg" alt="Binod Tamang"/>
+                <img src="${pageContext.request.contextPath}/static/images/Binod.jpg" alt="Binod"/>
                 <span>UI/UX Lead</span>
             </div>
-            <div><h2>Binod Tamang</h2><p>Focuses on clean screens, approachable layouts, and a polished visual direction.</p></div>
+            <div><h2>Binod Tamang</h2><p>Focuses on clean screens...</p></div>
         </article>
-        <article class="developer-card">
+
+        <article class="developer-card" onclick="showDeveloperPopup(4)">
             <div class="developer-photo">
-                <img src="${pageContext.request.contextPath}/static/images/Prajesh.jpg" alt="Prajesh Thapa"/>
+                <img src="${pageContext.request.contextPath}/static/images/Prajesh.jpg" alt="Prajesh"/>
                 <span>Database Engineer</span>
             </div>
-            <div><h2>Prajesh Thapa</h2><p>Maintains data structure, route information, and the booking system foundation.</p></div>
+            <div><h2>Prajesh Thapa</h2><p>Maintains data structure...</p></div>
         </article>
-        <article class="developer-card">
+
+        <article class="developer-card" onclick="showDeveloperPopup(5)">
             <div class="developer-photo">
-                <img src="${pageContext.request.contextPath}/static/images/Aditya.jpg" alt="Aditya Ale Magar"/>
+                <img src="${pageContext.request.contextPath}/static/images/Aditya.jpg" alt="Aditya"/>
                 <span>Quality Analyst</span>
             </div>
-            <div><h2>Aditya Ale Magar</h2><p>Reviews behavior, checks edge cases, and helps keep the final system dependable.</p></div>
+            <div><h2>Aditya Ale Magar</h2><p>Reviews behavior...</p></div>
         </article>
+
     </div>
 </section>
 
+<!-- Popup -->
+<div class="developer-popup" id="devPopup">
+    <div class="popup-content">
+        <div class="popup-photo" id="popupPhoto"></div>
+        <div class="popup-info">
+            <h2 id="popupName"></h2>
+            <p class="popup-role" id="popupRole"></p>
+            <p class="popup-desc" id="popupDesc"></p>
+            <button class="close-btn" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+</div>
+
 <jsp:include page="/WEB-INF/views/partials/landing-footer.jsp"/>
+
+<script>
+    const developers = [
+        { photo: "${pageContext.request.contextPath}/static/images/Krits.jpg", name: "Kritagya Shrestha", role: "CEO", desc: "Drives the product vision and strategy for SkyLine Airlines..." },
+        { photo: "${pageContext.request.contextPath}/static/images/SujalP.jpg", name: "Sujal Pariyar", role: "Co-Founder", desc: "Shapes core workflows and helps turn team ideas..." },
+        { photo: "${pageContext.request.contextPath}/static/images/SujalT.jpg", name: "Sujal Tiwari", role: "Lead Backend Developer", desc: "Works on server-side logic..." },
+        { photo: "${pageContext.request.contextPath}/static/images/Binod.jpg", name: "Binod Tamang", role: "UI/UX Lead", desc: "Focuses on clean screens..." },
+        { photo: "${pageContext.request.contextPath}/static/images/Prajesh.jpg", name: "Prajesh Thapa", role: "Database Engineer", desc: "Maintains data structure..." },
+        { photo: "${pageContext.request.contextPath}/static/images/Aditya.jpg", name: "Aditya Ale Magar", role: "Quality Analyst", desc: "Reviews behavior, checks edge cases..." }
+    ];
+
+    function showDeveloperPopup(index) {
+        const dev = developers[index];
+        const photoDiv = document.getElementById('popupPhoto');
+        photoDiv.innerHTML = `<img src="${dev.photo}" alt="${dev.name}" onerror="this.src='${pageContext.request.contextPath}/static/images/Air.jpg'">`;
+
+        document.getElementById('popupName').textContent = dev.name;
+        document.getElementById('popupRole').textContent = dev.role;
+        document.getElementById('popupDesc').textContent = dev.desc;
+        document.getElementById('devPopup').style.display = 'flex';
+    }
+
+    function closePopup() {
+        document.getElementById('devPopup').style.display = 'none';
+    }
+
+    // Close on outside click
+    document.getElementById('devPopup').addEventListener('click', function(e) {
+        if (e.target === this) closePopup();
+    });
+</script>
+
 </body>
 </html>
