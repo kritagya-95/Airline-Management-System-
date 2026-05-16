@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
@@ -24,8 +24,7 @@
         <div class="nav-dropdown">
             <a href="#" class="nav-link"><h2>Book</h2> <span class="arrow">▾</span></a>
             <div class="dropdown-menu">
-                <a href="${pageContext.request.contextPath}/search-flights">Search Flights</a>
-                <a href="${pageContext.request.contextPath}/home" class="nav-link-direct">Book a Flight</a>
+                <a href="${pageContext.request.contextPath}/book-flight">Book a Flight</a>
                 <a href="#">Manage Booking</a>
             </div>
         </div>
@@ -50,29 +49,29 @@
 <div class="search-container">
     <div class="search-box">
         <h1 class="search-title">Search and Book for Our FLIGHTS online</h1>
-        <form class="search-form" action="${pageContext.request.contextPath}/flights" method="get">
+        <form class="search-form" action="${pageContext.request.contextPath}/search-flights" method="get">
             <div class="search-field">
                 <label>From</label>
                 <div class="search-input-wrap">
-                    <input type="text" name="from" placeholder="Select Origin" class="search-input" required/>
+                    <input type="text" name="from" value="<c:out value='${searchedFrom}'/>" placeholder="Select Origin" class="search-input" required/>
                 </div>
             </div>
             <div class="search-field">
                 <label>To</label>
                 <div class="search-input-wrap">
-                    <input type="text" name="to" placeholder="Select Destination" class="search-input" required/>
+                    <input type="text" name="to" value="<c:out value='${searchedTo}'/>" placeholder="Select Destination" class="search-input" required/>
                 </div>
             </div>
             <div class="search-field">
                 <label>Departure</label>
                 <div class="search-input-wrap">
-                    <input type="date" name="departure" class="search-input" required/>
+                    <input type="date" name="departure" value="<c:out value='${searchedDate}'/>" class="search-input" required/>
                 </div>
             </div>
             <div class="search-field">
                 <label>Return</label>
                 <div class="search-input-wrap">
-                    <input type="date" name="returnDate" class="search-input"/>
+                    <input type="date" name="returnDate" value="<c:out value='${param.returnDate}'/>" class="search-input"/>
                 </div>
             </div>
             <div class="search-field search-btn-wrap">
@@ -83,7 +82,12 @@
 </div>
 
 <main class="booking-container" id="popular-deals">
-    <h2 class="section-title">Popular Flight Deals on SkyLine Airlines</h2>
+    <h2 class="section-title">
+        <c:choose>
+            <c:when test="${not empty searchedFrom}">Available Flights Matching Your Search</c:when>
+            <c:otherwise>Popular Flight Deals on SkyLine Airlines</c:otherwise>
+        </c:choose>
+    </h2>
 
     <div class="flight-filter">
         <div class="filter-field">
@@ -103,7 +107,9 @@
     <div class="flight-grid" id="flightGrid">
         <c:choose>
             <c:when test="${empty flights}">
-                <div class="no-flights">No flights available at the moment.</div>
+                <div class="no-flights" style="text-align: center; width: 100%; font-size: 1.2rem; margin: 2rem 0;">
+                    No flights found matching your criteria. Try adjusting your destinations or dates.
+                </div>
             </c:when>
             <c:otherwise>
                 <c:forEach var="f" items="${flights}">
@@ -141,6 +147,7 @@
 </main>
 
 <script>
+    // Live client-side string filtering engine
     function filterCards() {
         const fromValue = document.getElementById("filterFrom").value.toLowerCase().trim();
         const toValue = document.getElementById("filterTo").value.toLowerCase().trim();
@@ -156,6 +163,7 @@
         });
     }
 
+    // Nav dropdown utility script logic
     document.querySelectorAll(".nav-dropdown").forEach(dd => {
         dd.addEventListener("click", function(e) {
             e.stopPropagation();
