@@ -6,9 +6,8 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Book Flights - SkyLine Airlines</title>
+    <title>Search Results - SkyLine Airlines</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Chivo:wght@400;500;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/book-flight.css"/>
 </head>
@@ -20,7 +19,6 @@
             <span class="logo-text"><h1>SkyLine</h1></span>
         </a>
     </div>
-
     <nav class="nav-links">
         <div class="nav-dropdown">
             <a href="#" class="nav-link"><h2>Book</h2> <span class="arrow">▾</span></a>
@@ -30,7 +28,6 @@
             </div>
         </div>
     </nav>
-
     <div class="header-right">
         <div class="header-auth">
             <c:choose>
@@ -54,25 +51,25 @@
             <div class="search-field">
                 <label>From</label>
                 <div class="search-input-wrap">
-                    <input type="text" name="from" placeholder="Select Origin" class="search-input" required/>
+                    <input type="text" name="from" value="<c:out value='${searchedFrom}'/>" placeholder="Select Origin" class="search-input" required/>
                 </div>
             </div>
             <div class="search-field">
                 <label>To</label>
                 <div class="search-input-wrap">
-                    <input type="text" name="to" placeholder="Select Destination" class="search-input" required/>
+                    <input type="text" name="to" value="<c:out value='${searchedTo}'/>" placeholder="Select Destination" class="search-input" required/>
                 </div>
             </div>
             <div class="search-field">
                 <label>Departure</label>
                 <div class="search-input-wrap">
-                    <input type="date" name="departure" class="search-input" required/>
+                    <input type="date" name="departure" value="<c:out value='${searchedDate}'/>" class="search-input" required/>
                 </div>
             </div>
             <div class="search-field">
                 <label>Return</label>
                 <div class="search-input-wrap">
-                    <input type="date" name="returnDate" class="search-input"/>
+                    <input type="date" name="returnDate" value="<c:out value='${param.returnDate}'/>" class="search-input"/>
                 </div>
             </div>
             <div class="search-field search-btn-wrap">
@@ -82,33 +79,19 @@
     </div>
 </div>
 
-<main class="booking-container" id="popular-deals">
-    <h2 class="section-title">Popular Flight Deals on SkyLine Airlines</h2>
+<main class="booking-container">
+    <h2 class="section-title">Matching Search Results</h2>
 
-    <div class="flight-filter">
-        <div class="filter-field">
-            <label>From</label>
-            <div class="filter-input-wrap-local">
-                <input type="text" id="filterFrom" placeholder="Input Origin" class="filter-input" oninput="filterCards()"/>
-            </div>
-        </div>
-        <div class="filter-field">
-            <label>To</label>
-            <div class="filter-input-wrap-local">
-                <input type="text" id="filterTo" placeholder="Input Destination" class="filter-input" oninput="filterCards()"/>
-            </div>
-        </div>
-    </div>
-
-    <div class="flight-grid" id="flightGrid">
+    <div class="flight-grid">
         <c:choose>
             <c:when test="${empty flights}">
-                <div class="no-flights">No flights available at the moment.</div>
+                <div class="no-flights" style="text-align: center; width: 100%; font-size: 1.2rem; margin: 2rem 0;">
+                    ❌ No flights found matching your criteria. Try adjusting your destinations or dates.
+                </div>
             </c:when>
             <c:otherwise>
                 <c:forEach var="f" items="${flights}">
-                    <%-- FIXED: Safe fallback attributes added using single quotes to avoid evaluation breaks if codes are empty --%>
-                    <article class="flight-card" data-from="<c:out value='${f.origin_city} ${f.origin_code}'/>" data-to="<c:out value='${f.dest_city} ${f.dest_code}'/>">
+                    <article class="flight-card">
                         <div class="flight-card-img">
                             <c:choose>
                                 <c:when test="${f.dest_city == 'Dubai'}"><img src="${pageContext.request.contextPath}/static/images/dubai.jpg" alt="Dubai"></c:when>
@@ -122,8 +105,6 @@
                             <h3 class="flight-card-title"><c:out value="${f.origin_city}"/> to <c:out value="${f.dest_city}"/></h3>
                             <p class="flight-card-depart">Depart: <c:out value="${f.departure_time}"/></p>
                             <p class="flight-card-price">NPR <fmt:formatNumber value="${f.base_economy_fare}" pattern="#,##0.00"/></p>
-
-                                <%-- FIXED: Linked SecurityFilter configuration check directly to button output processing --%>
                             <a class="book-btn" href="${pageContext.request.contextPath}/booking?flightId=${f.flight_id}">Book Now</a>
                         </div>
                     </article>
@@ -133,58 +114,7 @@
     </div>
 </main>
 
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-section brand-info">
-            <h2 class="footer-logo">SkyLine</h2>
-            <p>Elevating your travel journey with world-class service, premier route operations, and dynamic booking accessibility.</p>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-        </div>
-        <div class="footer-section links-services">
-            <h3>Our Services</h3>
-            <ul>
-                <li><a href="${pageContext.request.contextPath}/book-flight">Book Flights</a></li>
-                <li><a href="#">Corporate Travel</a></li>
-                <li><a href="#">Cargo Flights</a></li>
-                <li><a href="#">Premium Lounges</a></li>
-            </ul>
-        </div>
-        <div class="footer-section links-support">
-            <h3>Support & Info</h3>
-            <ul>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Baggage Guidelines</a></li>
-                <li><a href="#">Refund Policy</a></li>
-                <li><a href="#">FAQs</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2026 SkyLine Airlines. All Rights Reserved.</p>
-    </div>
-</footer>
-
 <script>
-    function filterCards() {
-        const fromValue = document.getElementById("filterFrom").value.toLowerCase().trim();
-        const toValue = document.getElementById("filterTo").value.toLowerCase().trim();
-
-        document.querySelectorAll(".flight-card").forEach(card => {
-            const cardFrom = card.getAttribute("data-from") ? card.getAttribute("data-from").toLowerCase() : "";
-            const cardTo = card.getAttribute("data-to") ? card.getAttribute("data-to").toLowerCase() : "";
-
-            const matchFrom = fromValue === "" || cardFrom.includes(fromValue);
-            const matchTo = toValue === "" || cardTo.includes(toValue);
-
-            card.style.display = (matchFrom && matchTo) ? "flex" : "none";
-        });
-    }
-
     document.querySelectorAll(".nav-dropdown").forEach(dd => {
         dd.addEventListener("click", function(e) {
             e.stopPropagation();
