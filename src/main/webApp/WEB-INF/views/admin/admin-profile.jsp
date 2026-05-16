@@ -27,15 +27,11 @@
     </header>
 
     <div class="profile-banner">
-        <div class="avatar-circle" style="background:#ddd; position:relative; overflow:hidden;">
+        <div class="avatar-circle">
             <c:choose>
                 <c:when test="${not empty user.profileImage and user.profileImage != 'default-avatar.png'}">
                     <img src="${pageContext.request.contextPath}/uploads/${user.profileImage}"
-                         alt="Profile" style="width:100%; height:100%; object-fit:cover;">
-                    <!-- DEBUG TEXT -->
-                    <div style="position:absolute; bottom:2px; left:2px; background:rgba(0,0,0,0.8); color:#fff; font-size:9px; padding:1px 4px;">
-                            ${user.profileImage}
-                    </div>
+                         alt="Profile" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
                 </c:when>
                 <c:otherwise>
                     ${fn:substring(user.fullName, 0, 2)}

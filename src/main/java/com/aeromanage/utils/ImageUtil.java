@@ -5,12 +5,18 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+/**
+ * Utility class for handling image file uploads.
+ * Files are stored outside the project in ~/skyline-uploads/
+ */
 public class ImageUtil {
+
+    private static final String UPLOAD_DIR = System.getProperty("user.home")
+            + File.separator + "skyline-uploads";
 
     public static String uploadImage(Part imagePart) {
         if (imagePart == null || imagePart.getSubmittedFileName() == null ||
                 imagePart.getSubmittedFileName().isEmpty()) {
-            System.out.println("[ImageUtil] No file received");
             return null;
         }
 
@@ -23,31 +29,23 @@ public class ImageUtil {
         }
 
         if (!".jpg".equals(extension) && !".jpeg".equals(extension) && !".png".equals(extension)) {
-            System.out.println("[ImageUtil] Invalid extension: " + extension);
             return null;
         }
 
         String uniqueName = LocalDateTime.now().toString()
                 .replace(":", "-").replace("T", "_") + extension;
 
-        // Save to deployed webapp/uploads (Cargo compatible)
-        String uploadDirPath = System.getProperty("catalina.base") +
-                "/webapps/ROOT/uploads";
-
-        File uploadDir = new File(uploadDirPath);
+        File uploadDir = new File(UPLOAD_DIR);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
-            System.out.println("[ImageUtil] Created directory: " + uploadDirPath);
         }
 
         try {
-            String fullPath = uploadDir + File.separator + uniqueName;
-            imagePart.write(fullPath);
-            System.out.println("[ImageUtil] ✅ SUCCESS: Saved " + uniqueName);
+            imagePart.write(UPLOAD_DIR + File.separator + uniqueName);
+            System.out.println("[ImageUtil] SUCCESS: " + uniqueName);
             return uniqueName;
         } catch (IOException e) {
-            System.err.println("[ImageUtil] ❌ FAILED: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("[ImageUtil] FAILED: " + e.getMessage());
             return null;
         }
     }
@@ -56,7 +54,9 @@ public class ImageUtil {
         if (imageName == null || imageName.isEmpty() || "default-avatar.png".equals(imageName)) {
             return;
         }
-        String path = System.getProperty("catalina.base") + "/webapps/ROOT/uploads/" + imageName;
-        new File(path).delete();
+        File file = new File(UPLOAD_DIR + File.separator + imageName);
+        if (file.exists()) {
+            file.delete();
+        }
     }
 }

@@ -45,7 +45,8 @@
       <c:choose>
         <c:when test="${not empty user.profileImage and user.profileImage != 'default-avatar.png'}">
           <img src="${pageContext.request.contextPath}/uploads/${user.profileImage}"
-               alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+               alt="Profile Picture"
+               style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
         </c:when>
         <c:otherwise>
           <c:set var="nameParts" value="${fn:split(user.fullName, ' ')}"/>
