@@ -1,0 +1,95 @@
+/* information.css */
+.developer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.developer-card {
+    background: #fffdfa;
+    border: 1px solid #ede8e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transition: all 0.3s ease;   /* Added hover transition */
+}
+
+.developer-card:hover {
+    transform: translateY(-10px);   /* Hover effect like other pages */
+    box-shadow: 0 15px 30px rgba(139, 0, 0, 0.15);
+}
+
+.developer-photo {
+    position: relative;
+    height: 230px;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.developer-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;   /* Smooth image zoom on hover */
+}
+
+.developer-card:hover .developer-photo img {
+    transform: scale(1.08);   /* Nice subtle zoom effect */
+}
+
+.developer-photo::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 45%;
+    background: linear-gradient(to top, rgba(139,0,0,0.9), rgba(139,0,0,0));
+}
+
+.developer-photo span {
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    z-index: 1;
+    display: inline-block;
+    color: #fff;
+    background: #8B0000;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.developer-card div:not(.developer-photo) {
+    min-height: 146px;
+    padding: 18px 20px;
+}
+
+.developer-card h2 {
+    font-family: 'Chivo', sans-serif;
+    font-size: 18px;
+    color: #07101f;
+    margin-bottom: 12px;
+}
+
+.developer-card p {
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.55;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 1024px) {
+    .developer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .developer-grid {
+        grid-template-columns: 1fr;
+    }
+}
