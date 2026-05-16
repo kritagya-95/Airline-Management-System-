@@ -135,7 +135,9 @@
 <!-- Popup -->
 <div class="developer-popup" id="devPopup">
     <div class="popup-content">
-        <div class="popup-photo" id="popupPhoto"></div>
+        <div class="popup-photo" id="popupPhoto">
+            <img id="popupImg" src="" alt="" style="width:100%;height:280px;object-fit:cover;"/>
+        </div>
         <div class="popup-info">
             <h2 id="popupName"></h2>
             <p class="popup-role" id="popupRole"></p>
@@ -148,20 +150,22 @@
 <jsp:include page="/WEB-INF/views/partials/landing-footer.jsp"/>
 
 <script>
+    const ctx = '<%= request.getContextPath() %>';
+
     const developers = [
-        { photo: "${pageContext.request.contextPath}/static/images/Krits.jpg", name: "Kritagya Shrestha", role: "CEO", desc: "Drives the product vision and strategy for SkyLine Airlines..." },
-        { photo: "${pageContext.request.contextPath}/static/images/SujalP.jpg", name: "Sujal Pariyar", role: "Co-Founder", desc: "Shapes core workflows and helps turn team ideas..." },
-        { photo: "${pageContext.request.contextPath}/static/images/SujalT.jpg", name: "Sujal Tiwari", role: "Lead Backend Developer", desc: "Works on server-side logic..." },
-        { photo: "${pageContext.request.contextPath}/static/images/Binod.jpg", name: "Binod Tamang", role: "UI/UX Lead", desc: "Focuses on clean screens..." },
-        { photo: "${pageContext.request.contextPath}/static/images/Prajesh.jpg", name: "Prajesh Thapa", role: "Database Engineer", desc: "Maintains data structure..." },
-        { photo: "${pageContext.request.contextPath}/static/images/Aditya.jpg", name: "Aditya Ale Magar", role: "Quality Analyst", desc: "Reviews behavior, checks edge cases..." }
+        { photo: ctx + "/static/images/Krits.jpg",   name: "Kritagya Shrestha",  role: "CEO",                    desc: "Drives the product vision and strategy for SkyLine Airlines..." },
+        { photo: ctx + "/static/images/SujalP.jpg",  name: "Sujal Pariyar",      role: "Co-Founder",             desc: "Shapes core workflows and helps turn team ideas into reality..." },
+        { photo: ctx + "/static/images/SujalT.jpg",  name: "Sujal Tiwari",       role: "Lead Backend Developer", desc: "Works on server-side logic, servlets, and the DAO layer..." },
+        { photo: ctx + "/static/images/Binod.jpg",   name: "Binod Tamang",        role: "UI/UX Lead",             desc: "Focuses on clean screens and intuitive user experience..." },
+        { photo: ctx + "/static/images/Prajesh.jpg", name: "Prajesh Thapa",       role: "Database Engineer",      desc: "Maintains data structure, SQL schemas and query optimization..." },
+        { photo: ctx + "/static/images/Aditya.jpg",  name: "Aditya Ale Magar",    role: "Quality Analyst",        desc: "Reviews behavior, checks edge cases and ensures stability..." }
     ];
 
     function showDeveloperPopup(index) {
         const dev = developers[index];
-        const photoDiv = document.getElementById('popupPhoto');
-        photoDiv.innerHTML = `<img src="${dev.photo}" alt="${dev.name}" onerror="this.src='${pageContext.request.contextPath}/static/images/Air.jpg'">`;
-
+        const img = document.getElementById('popupImg');
+        img.src = dev.photo;
+        img.alt = dev.name;
         document.getElementById('popupName').textContent = dev.name;
         document.getElementById('popupRole').textContent = dev.role;
         document.getElementById('popupDesc').textContent = dev.desc;
@@ -172,11 +176,10 @@
         document.getElementById('devPopup').style.display = 'none';
     }
 
-    // Close on outside click
     document.getElementById('devPopup').addEventListener('click', function(e) {
         if (e.target === this) closePopup();
     });
 </script>
-
 </body>
 </html>
+
