@@ -13,23 +13,21 @@
 </head>
 <body>
 
-<!-- ══ HEADER ══ -->
 <header class="header">
     <div class="header-logo">
-        <img src="${pageContext.request.contextPath}/static/images/logo.png"
-             class="logo-image" alt="SkyLine Logo"/>
-        <span class="logo-text"><h1>SkyLine</h1></span>
+        <a href="${pageContext.request.contextPath}/" class="logo-link">
+            <span class="logo-text"><h1>SkyLine</h1></span>
+        </a>
+    </div>
+    <div class="nav-dropdown">
+        <a href="#" class="nav-link"><h2>Book</h2> <span class="arrow">▾</span></a>
+        <div class="dropdown-menu">
+            <a href="${pageContext.request.contextPath}/search-flights">Search Flights</a>
+            <a href="${pageContext.request.contextPath}/book-flight">Book a Flight</a>
+            <a href="${pageContext.request.contextPath}/booking/manage">Manage Booking</a>
+        </div>
     </div>
 
-    <nav class="nav-links">
-        <div class="nav-dropdown">
-            <a href="#" class="nav-link"><h2>Book</h2> <span class="arrow">▾</span></a>
-            <div class="dropdown-menu">
-                <a href="#">Search Flights</a>
-                <a href="#">Book a Flight</a>
-                <a href="#">Manage Booking</a>
-            </div>
-        </div>
         <div class="nav-dropdown">
             <a href="#" class="nav-link"><h2>Manage</h2> <span class="arrow">▾</span></a>
             <div class="dropdown-menu">
@@ -72,7 +70,6 @@
     </div>
 </header>
 
-<!-- ══ HERO ══ -->
 <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -81,7 +78,6 @@
     </div>
 </section>
 
-<!-- ══ SEARCH BOX ══ -->
 <div class="search-container">
     <div class="search-box">
         <h1 class="search-title">Search and Book for Our FLIGHTS online</h1>
@@ -125,7 +121,6 @@
     </div>
 </div>
 
-<!-- ══ POPULAR FLIGHTS ══ -->
 <section class="popular-section">
     <h2 class="section-title">Popular Flight Deals on SkyLine Airlines</h2>
 
@@ -223,7 +218,6 @@
     </div>
 </section>
 
-<!-- ══ INFO SECTION ══ -->
 <section class="info-section">
     <div class="info-grid">
         <div class="info-col">
@@ -252,12 +246,9 @@
     </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
 <footer class="prof-footer">
     <div class="prof-footer-inner">
         <div class="prof-footer-logo">
-            <img src="${pageContext.request.contextPath}/static/images/logo.png"
-                 class="prof-footer-logo-img" alt="SkyLine"/>
             <span class="prof-footer-logo-text">SkyLine</span>
         </div>
         <p class="prof-footer-copy">&copy; 2026 SkyLine Airlines. All rights reserved.</p>
@@ -277,6 +268,7 @@
         </div>
     </div>
 </footer>
+
 <script>
     function filterCards() {
         const from  = document.getElementById("filterFrom").value.toLowerCase();

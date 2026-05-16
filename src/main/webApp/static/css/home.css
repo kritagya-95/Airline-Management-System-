@@ -15,7 +15,6 @@
     text-decoration: underline;
 }
 
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -44,7 +43,16 @@ body {
     gap: 10px;
 }
 
-.logo-image { height: 1px; }
+/* Clickable Logo Wrap Configuration */
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+.logo-link:hover {
+    text-decoration: none;
+}
 
 .logo-text {
     font-family: 'Cinzel', serif;
@@ -156,7 +164,6 @@ body {
     color: #555;
 }
 
-/* Log In — white background, red border, red text */
 .btn-header-login {
     font-family: 'Cinzel', serif;
     font-size: 13px;
@@ -177,7 +184,6 @@ body {
     text-decoration: none;
 }
 
-/* Sign Up — red background, white text */
 .btn-header-signup {
     font-family: 'Cinzel', serif;
     font-size: 13px;
@@ -594,11 +600,8 @@ body {
 .prof-footer-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
     flex: 1;
 }
-
-.prof-footer-logo-img { height: 60px; }
 
 .prof-footer-logo-text {
     font-family: 'Cinzel', serif;
@@ -640,7 +643,6 @@ body {
 }
 
 .prof-social-link:hover { border-color: #8B0000; }
-
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 1024px) {
