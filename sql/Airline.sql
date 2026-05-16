@@ -37,6 +37,7 @@ CREATE TABLE users (
                        phone      VARCHAR(20),
                        role       ENUM('ADMIN','PASSENGER','STAFF') NOT NULL DEFAULT 'PASSENGER',
                        status     ENUM('PENDING','APPROVED','REJECTED') NOT NULL DEFAULT 'PENDING',
+                       profile_image  VARCHAR(255) NULL DEFAULT 'default-avatar.png',
                        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

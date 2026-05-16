@@ -14,8 +14,6 @@
 <body>
 
 <div class="admin-profile-container">
-
-    <!-- Top Navigation -->
     <header class="admin-top-nav">
         <div class="logo">
             <img src="${pageContext.request.contextPath}/static/images/logo.png" alt="SkyLine"/>
@@ -28,19 +26,28 @@
         <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Logout</a>
     </header>
 
-    <!-- Red Banner -->
     <div class="profile-banner">
-        <div class="avatar-circle">
-            ${fn:substring(user.fullName, 0, 2)}
+        <div class="avatar-circle" style="background:#ddd; position:relative; overflow:hidden;">
+            <c:choose>
+                <c:when test="${not empty user.profileImage and user.profileImage != 'default-avatar.png'}">
+                    <img src="${pageContext.request.contextPath}/uploads/${user.profileImage}"
+                         alt="Profile" style="width:100%; height:100%; object-fit:cover;">
+                    <!-- DEBUG TEXT -->
+                    <div style="position:absolute; bottom:2px; left:2px; background:rgba(0,0,0,0.8); color:#fff; font-size:9px; padding:1px 4px;">
+                            ${user.profileImage}
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    ${fn:substring(user.fullName, 0, 2)}
+                </c:otherwise>
+            </c:choose>
         </div>
         <h1><c:out value="${user.fullName}"/></h1>
     </div>
 
-    <!-- Main Content -->
     <div class="profile-content">
         <div class="tabs">
             <button class="tab active">Overview</button>
-           <!-- <button class="tab">Settings</button>-->
         </div>
 
         <div class="info-card">
@@ -51,22 +58,10 @@
                 </button>
             </div>
 
-            <!-- View Mode -->
             <div id="view-mode" class="info-grid">
                 <div class="info-row">
-                    <span class="info-label">First Name</span>
-                    <span class="info-value"><c:out value="${fn:split(user.fullName, ' ')[0]}"/></span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Last Name</span>
-                    <span class="info-value">
-                        <c:choose>
-                            <c:when test="${fn:length(fn:split(user.fullName, ' ')) > 1}">
-                                <c:out value="${fn:split(user.fullName, ' ')[1]}"/>
-                            </c:when>
-                            <c:otherwise>—</c:otherwise>
-                        </c:choose>
-                    </span>
+                    <span class="info-label">Full Name</span>
+                    <span class="info-value"><c:out value="${user.fullName}"/></span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Email</span>
@@ -78,8 +73,9 @@
                 </div>
             </div>
 
-            <!-- Edit Mode -->
-            <form id="edit-mode" class="edit-form" action="${pageContext.request.contextPath}/admin/profile/update" method="post" style="display: none;">
+            <form id="edit-mode" class="edit-form"
+                  action="${pageContext.request.contextPath}/admin/profile/update"
+                  method="post" enctype="multipart/form-data" style="display: none;">
                 <div class="info-grid">
                     <div class="form-group">
                         <label>Full Name</label>
@@ -92,6 +88,10 @@
                     <div class="form-group">
                         <label>Phone</label>
                         <input type="tel" name="phone" value="<c:out value='${user.phone}'/>"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Profile Picture</label>
+                        <input type="file" name="profileImage" accept="image/*"/>
                     </div>
                 </div>
                 <div class="form-actions">

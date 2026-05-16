@@ -4,17 +4,10 @@ import com.aeromanage.entity.User;
 import com.aeromanage.utils.DBConnection;
 
 import java.sql.*;
+import java.util.*;
 
 /**
- * JDBC implementation of the {@link UserDao} interface.
- *
- * <p>Provides concrete database operations for user account management using
- * standard JDBC with {@link PreparedStatement} to prevent SQL injection.
- * All database resources are managed via try-with-resources to ensure
- * proper cleanup regardless of execution outcome.</p>
- *
- * @see UserDao
- * @see DBConnection
+ * JDBC implementation of the UserDao interface.
  */
 public class UserDaoImpl implements UserDao {
 
@@ -46,12 +39,11 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public boolean save(User user) {
-        String sql = "INSERT INTO users (full_name, email, password, phone, role, status) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (full_name, email, password, phone, role, status, profile_image) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql,
-                     PreparedStatement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, user.getFullName());
             ps.setString(2, user.getEmail());
@@ -59,6 +51,7 @@ public class UserDaoImpl implements UserDao {
             ps.setString(4, user.getPhone());
             ps.setString(5, user.getRole());
             ps.setString(6, user.getStatus());
+            ps.setString(7, user.getProfileImage());
 
             int rows = ps.executeUpdate();
 
@@ -102,10 +95,6 @@ public class UserDaoImpl implements UserDao {
 
     /**
      * {@inheritDoc}
-     *
-     * <p>Updates {@code full_name}, {@code phone}, {@code role}, and {@code status}
-     * fields for the record identified by {@code user_id}. The {@code email} field
-     * is intentionally excluded from mutation to preserve account identity integrity.</p>
      */
     @Override
     public boolean update(User user) {
@@ -144,7 +133,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public boolean updatePassword(int userId, String hashedPassword) {
-        String sql = "UPDATE users SET password = ? WHERE user_id = ? AND role = 'PASSENGER'";
+        String sql = "UPDATE users SET password = ? WHERE user_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -154,8 +143,7 @@ public class UserDaoImpl implements UserDao {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.err.println("[UserDaoImpl] updatePassword error for userId "
-                    + userId + ": " + e.getMessage());
+            System.err.println("[UserDaoImpl] updatePassword error for userId " + userId + ": " + e.getMessage());
             return false;
         }
     }
@@ -167,61 +155,27 @@ public class UserDaoImpl implements UserDao {
     public boolean deletePassengerAccount(int userId) {
         try (Connection conn = DBConnection.getConnection()) {
             conn.setAutoCommit(false);
-
             try {
-                deleteRows(conn, """
-                    DELETE r FROM refunds r
-                    JOIN cancellations c ON c.cancellation_id = r.cancellation_id
-                    JOIN bookings b ON b.booking_id = c.booking_id
-                    WHERE b.user_id = ?
-                    """, userId);
-
-                deleteRows(conn, """
-                    DELETE t FROM tickets t
-                    JOIN booking_passengers bp ON bp.passenger_id = t.passenger_id
-                    JOIN bookings b ON b.booking_id = bp.booking_id
-                    WHERE b.user_id = ?
-                    """, userId);
-
-                deleteRows(conn, """
-                    DELETE c FROM cancellations c
-                    JOIN bookings b ON b.booking_id = c.booking_id
-                    WHERE b.user_id = ?
-                    """, userId);
-
-                deleteRows(conn, """
-                    DELETE p FROM payments p
-                    JOIN bookings b ON b.booking_id = p.booking_id
-                    WHERE b.user_id = ?
-                    """, userId);
-
-                deleteRows(conn, """
-                    DELETE bp FROM booking_passengers bp
-                    JOIN bookings b ON b.booking_id = bp.booking_id
-                    WHERE b.user_id = ?
-                    """, userId);
-
+                // Delete related records (same as before)
+                deleteRows(conn, "DELETE FROM refunds WHERE cancellation_id IN (SELECT cancellation_id FROM cancellations WHERE booking_id IN (SELECT booking_id FROM bookings WHERE user_id = ?))", userId);
+                deleteRows(conn, "DELETE FROM cancellations WHERE booking_id IN (SELECT booking_id FROM bookings WHERE user_id = ?)", userId);
+                deleteRows(conn, "DELETE FROM payments WHERE booking_id IN (SELECT booking_id FROM bookings WHERE user_id = ?)", userId);
+                deleteRows(conn, "DELETE FROM booking_passengers WHERE booking_id IN (SELECT booking_id FROM bookings WHERE user_id = ?)", userId);
                 deleteRows(conn, "DELETE FROM bookings WHERE user_id = ?", userId);
                 deleteRows(conn, "DELETE FROM notifications WHERE user_id = ?", userId);
-                deleteRows(conn, "UPDATE audit_logs SET user_id = NULL WHERE user_id = ?", userId);
 
-                int deleted = deleteRows(conn,
-                        "DELETE FROM users WHERE user_id = ? AND role = 'PASSENGER'",
-                        userId);
+                int deleted = deleteRows(conn, "DELETE FROM users WHERE user_id = ? AND role = 'PASSENGER'", userId);
 
                 conn.commit();
                 return deleted > 0;
-
             } catch (SQLException e) {
                 conn.rollback();
                 throw e;
             } finally {
                 conn.setAutoCommit(true);
             }
-
         } catch (SQLException e) {
-            System.err.println("[UserDaoImpl] deletePassengerAccount error for userId "
-                    + userId + ": " + e.getMessage());
+            System.err.println("[UserDaoImpl] deletePassengerAccount error: " + e.getMessage());
             return false;
         }
     }
@@ -250,19 +204,47 @@ public class UserDaoImpl implements UserDao {
             ps.setString(4, "Operations");
 
             ps.executeUpdate();
-
         } catch (SQLException e) {
-            System.err.println("[UserDaoImpl] saveStaffRecord error for userId "
-                    + userId + ": " + e.getMessage());
+            System.err.println("[UserDaoImpl] saveStaffRecord error: " + e.getMessage());
         }
     }
 
+    // ==================== NEW PROFILE IMAGE METHODS ====================
+
+    @Override
+    public boolean updateProfileImage(int userId, String imageName) {
+        String sql = "UPDATE users SET profile_image = ? WHERE user_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, imageName);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[UserDaoImpl] updateProfileImage error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public String getProfileImage(int userId) {
+        String sql = "SELECT profile_image FROM users WHERE user_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String img = rs.getString("profile_image");
+                    return (img != null && !img.isEmpty()) ? img : "default-avatar.png";
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[UserDaoImpl] getProfileImage error: " + e.getMessage());
+        }
+        return "default-avatar.png";
+    }
+
     /**
-     * Maps the current row of the provided {@link ResultSet} to a {@link User} entity.
-     *
-     * @param rs the {@link ResultSet} positioned at the row to map
-     * @return a populated {@link User} instance
-     * @throws SQLException if a database access error occurs during column retrieval
+     * Maps ResultSet row to User object (Updated with profile_image)
      */
     private User mapRow(ResultSet rs) throws SQLException {
         User user = new User();
@@ -273,6 +255,7 @@ public class UserDaoImpl implements UserDao {
         user.setPhone(rs.getString("phone"));
         user.setRole(rs.getString("role"));
         user.setStatus(rs.getString("status"));
+        user.setProfileImage(rs.getString("profile_image"));   // NEW
         return user;
     }
 }

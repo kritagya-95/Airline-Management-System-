@@ -13,7 +13,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="prof-header">
     <div class="prof-header-logo">
         <a href="${pageContext.request.contextPath}/staff/dashboard">
@@ -28,10 +27,17 @@
     <a href="${pageContext.request.contextPath}/logout" class="prof-btn-logout">Logout</a>
 </header>
 
-<!-- BANNER -->
 <div class="prof-banner staff-banner">
     <div class="prof-avatar">
-        ${fn:substring(user.fullName, 0, 2)}
+        <c:choose>
+            <c:when test="${not empty user.profileImage and user.profileImage != 'default-avatar.png'}">
+                <img src="${pageContext.request.contextPath}/uploads/${user.profileImage}"
+                     alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+            </c:when>
+            <c:otherwise>
+                ${fn:substring(user.fullName, 0, 2)}
+            </c:otherwise>
+        </c:choose>
     </div>
     <h1><c:out value="${user.fullName}"/></h1>
     <p class="role-badge staff">STAFF MEMBER</p>
@@ -48,16 +54,12 @@
             <div class="prof-info-item"><span class="label">Full Name</span><span><c:out value="${user.fullName}"/></span></div>
             <div class="prof-info-item"><span class="label">Email</span><span><c:out value="${user.email}"/></span></div>
             <div class="prof-info-item"><span class="label">Phone</span><span><c:out value="${user.phone}" default="Not Provided"/></span></div>
-            <div class="prof-info-item"><span class="label">Employee Code</span><span><c:out value="${staff != null ? staff.employeeCode : 'N/A'}"/></span></div>
-            <div class="prof-info-item"><span class="label">Designation</span><span><c:out value="${staff != null ? staff.designation : 'N/A'}"/></span></div>
-            <div class="prof-info-item"><span class="label">Department</span><span><c:out value="${staff != null ? staff.department : 'N/A'}"/></span></div>
-            <div class="prof-info-item"><span class="label">Hire Date</span><span><c:out value="${staff != null ? staff.hireDate : 'N/A'}"/></span></div>
+            <!-- Add other fields as needed -->
         </div>
 
-        <!-- Edit Form -->
         <form id="edit-mode" class="prof-edit-form"
               action="${pageContext.request.contextPath}/staff/profile/update"
-              method="post" style="display:none;">
+              method="post" enctype="multipart/form-data" style="display:none;">
 
             <div class="prof-edit-grid">
                 <div class="prof-edit-field">
@@ -71,6 +73,10 @@
                 <div class="prof-edit-field">
                     <label>Phone</label>
                     <input type="tel" name="phone" value="<c:out value='${user.phone}'/>"/>
+                </div>
+                <div class="prof-edit-field">
+                    <label>Profile Picture</label>
+                    <input type="file" name="profileImage" accept="image/*"/>
                 </div>
             </div>
 

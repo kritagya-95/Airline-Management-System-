@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c"  uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,83 +13,62 @@
 </head>
 <body>
 
-<!-- ══ SUCCESS POPUP OVERLAY ══ -->
-<c:if test="${showSuccess}">
-  <div class="prof-popup-overlay" id="successPopup">
-    <div class="prof-popup-box">
-      <div class="prof-popup-icon">✅</div>
-      <h3 class="prof-popup-title">Profile Updated!</h3>
-      <p class="prof-popup-msg">Your profile has been updated successfully.</p>
-      <button class="prof-popup-close" onclick="closePopup()">Close</button>
-    </div>
-  </div>
-</c:if>
-
-<c:if test="${not empty successMsg}">
+<c:if test="${showSuccess || not empty successMsg}">
   <div class="prof-popup-overlay" id="successPopup">
     <div class="prof-popup-box">
       <div class="prof-popup-icon">✅</div>
       <h3 class="prof-popup-title">Success</h3>
-      <p class="prof-popup-msg"><c:out value="${successMsg}"/></p>
+      <p class="prof-popup-msg"><c:out value="${successMsg != null ? successMsg : 'Profile Updated!'}"/></p>
       <button class="prof-popup-close" onclick="closePopup()">Close</button>
     </div>
   </div>
 </c:if>
 
-<!-- ══ HEADER ══ -->
 <header class="prof-header">
   <div class="prof-header-logo">
     <a href="${pageContext.request.contextPath}/home" class="prof-logo-link">
-      <img src="${pageContext.request.contextPath}/static/images/logo.png"
-           class="prof-logo-img" alt="SkyLine"/>
+      <img src="${pageContext.request.contextPath}/static/images/logo.png" class="prof-logo-img" alt="SkyLine"/>
       <span class="prof-logo-text">SkyLine</span>
     </a>
   </div>
-
   <nav class="prof-nav">
-    <a href="${pageContext.request.contextPath}/home"    class="prof-nav-link">Book Flights</a>
-    <a href="${pageContext.request.contextPath}/home"    class="prof-nav-link">Flights</a>
+    <a href="${pageContext.request.contextPath}/home" class="prof-nav-link">Book Flights</a>
+    <a href="${pageContext.request.contextPath}/home" class="prof-nav-link">Flights</a>
     <a href="${pageContext.request.contextPath}/profile" class="prof-nav-link active">My Profile</a>
   </nav>
-
-  <a href="${pageContext.request.contextPath}/logout" class="prof-btn-logout">
-    ⎋ Logout
-  </a>
+  <a href="${pageContext.request.contextPath}/logout" class="prof-btn-logout">⎋ Logout</a>
 </header>
 
-<!-- ══ PROFILE BANNER ══ -->
 <div class="prof-banner">
   <div class="prof-banner-inner">
     <div class="prof-avatar">
-      <c:set var="nameParts" value="${fn:split(user.fullName, ' ')}"/>
       <c:choose>
-        <c:when test="${fn:length(nameParts) >= 2}">
-          ${fn:substring(nameParts[0], 0, 1)}${fn:substring(nameParts[1], 0, 1)}
+        <c:when test="${not empty user.profileImage and user.profileImage != 'default-avatar.png'}">
+          <img src="${pageContext.request.contextPath}/uploads/${user.profileImage}"
+               alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
         </c:when>
         <c:otherwise>
-          ${fn:substring(user.fullName, 0, 2)}
+          <c:set var="nameParts" value="${fn:split(user.fullName, ' ')}"/>
+          ${fn:length(nameParts) >= 2 ?
+            fn:substring(nameParts[0], 0, 1).concat(fn:substring(nameParts[1], 0, 1)) :
+            fn:substring(user.fullName, 0, 2)}
         </c:otherwise>
       </c:choose>
     </div>
-    <h1 class="prof-banner-name">
-      <c:out value="${user.fullName}"/>
-    </h1>
+    <h1 class="prof-banner-name"><c:out value="${user.fullName}"/></h1>
   </div>
 </div>
 
-<!-- ══ TABS ══ -->
 <div class="prof-tabs-wrap">
   <div class="prof-tabs">
     <button class="prof-tab active" onclick="showTab('overview', this)">Overview</button>
-    <button class="prof-tab"        onclick="showTab('myflights', this)">My Flights</button>
-    <button class="prof-tab"        onclick="showTab('settings', this)">Settings</button>
+    <button class="prof-tab" onclick="showTab('myflights', this)">My Flights</button>
+    <button class="prof-tab" onclick="showTab('settings', this)">Settings</button>
   </div>
 </div>
 
-<!-- ══ TAB CONTENT ══ -->
 <div class="prof-content">
 
-  <!-- OVERVIEW TAB -->
   <div id="tab-overview" class="prof-tab-panel active">
     <div class="prof-card">
       <div class="prof-card-header">
@@ -97,16 +76,13 @@
         <button class="prof-btn-edit" onclick="toggleEdit()">✏️ Edit</button>
       </div>
 
-      <!-- VIEW MODE -->
       <div id="view-mode" class="prof-info-grid">
         <div class="prof-info-item">
-          <span class="prof-info-label">👤 First Name</span>
-          <span class="prof-info-value">
-            <c:out value="${fn:split(user.fullName, ' ')[0]}"/>
-          </span>
+          <span class="prof-info-label">First Name</span>
+          <span class="prof-info-value"><c:out value="${fn:split(user.fullName, ' ')[0]}"/></span>
         </div>
         <div class="prof-info-item">
-          <span class="prof-info-label">👤 Last Name</span>
+          <span class="prof-info-label">Last Name</span>
           <span class="prof-info-value">
             <c:choose>
               <c:when test="${fn:length(fn:split(user.fullName, ' ')) >= 2}">
@@ -117,244 +93,73 @@
           </span>
         </div>
         <div class="prof-info-item">
-          <span class="prof-info-label">✉️ Email</span>
+          <span class="prof-info-label">Email</span>
           <span class="prof-info-value"><c:out value="${user.email}"/></span>
         </div>
         <div class="prof-info-item">
-          <span class="prof-info-label">📞 Phone</span>
-          <span class="prof-info-value">
-            <c:choose>
-              <c:when test="${not empty user.phone}">
-                <c:out value="${user.phone}"/>
-              </c:when>
-              <c:otherwise>—</c:otherwise>
-            </c:choose>
-          </span>
+          <span class="prof-info-label">Phone</span>
+          <span class="prof-info-value"><c:out value="${user.phone}" default="—"/></span>
         </div>
       </div>
 
-      <!-- EDIT MODE (hidden by default) -->
       <form id="edit-mode" class="prof-edit-form"
             action="${pageContext.request.contextPath}/profile/update"
-            method="post" style="display:none;">
-
-        <c:if test="${not empty errorMsg}">
-          <div class="prof-flash-error">❌ <c:out value="${errorMsg}"/></div>
-        </c:if>
+            method="post" enctype="multipart/form-data" style="display:none;">
 
         <div class="prof-edit-grid">
           <div class="prof-edit-field">
             <label>First Name</label>
-            <input type="text" name="firstName"
-                   value="<c:out value='${fn:split(user.fullName, " ")[0]}'/>"
-                   required/>
+            <input type="text" name="firstName" value="<c:out value='${fn:split(user.fullName, " ")[0]}'/>" required/>
           </div>
           <div class="prof-edit-field">
             <label>Last Name</label>
-            <input type="text" name="lastName"
-                   value="<c:choose>
-                     <c:when test='${fn:length(fn:split(user.fullName, \" \")) >= 2}'>${fn:split(user.fullName, ' ')[1]}</c:when>
-                     <c:otherwise></c:otherwise>
-                   </c:choose>"/>
+            <input type="text" name="lastName" value="<c:out value='${fn:length(fn:split(user.fullName, " ")) >= 2 ? fn:split(user.fullName, " ")[1] : ""}'/>"/>
           </div>
           <div class="prof-edit-field">
             <label>Email</label>
-            <input type="email" name="email"
-                   value="<c:out value='${user.email}'/>" required/>
+            <input type="email" name="email" value="<c:out value='${user.email}'/>" required/>
           </div>
           <div class="prof-edit-field">
             <label>Phone</label>
-            <input type="tel" name="phone"
-                   value="<c:out value='${user.phone}'/>"/>
+            <input type="tel" name="phone" value="<c:out value='${user.phone}'/>"/>
+          </div>
+          <div class="prof-edit-field">
+            <label>Profile Picture</label>
+            <input type="file" name="profileImage" accept="image/*"/>
           </div>
         </div>
+
         <div class="prof-edit-actions">
           <button type="submit" class="prof-btn-save">Save Changes</button>
-          <button type="button" class="prof-btn-cancel"
-                  onclick="toggleEdit()">Cancel</button>
+          <button type="button" class="prof-btn-cancel" onclick="toggleEdit()">Cancel</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MY FLIGHTS TAB -->
-  <div id="tab-myflights" class="prof-tab-panel" style="display:none;">
-    <div class="prof-card">
-      <div class="prof-card-header">
-        <h2 class="prof-card-title">My Flights</h2>
-      </div>
-      <div class="prof-empty-state">
-        <div class="prof-empty-icon">✈️</div>
-        <p>No flights booked yet.</p>
-        <a href="${pageContext.request.contextPath}/home"
-           class="prof-btn-book">Book a Flight</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- SETTINGS TAB -->
-  <div id="tab-settings" class="prof-tab-panel" style="display:none;">
-    <div class="prof-card">
-      <div class="prof-card-header">
-        <h2 class="prof-card-title">Settings</h2>
-      </div>
-      <div class="prof-settings-list">
-        <div class="prof-setting-item">
-          <div>
-            <p class="prof-setting-label">Account Status</p>
-            <p class="prof-setting-value">
-              <span class="prof-status-badge ${user.status.toLowerCase()}">
-                <c:out value="${user.status}"/>
-              </span>
-            </p>
-          </div>
-        </div>
-        <div class="prof-setting-item">
-          <div>
-            <p class="prof-setting-label">Role</p>
-            <p class="prof-setting-value">PASSENGER</p>
-          </div>
-        </div>
-        <c:if test="${not empty passwordError}">
-          <div class="prof-flash-error">❌ <c:out value="${passwordError}"/></div>
-        </c:if>
-        <c:if test="${not empty deleteError}">
-          <div class="prof-flash-error">❌ <c:out value="${deleteError}"/></div>
-        </c:if>
-        <div class="prof-setting-item">
-          <div>
-            <p class="prof-setting-label">Change Password</p>
-            <p class="prof-setting-sub">Update your account password</p>
-          </div>
-          <button type="button" class="prof-btn-outline-sm" onclick="openPasswordPopup()">Change</button>
-        </div>
-        <div class="prof-setting-item danger">
-          <div>
-            <p class="prof-setting-label">Delete Account</p>
-            <p class="prof-setting-sub">Permanently remove your account</p>
-          </div>
-          <form action="${pageContext.request.contextPath}/profile/delete"
-                method="post"
-                onsubmit="return confirm('Delete your account permanently? This cannot be undone.');">
-            <button type="submit" class="prof-btn-danger-sm">Delete</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<div class="prof-popup-overlay" id="passwordPopup">
-  <div class="prof-popup-box">
-    <h3 class="prof-popup-title">Change Password</h3>
-    <form action="${pageContext.request.contextPath}/profile/password" method="post" class="prof-password-form">
-      <label for="newPassword">New Password</label>
-      <input type="password" id="newPassword" name="newPassword" required/>
-      <label for="confirmPassword">Re-enter New Password</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" required/>
-      <div class="prof-popup-actions">
-        <button type="submit" class="prof-popup-close">Save</button>
-        <button type="button" class="prof-btn-cancel" onclick="closePasswordPopup()">Cancel</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- ══ INFO SECTION ══ -->
-<section class="prof-info-section">
-  <div class="prof-info-footer-grid">
-    <div class="prof-info-col">
-      <h4 class="prof-info-heading">About Us</h4>
-      <a href="${pageContext.request.contextPath}/aboutus-airline" class="prof-info-link">About SkyLine</a>
-      <a href="${pageContext.request.contextPath}/information" class="prof-info-link">Information</a>
-    </div>
-    <div class="prof-info-col">
-      <h4 class="prof-info-heading">Book &amp; Manage</h4>
-      <a href="${pageContext.request.contextPath}/search-flights" class="prof-info-link">Search Flights</a>
-      <a href="${pageContext.request.contextPath}/my-bookings" class="prof-info-link">Manage Booking</a>
-      <a href="${pageContext.request.contextPath}/flight-schedule" class="prof-info-link">Flight Schedule</a>
-    </div>
-    <div class="prof-info-col">
-      <h4 class="prof-info-heading">Where We Fly?</h4>
-      <a href="${pageContext.request.contextPath}/popular-routes" class="prof-info-link">Popular Flights</a>
-      <a href="${pageContext.request.contextPath}/partner-airlines" class="prof-info-link">Partner Airlines</a>
-    </div>
-    <div class="prof-info-col">
-      <h4 class="prof-info-heading">Prepare To Travel</h4>
-      <a href="#" class="prof-info-link">Baggage Guidelines</a>
-      <a href="#" class="prof-info-link">Airport Information</a>
-      <a href="#" class="prof-info-link">First-time Travellers</a>
-      <a href="#" class="prof-info-link">Visas &amp; Documents</a>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FOOTER ══ -->
 <footer class="prof-footer">
   <div class="prof-footer-inner">
     <div class="prof-footer-logo">
-      <img src="${pageContext.request.contextPath}/static/images/logo.png"
-           class="prof-footer-logo-img" alt="SkyLine"/>
+      <img src="${pageContext.request.contextPath}/static/images/logo.png" class="prof-footer-logo-img" alt="SkyLine"/>
       <span class="prof-footer-logo-text">SkyLine</span>
     </div>
     <p class="prof-footer-copy">&copy; 2026 SkyLine Airlines. All rights reserved.</p>
     <div class="prof-footer-social">
-      <a href="#" class="prof-social-link" target="_blank">
-        <img src="${pageContext.request.contextPath}/static/images/facebook.png"
-             alt="Facebook" width="20"/>
-      </a>
-      <a href="#" class="prof-social-link" target="_blank">
-        <img src="${pageContext.request.contextPath}/static/images/twitter.png"
-             alt="Twitter" width="20"/>
-      </a>
-      <a href="#" class="prof-social-link" target="_blank">
-        <img src="${pageContext.request.contextPath}/static/images/instagram.png"
-             alt="Instagram" width="20"/>
-      </a>
+      <a href="#" class="prof-social-link" target="_blank"><img src="${pageContext.request.contextPath}/static/images/facebook.png" alt="Facebook" width="20"/></a>
+      <a href="#" class="prof-social-link" target="_blank"><img src="${pageContext.request.contextPath}/static/images/twitter.png" alt="Twitter" width="20"/></a>
+      <a href="#" class="prof-social-link" target="_blank"><img src="${pageContext.request.contextPath}/static/images/instagram.png" alt="Instagram" width="20"/></a>
     </div>
   </div>
 </footer>
 
 <script>
-  // Show popup automatically if update was successful
-  window.addEventListener('load', function () {
-    const popup = document.getElementById('successPopup');
-    if (popup) {
-      popup.style.display = 'flex';
-    }
-    if (${not empty passwordError || not empty deleteError}) {
-      const settingsButton = document.querySelectorAll('.prof-tab')[2];
-      showTab('settings', settingsButton);
-    }
-    if (${not empty passwordError}) {
-      openPasswordPopup();
-    }
-  });
-
-  // Close popup
   function closePopup() {
     const popup = document.getElementById('successPopup');
-    if (popup) {
-      popup.style.display = 'none';
-    }
+    if (popup) popup.style.display = 'none';
   }
 
-  function openPasswordPopup() {
-    const popup = document.getElementById('passwordPopup');
-    if (popup) {
-      popup.style.display = 'flex';
-    }
-  }
-
-  function closePasswordPopup() {
-    const popup = document.getElementById('passwordPopup');
-    if (popup) {
-      popup.style.display = 'none';
-    }
-  }
-
-  // Tab switching
   function showTab(tabId, btn) {
     document.querySelectorAll('.prof-tab-panel').forEach(p => p.style.display = 'none');
     document.querySelectorAll('.prof-tab').forEach(t => t.classList.remove('active'));
@@ -362,7 +167,6 @@
     btn.classList.add('active');
   }
 
-  // Toggle edit mode
   function toggleEdit() {
     const viewMode = document.getElementById('view-mode');
     const editMode = document.getElementById('edit-mode');
@@ -374,6 +178,11 @@
       editMode.style.display = 'none';
     }
   }
+
+  window.addEventListener('load', function () {
+    const popup = document.getElementById('successPopup');
+    if (popup) popup.style.display = 'flex';
+  });
 </script>
 
 </body>

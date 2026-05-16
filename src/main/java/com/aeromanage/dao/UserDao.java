@@ -13,7 +13,6 @@ import com.aeromanage.entity.User;
  * @see User
  */
 public interface UserDao {
-
     /**
      * Retrieves a user record by email address.
      *
@@ -74,4 +73,7 @@ public interface UserDao {
      * @param userId the primary key of the newly registered staff user
      */
     void saveStaffRecord(int userId);
+
+    boolean updateProfileImage(int userId, String imageName);
+    String getProfileImage(int userId);
 }

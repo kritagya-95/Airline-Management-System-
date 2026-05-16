@@ -24,7 +24,13 @@ public class User {
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String profileImage = "default-avatar.png";
 
+    // NEW Getter & Setter for Profile Image
+    public String getProfileImage() { return profileImage; }
+    public void setProfileImage(String profileImage) {
+        this.profileImage = (profileImage != null) ? profileImage : "default-avatar.png";
+    }
     /**
      * Default no-argument constructor required for JavaBean compliance
      * and framework instantiation.
@@ -156,6 +162,7 @@ public class User {
      * @param updatedAt the last updated timestamp to assign
      */
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
 
     /**
      * Returns a string representation of this user for diagnostic and logging purposes.
