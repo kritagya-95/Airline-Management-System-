@@ -22,4 +22,14 @@
         <location>/error404.jsp</location>
     </error-page>
 
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error500.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>505</error-code>
+        <location>/error505.jsp</location>
+    </error-page>
+
 </web-app>

@@ -1,0 +1,379 @@
+/* ==========================================================================
+   BOOK FLIGHT PAGE STYLING
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Chivo', sans-serif;
+    background: #faf7f2;
+}
+
+/* ══ HEADER ══ */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-text {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #8B0000;
+    letter-spacing: 0.06em;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8B0000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.arrow {
+    font-size: 11px;
+    color: #8B0000;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    min-width: 180px;
+    z-index: 300;
+}
+
+.nav-dropdown.open .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 11px 18px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background: #fdf0f0;
+    color: #8B0000;
+}
+
+.btn-header-login {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #8B0000;
+    text-decoration: none;
+    padding: 8px 20px;
+    border: 1.5px solid #8B0000;
+    border-radius: 20px;
+}
+
+/* ══ TOP HERO GRAPHIC BANNER ══ */
+.hero-banner {
+    width: 100%;
+    height: 260px;
+    background: url('../images/Air.jpg') center 35% / cover no-repeat;
+    position: relative;
+}
+
+/* ══ FLOATING SEARCH PANEL OVER HERO BANNER ══ */
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 0 40px;
+    margin-top: -60px;
+    position: relative;
+    z-index: 10;
+}
+
+.search-box {
+    background: #8B0000;
+    border-radius: 16px;
+    padding: 36px 48px 44px;
+    width: 100%;
+    max-width: 1100px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.search-title {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 28px;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    letter-spacing: 0.03em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.search-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 160px;
+}
+
+.search-field label {
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.search-input-wrap {
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px 14px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    border: none;
+    background: transparent;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    width: 100%;
+}
+
+.search-btn-wrap {
+    flex: 0 0 auto;
+    min-width: unset;
+}
+
+.search-btn {
+    height: 45px;
+    padding: 0 32px;
+    background: #fff;
+    color: #8B0000;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    letter-spacing: 0.05em;
+}
+
+.search-btn:hover {
+    background: #f5e0e0;
+}
+
+/* ══ DYNAMIC CONTAINER GRID AND FILTERS ══ */
+.booking-container {
+    max-width: 1110px;
+    margin: 50px auto 70px;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #8B0000;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    margin-bottom: 32px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.flight-filter {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 240px;
+}
+
+.filter-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+}
+
+.filter-input-wrap-local {
+    background: #fff;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+
+.filter-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* ══ FLIGHT CARDS PRESENTATION GRID ══ */
+.flight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+}
+
+.no-flights {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #888;
+    padding: 40px;
+}
+
+.flight-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.flight-card-img {
+    height: 115px;
+    background: #8B0000;
+    overflow: hidden;
+}
+
+.flight-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.flight-card-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.flight-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+}
+
+.flight-card-depart {
+    font-size: 11px;
+    color: #666;
+}
+
+.flight-card-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #8B0000;
+    margin-top: 4px;
+}
+
+.book-btn {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background: #8B0000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: auto;
+    transition: background 0.15s ease;
+}
+
+.book-btn:hover {
+    background: #660000;
+}
+
+/* ══ RESPONSIVE BREAKPOINTS ══ */
+@media (max-width: 900px) {
+    .flight-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .search-btn-wrap {
+        width: 100%;
+    }
+    .search-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .flight-grid {
+        grid-template-columns: 1fr;
+    }
+    .flight-filter {
+        flex-direction: column;
+    }
+}
