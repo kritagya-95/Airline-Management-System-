@@ -1,0 +1,109 @@
+.schedule-page {
+    background: #faf7f2;
+    min-height: calc(100vh - 64px);
+    padding: 42px 40px 64px;
+}
+
+.schedule-hero,
+.schedule-empty,
+.schedule-section {
+    max-width: 1100px;
+    margin: 0 auto 24px;
+}
+
+.schedule-hero {
+    padding: 34px 0 18px;
+}
+
+.schedule-kicker {
+    color: #8B0000;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.schedule-hero h1 {
+    color: #1f1f1f;
+    font-family: 'Cinzel', serif;
+    font-size: 34px;
+    line-height: 1.2;
+    margin: 8px 0;
+}
+
+.schedule-hero p,
+.schedule-muted,
+.schedule-empty p {
+    color: #666;
+    font-family: 'Chivo', sans-serif;
+    font-size: 15px;
+}
+
+.schedule-empty,
+.schedule-section {
+    background: #fff;
+    border: 1px solid #eadfd5;
+    border-radius: 8px;
+    box-shadow: 0 6px 22px rgba(40, 30, 20, 0.06);
+    padding: 24px;
+}
+
+.schedule-empty {
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.schedule-empty h2,
+.schedule-section h2 {
+    color: #8B0000;
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.schedule-table-wrap {
+    overflow-x: auto;
+}
+
+.schedule-table {
+    border-collapse: collapse;
+    font-family: 'Chivo', sans-serif;
+    min-width: 980px;
+    width: 100%;
+}
+
+.schedule-table th {
+    background: #f7eee8;
+    color: #5f2727;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 12px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.schedule-table td {
+    border-bottom: 1px solid #f0e7df;
+    color: #333;
+    font-size: 14px;
+    padding: 13px 12px;
+    vertical-align: top;
+}
+
+.schedule-badge {
+    background: #eef5fb;
+    border: 1px solid #c9dceb;
+    border-radius: 999px;
+    color: #24516f;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 10px;
+}
+
+@media (max-width: 900px) {
+    .schedule-page {
+        padding: 28px 20px 48px;
+    }
+}

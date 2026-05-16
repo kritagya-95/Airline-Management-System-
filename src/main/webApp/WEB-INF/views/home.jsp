@@ -31,9 +31,9 @@
         <div class="nav-dropdown">
             <a href="#" class="nav-link"><h2>Manage</h2> <span class="arrow">▾</span></a>
             <div class="dropdown-menu">
-                <a href="#">My Bookings</a>
-                <a href="#">Cancel Booking</a>
-                <a href="#">Flight Schedule</a>
+                <a href="${pageContext.request.contextPath}/my-bookings">My Bookings</a>
+                <a href="${pageContext.request.contextPath}/cancel-booking">Cancel Booking</a>
+                <a href="${pageContext.request.contextPath}/flight-schedule">Flight Schedule</a>
             </div>
         </div>
         <div class="nav-dropdown">

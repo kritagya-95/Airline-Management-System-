@@ -1,0 +1,105 @@
+.cancel-page {
+    background: #faf7f2;
+    min-height: calc(100vh - 64px);
+    padding: 42px 40px 64px;
+}
+
+.cancel-hero,
+.cancel-section {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.cancel-hero {
+    padding: 34px 0 28px;
+}
+
+.cancel-kicker {
+    color: #8B0000;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.cancel-hero h1 {
+    color: #1f1f1f;
+    font-family: 'Cinzel', serif;
+    font-size: 34px;
+    line-height: 1.2;
+    margin: 8px 0;
+}
+
+.cancel-hero p,
+.cancel-empty p {
+    color: #666;
+    font-family: 'Chivo', sans-serif;
+    font-size: 15px;
+}
+
+.cancel-section {
+    background: #fff;
+    border: 1px solid #eadfd5;
+    border-radius: 8px;
+    box-shadow: 0 6px 22px rgba(40, 30, 20, 0.06);
+    padding: 24px;
+}
+
+.cancel-empty {
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.cancel-empty h2 {
+    color: #8B0000;
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.cancel-table-wrap {
+    overflow-x: auto;
+}
+
+.cancel-table {
+    border-collapse: collapse;
+    font-family: 'Chivo', sans-serif;
+    min-width: 980px;
+    width: 100%;
+}
+
+.cancel-table th {
+    background: #f7eee8;
+    color: #5f2727;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 12px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.cancel-table td {
+    border-bottom: 1px solid #f0e7df;
+    color: #333;
+    font-size: 14px;
+    padding: 13px 12px;
+    vertical-align: top;
+}
+
+.cancel-badge {
+    background: #fdf0f0;
+    border: 1px solid #edcaca;
+    border-radius: 999px;
+    color: #8B0000;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 10px;
+}
+
+@media (max-width: 900px) {
+    .cancel-page {
+        padding: 28px 20px 48px;
+    }
+}
