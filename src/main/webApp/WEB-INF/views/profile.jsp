@@ -267,24 +267,18 @@
     <div class="prof-info-col">
       <h4 class="prof-info-heading">About Us</h4>
       <a href="${pageContext.request.contextPath}/aboutus-airline" class="prof-info-link">About SkyLine</a>
-      <a href="#" class="prof-info-link">Newsroom</a>
-      <a href="#" class="prof-info-link">Corporate Information</a>
-      <a href="#" class="prof-info-link">Tenders</a>
-      <a href="#" class="prof-info-link">Careers</a>
+      <a href="${pageContext.request.contextPath}/information" class="prof-info-link">Information</a>
     </div>
     <div class="prof-info-col">
       <h4 class="prof-info-heading">Book &amp; Manage</h4>
-      <a href="#" class="prof-info-link">Search Flights</a>
-      <a href="#" class="prof-info-link">Manage Booking</a>
-      <a href="#" class="prof-info-link">Flight Schedule</a>
-      <a href="#" class="prof-info-link">Cargo</a>
+      <a href="${pageContext.request.contextPath}/search-flights" class="prof-info-link">Search Flights</a>
+      <a href="${pageContext.request.contextPath}/my-bookings" class="prof-info-link">Manage Booking</a>
+      <a href="${pageContext.request.contextPath}/flight-schedule" class="prof-info-link">Flight Schedule</a>
     </div>
     <div class="prof-info-col">
       <h4 class="prof-info-heading">Where We Fly?</h4>
-      <a href="#" class="prof-info-link">Route Map</a>
-      <a href="#" class="prof-info-link">Nonstop Flights</a>
-      <a href="#" class="prof-info-link">Popular Flights</a>
-      <a href="#" class="prof-info-link">Partner Airlines</a>
+      <a href="${pageContext.request.contextPath}/popular-routes" class="prof-info-link">Popular Flights</a>
+      <a href="${pageContext.request.contextPath}/partner-airlines" class="prof-info-link">Partner Airlines</a>
     </div>
     <div class="prof-info-col">
       <h4 class="prof-info-heading">Prepare To Travel</h4>
