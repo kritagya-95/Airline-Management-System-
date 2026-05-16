@@ -1,5 +1,9 @@
--- Database--
-CREATE DATABASE IF NOT EXISTS skyline_airlines
+-- =============================================
+-- Drop everything cleanly (reverse FK order)
+-- =============================================
+DROP DATABASE IF EXISTS skyline_airlines;
+
+CREATE DATABASE skyline_airlines
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
@@ -24,7 +28,7 @@ CREATE TABLE airlines (
                           logo_url     VARCHAR(255)
 );
 
--- 3. USERS (must be here before bookings, cancellations, staff, etc.)
+-- 3. USERS
 CREATE TABLE users (
                        user_id    INT          AUTO_INCREMENT PRIMARY KEY,
                        full_name  VARCHAR(100) NOT NULL,
@@ -234,41 +238,82 @@ CREATE TABLE reports (
 );
 
 
--- SAMPLE DATA--
+-- =============================================
+-- SAMPLE DATA
+-- =============================================
 
-
+-- AIRPORTS (9 total, inserted once cleanly)
 INSERT INTO airports (iata_code, airport_name, city, country, timezone) VALUES
-                                                                            ('KTM', 'Tribhuvan International Airport',     'Kathmandu', 'Nepal',    'Asia/Kathmandu'),
-                                                                            ('DEL', 'Indira Gandhi International Airport', 'New Delhi',  'India',   'Asia/Kolkata'),
-                                                                            ('DXB', 'Dubai International Airport',         'Dubai',      'UAE',     'Asia/Dubai'),
-                                                                            ('DOH', 'Hamad International Airport',         'Doha',       'Qatar',   'Asia/Qatar'),
-                                                                            ('BKK', 'Suvarnabhumi Airport',                'Bangkok',    'Thailand','Asia/Bangkok');
+                                                                            ('KTM', 'Tribhuvan International Airport',     'Kathmandu', 'Nepal',          'Asia/Kathmandu'),
+                                                                            ('DEL', 'Indira Gandhi International Airport', 'New Delhi', 'India',          'Asia/Kolkata'),
+                                                                            ('DXB', 'Dubai International Airport',         'Dubai',     'UAE',            'Asia/Dubai'),
+                                                                            ('DOH', 'Hamad International Airport',         'Doha',      'Qatar',          'Asia/Qatar'),
+                                                                            ('BKK', 'Suvarnabhumi Airport',                'Bangkok',   'Thailand',       'Asia/Bangkok'),
+                                                                            ('LHR', 'Heathrow Airport',                    'London',    'United Kingdom', 'Europe/London'),
+                                                                            ('FCO', 'Leonardo da Vinci Airport',           'Rome',      'Italy',          'Europe/Rome'),
+                                                                            ('MAD', 'Adolfo Suarez Madrid-Barajas',        'Madrid',    'Spain',          'Europe/Madrid'),
+                                                                            ('FRA', 'Frankfurt Airport',                   'Frankfurt', 'Germany',        'Europe/Berlin');
 
+-- airport_id mapping (guaranteed by insertion order):
+-- 1=KTM  2=DEL  3=DXB  4=DOH  5=BKK  6=LHR  7=FCO  8=MAD  9=FRA
+
+-- AIRLINES
 INSERT INTO airlines (iata_code, airline_name, country) VALUES
                                                             ('RA', 'Nepal Airlines', 'Nepal'),
                                                             ('9N', 'Tropic Air',     'Nepal'),
                                                             ('EK', 'Emirates',       'UAE');
 
-INSERT INTO aircraft (airline_id, registration, model, total_seats, economy_seats, business_seats, first_seats) VALUES
-                                                                                                                    (1, '9N-AKW', 'Boeing 757-200', 167, 137, 30,  0),
-                                                                                                                    (1, '9N-ABB', 'Airbus A320',    162, 132, 30,  0),
-                                                                                                                    (3, 'A6-EEW', 'Boeing 777-300', 360, 304, 42, 14);
+-- airline_id mapping: 1=Nepal Airlines  2=Tropic Air  3=Emirates
 
+-- AIRCRAFT (4 total)
+INSERT INTO aircraft (airline_id, registration, model, total_seats, economy_seats, business_seats, first_seats) VALUES
+                                                                                                                    (1, '9N-AKW', 'Boeing 757-200',  167, 137,  30,  0),
+                                                                                                                    (1, '9N-ABB', 'Airbus A320',     162, 132,  30,  0),
+                                                                                                                    (3, 'A6-EEW', 'Boeing 777-300',  360, 304,  42, 14),
+                                                                                                                    (3, 'A6-ENA', 'Airbus A380-800', 489, 399,  76, 14);
+
+-- aircraft_id mapping: 1=Boeing757  2=A320  3=Boeing777  4=A380
+
+-- SEATS (for aircraft 1 only)
 INSERT INTO seats (aircraft_id, seat_number, class) VALUES
                                                         (1,'1A','BUSINESS'),(1,'1B','BUSINESS'),(1,'1C','BUSINESS'),
                                                         (1,'2A','BUSINESS'),(1,'2B','BUSINESS'),(1,'2C','BUSINESS'),
                                                         (1,'10A','ECONOMY'),(1,'10B','ECONOMY'),(1,'10C','ECONOMY'),
                                                         (1,'11A','ECONOMY'),(1,'11B','ECONOMY'),(1,'11C','ECONOMY');
 
+-- FLIGHTS (9 total)
 INSERT INTO flights (airline_id, aircraft_id, flight_number, origin_airport_id, dest_airport_id,
-                     departure_time, arrival_time, status, base_economy_fare, base_business_fare) VALUES
-                                                                                                      (1, 1, 'RA201', 1, 2, '2025-06-01 08:00:00', '2025-06-01 09:30:00', 'SCHEDULED',  8500.00,  25000.00),
-                                                                                                      (1, 2, 'RA202', 2, 1, '2025-06-01 12:00:00', '2025-06-01 13:30:00', 'SCHEDULED',  8500.00,  25000.00),
-                                                                                                      (3, 3, 'EK612', 1, 3, '2025-06-02 22:30:00', '2025-06-03 01:30:00', 'SCHEDULED', 45000.00, 120000.00);
+                     departure_time, arrival_time, status, base_economy_fare, base_business_fare)
+VALUES
+-- Nepal Airlines: KTM ↔ DEL
+(1, 1, 'RA201', 1, 2, '2026-07-01 08:00:00', '2026-07-01 09:30:00', 'SCHEDULED',  8500.00,  25000.00),
+(1, 2, 'RA202', 2, 1, '2026-07-01 12:00:00', '2026-07-01 13:30:00', 'SCHEDULED',  8500.00,  25000.00),
+
+-- Emirates: KTM → Dubai
+(3, 3, 'EK612', 1, 3, '2026-07-02 22:30:00', '2026-07-03 01:30:00', 'SCHEDULED', 45000.00, 120000.00),
+
+-- Emirates: KTM → London
+(3, 4, 'EK118', 1, 6, '2026-07-03 23:00:00', '2026-07-04 06:30:00', 'SCHEDULED', 85000.00, 220000.00),
+
+-- Emirates: KTM → Rome
+(3, 4, 'EK312', 1, 7, '2026-07-04 21:00:00', '2026-07-05 04:00:00', 'SCHEDULED', 78000.00, 200000.00),
+
+-- Emirates: KTM → Madrid
+(3, 4, 'EK762', 1, 8, '2026-07-05 22:00:00', '2026-07-06 05:30:00', 'SCHEDULED', 80000.00, 210000.00),
+
+-- Emirates: KTM → Frankfurt
+(3, 4, 'EK048', 1, 9, '2026-07-06 20:30:00', '2026-07-07 03:45:00', 'SCHEDULED', 75000.00, 195000.00),
+
+-- Emirates: KTM → Bangkok
+(3, 3, 'EK384', 1, 5, '2026-07-07 18:00:00', '2026-07-07 23:45:00', 'SCHEDULED', 35000.00,  95000.00),
+
+-- Emirates: KTM → Doha
+(3, 3, 'EK640', 1, 4, '2026-07-08 02:00:00', '2026-07-08 04:30:00', 'SCHEDULED', 42000.00, 110000.00);
 
 
--- VIEWS--
-
+-- =============================================
+-- VIEWS
+-- =============================================
 
 CREATE OR REPLACE VIEW v_flight_search AS
 SELECT
@@ -290,10 +335,10 @@ SELECT
     (SELECT COUNT(*) FROM flight_seat_availability fsa
      WHERE fsa.flight_id = f.flight_id AND fsa.is_available = 0) AS booked_seats
 FROM flights f
-         JOIN airlines al ON al.airline_id       = f.airline_id
-         JOIN airports oa ON oa.airport_id       = f.origin_airport_id
-         JOIN airports da ON da.airport_id       = f.dest_airport_id
-         JOIN aircraft ac ON ac.aircraft_id      = f.aircraft_id;
+         JOIN airlines al ON al.airline_id      = f.airline_id
+         JOIN airports oa ON oa.airport_id      = f.origin_airport_id
+         JOIN airports da ON da.airport_id      = f.dest_airport_id
+         JOIN aircraft ac ON ac.aircraft_id     = f.aircraft_id;
 
 CREATE OR REPLACE VIEW v_booking_summary AS
 SELECT

@@ -20,7 +20,7 @@ public class PasswordUtil {
         if (passwordTyped == null || hashedPassword == null) return false;
 
         // Smart Bypass for Development
-        if (IS_DEV_MODE && "admin123".equals(passwordTyped)) {
+        if (IS_DEV_MODE && "Admin@95".equals(passwordTyped)) {
             System.out.println("[AUTH] Dev Mode Bypass used for authentication.");
             return true;
         }

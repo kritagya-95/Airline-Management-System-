@@ -176,6 +176,12 @@
                                 <c:when test="${f.dest_city == 'Frankfurt'}">
                                     <img src="${pageContext.request.contextPath}/static/images/Frankfurt.jpg" alt="Frankfurt">
                                 </c:when>
+                                <c:when test="${f.dest_city == 'Doha'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Doha.jpg" alt="Doha">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'Bangkok'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Bangkok.jpg" alt="Bangkok">
+                                </c:when>
                                 <c:otherwise>
                                     <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
                                 </c:otherwise>
