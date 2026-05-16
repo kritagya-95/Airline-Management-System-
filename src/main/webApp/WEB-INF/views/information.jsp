@@ -39,7 +39,7 @@
                 <img src="${pageContext.request.contextPath}/static/images/Krits.jpg" alt="Kritagya Shrestha"/>
                 <span>CEO</span>
             </div>
-            <div><h2>Kritagya Shrestha</h2><p>Guides the product vision and keeps the SkyLine experience focused on travelers.</p></div>
+            <div><h2>Kritagya Shrestha</h2><p>Drives the product vision and strategy for SkyLine Airlines, ensuring the platform delivers a seamless, user-friendly, and innovative travel experience while keeping customer satisfaction and business goals at the center of development.</p></div>
         </article>
         <article class="developer-card">
             <div class="developer-photo">
