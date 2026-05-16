@@ -14,6 +14,8 @@ public class TravelGuideServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        // Just forward to the JSP (Static page)
         request.getRequestDispatcher("/WEB-INF/views/travel-guide.jsp")
                 .forward(request, response);
     }
