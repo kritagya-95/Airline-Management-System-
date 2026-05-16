@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/landing.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/popular-routes.css"/>
 </head>
 <body>
 <header class="land-header">
@@ -63,16 +64,16 @@
                                     <img src="${pageContext.request.contextPath}/static/images/Frankfurt.jpg" alt="Frankfurt"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight route"/>
+                                    <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight"/>
                                 </c:otherwise>
                             </c:choose>
                         </div>
                         <div class="route-card-body">
-                            <h2><c:out value="${r.origin_city}"/> (<c:out value="${r.origin_code}"/>) to <c:out value="${r.dest_city}"/> (<c:out value="${r.dest_code}"/>)</h2>
-                            <p class="route-card-meta"><c:out value="${r.flight_count}"/> scheduled flight(s)</p>
+                            <h2>${r.origin_city} → ${r.dest_city}</h2>
+                            <p class="route-card-meta">${r.origin_code} - ${r.dest_code} • ${r.flight_count} flights</p>
                             <p class="route-card-price">NPR <fmt:formatNumber value="${r.starting_fare}" pattern="#,##0.00"/></p>
-                            <p class="route-card-class">One way &bull; Economy Class</p>
-                            <a class="route-card-btn" href="${pageContext.request.contextPath}/home">Book Now</a>
+                            <p class="route-card-class">One way • Economy Class</p>
+                            <a href="${pageContext.request.contextPath}/home" class="route-card-btn">Book Now</a>
                         </div>
                     </article>
                 </c:forEach>

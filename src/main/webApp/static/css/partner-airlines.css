@@ -1,0 +1,119 @@
+/* partner-airlines.css */
+.partner-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.partner-card {
+    background: #fffdfa;
+    border: 2px solid #ecdcd4;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transition: transform 0.3s;
+}
+
+.partner-card:hover {
+    transform: translateY(-8px);
+}
+
+.partner-card-img {
+    height: 160px;
+    overflow: hidden;
+}
+
+.partner-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.partner-card-body {
+    padding: 24px 28px 28px;
+}
+
+.partner-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.partner-code {
+    width: 58px;
+    height: 58px;
+    border-radius: 12px;
+    background: #8B0000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Chivo', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.partner-country {
+    color: #00834b;
+    background: #d8f8e6;
+    border-radius: 16px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.partner-card-body h2 {
+    font-family: 'Chivo', sans-serif;
+    font-size: 18px;
+    color: #07101f;
+    margin-bottom: 12px;
+}
+
+.partner-card-body p {
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.55;
+    margin-bottom: 8px;
+}
+
+.partner-note {
+    background: #fff8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: #17233a;
+    margin: 20px 0;
+}
+
+.partner-network {
+    color: #334155;
+    margin-top: 18px;
+    font-weight: 500;
+}
+
+.partner-network::before {
+    content: "";
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border: 2px solid #8B0000;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: -2px;
+}
+
+@media (max-width: 1024px) {
+    .partner-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .partner-card-grid {
+        grid-template-columns: 1fr;
+    }
+}

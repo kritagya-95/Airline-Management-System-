@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/landing.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/partner-airlines.css"/>
 </head>
 <body>
 <header class="land-header">
@@ -43,33 +44,30 @@
                     <article class="partner-card">
                         <div class="partner-card-img">
                             <c:choose>
+                                <c:when test="${a.airline_name == 'Emirates'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Emirates.jpg" alt="Emirates"/>
+                                </c:when>
                                 <c:when test="${a.airline_name == 'Nepal Airlines'}">
                                     <img src="${pageContext.request.contextPath}/static/images/NepalAirline.jpg" alt="Nepal Airlines"/>
                                 </c:when>
                                 <c:when test="${a.airline_name == 'Tropic Air'}">
                                     <img src="${pageContext.request.contextPath}/static/images/TropicAir.jpg" alt="Tropic Air"/>
                                 </c:when>
-                                <c:when test="${a.airline_name == 'Emirates'}">
-                                    <img src="${pageContext.request.contextPath}/static/images/Emirates.jpg" alt="Emirates"/>
-                                </c:when>
                                 <c:otherwise>
-                                    <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Partner airline"/>
+                                    <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Partner"/>
                                 </c:otherwise>
                             </c:choose>
                         </div>
                         <div class="partner-card-body">
                             <div class="partner-card-top">
-                                <span class="partner-code"><c:out value="${a.iata_code}"/></span>
-                                <span class="partner-country"><c:out value="${a.country}"/></span>
+                                <span class="partner-code">${a.iata_code}</span>
+                                <span class="partner-country">${a.country}</span>
                             </div>
-                            <h2><c:out value="${a.airline_name}"/></h2>
-                            <p>IATA Code: <strong><c:out value="${a.iata_code}"/></strong></p>
+                            <h2>${a.airline_name}</h2>
+                            <p>IATA Code: <strong>${a.iata_code}</strong></p>
                             <p class="partner-note">Trusted partner for connected SkyLine journeys.</p>
                             <p class="partner-network">
-                                <c:choose>
-                                    <c:when test="${a.country == 'UAE'}">International Network</c:when>
-                                    <c:otherwise>Regional Network</c:otherwise>
-                                </c:choose>
+                                    ${a.country == 'UAE' ? 'International Network' : 'Regional Network'}
                             </p>
                         </div>
                     </article>

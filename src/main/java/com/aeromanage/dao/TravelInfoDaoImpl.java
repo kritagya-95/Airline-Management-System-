@@ -1,7 +1,6 @@
 package com.aeromanage.dao;
 
 import com.aeromanage.utils.DBConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,11 +48,13 @@ public class TravelInfoDaoImpl implements TravelInfoDao {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
                 list.add(rowToMap(rs));
             }
         } catch (SQLException e) {
             System.err.println("[TravelInfoDaoImpl] fetchMaps error: " + e.getMessage());
+            e.printStackTrace();
         }
         return list;
     }
@@ -62,7 +63,7 @@ public class TravelInfoDaoImpl implements TravelInfoDao {
         Map<String, Object> map = new LinkedHashMap<>();
         ResultSetMetaData meta = rs.getMetaData();
         for (int i = 1; i <= meta.getColumnCount(); i++) {
-            map.put(meta.getColumnLabel(i), rs.getObject(i));
+            map.put(meta.getColumnLabel(i).toLowerCase(), rs.getObject(i));
         }
         return map;
     }

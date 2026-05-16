@@ -2,7 +2,6 @@ package com.aeromanage.controller;
 
 import com.aeromanage.dao.TravelInfoDao;
 import com.aeromanage.dao.TravelInfoDaoImpl;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,7 +18,9 @@ public class PopularRoutesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         request.setAttribute("routes", travelInfoDao.getPopularRoutes());
+
         request.getRequestDispatcher("/WEB-INF/views/popular-routes.jsp")
                 .forward(request, response);
     }
