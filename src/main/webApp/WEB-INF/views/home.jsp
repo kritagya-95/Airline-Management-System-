@@ -233,9 +233,9 @@
         </div>
         <div class="info-col">
             <h3 class="info-heading">Book &amp; Manage</h3>
-            <a href="#" class="info-link"><h4>Search Flights</h4></a>
-            <a href="#" class="info-link"><h4>Manage Booking</h4></a>
-            <a href="#" class="info-link"><h4>Schedule</h4></a>
+            <a href="${pageContext.request.contextPath}/search-flights" class="info-link"><h4>Search Flights</h4></a>
+            <a href="${pageContext.request.contextPath}/my-bookings" class="info-link"><h4>Manage Booking</h4></a>
+            <a href="${pageContext.request.contextPath}/flight-schedule" class="info-link"><h4>Schedule</h4></a>
         </div>
         <div class="info-col">
             <h3 class="info-heading">Where we FLY?</h3>
