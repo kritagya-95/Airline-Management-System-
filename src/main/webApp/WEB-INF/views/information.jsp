@@ -86,7 +86,7 @@
                 <img src="${pageContext.request.contextPath}/static/images/Krits.jpg" alt="Kritagya"/>
                 <span>CEO</span>
             </div>
-            <div><h2>Kritagya Shrestha</h2><p>Drives the product vision...</p></div>
+            <div><h2>Kritagya Shrestha</h2><p>Designed frontend UI and supported backend development for smooth system functionality.</p></div>
         </article>
 
         <article class="developer-card" onclick="showDeveloperPopup(1)">
@@ -94,31 +94,31 @@
                 <img src="${pageContext.request.contextPath}/static/images/SujalP.jpg" alt="SujalP"/>
                 <span>Co-Founder</span>
             </div>
-            <div><h2>Sujal Pariyar</h2><p>Shapes core workflows...</p></div>
+            <div><h2>Sujal Pariyar</h2><p>Created wireframes, analyzed UI structure, and contributed to backend development.</p></div>
         </article>
 
         <article class="developer-card" onclick="showDeveloperPopup(2)">
             <div class="developer-photo">
                 <img src="${pageContext.request.contextPath}/static/images/SujalT.jpg" alt="SujalT"/>
-                <span>Lead Backend</span>
+                <span>IT Systems Manager</span>
             </div>
-            <div><h2>Sujal Tiwari</h2><p>Works on server-side logic...</p></div>
+            <div><h2>Sujal Tiwari</h2><p>Developed and normalized the database while assisting in backend operations.</p></div>
         </article>
 
         <article class="developer-card" onclick="showDeveloperPopup(3)">
             <div class="developer-photo">
                 <img src="${pageContext.request.contextPath}/static/images/Binod.jpg" alt="Binod"/>
-                <span>UI/UX Lead</span>
+                <span>UI/UX </span>
             </div>
-            <div><h2>Binod Tamang</h2><p>Focuses on clean screens...</p></div>
+            <div><h2>Binod Tamang</h2><p>Designed UI/UX interfaces and prepared ERD and relational database models.</p></div>
         </article>
 
         <article class="developer-card" onclick="showDeveloperPopup(4)">
             <div class="developer-photo">
                 <img src="${pageContext.request.contextPath}/static/images/Prajesh.jpg" alt="Prajesh"/>
-                <span>Database Engineer</span>
+                <span>System Tester</span>
             </div>
-            <div><h2>Prajesh Thapa</h2><p>Maintains data structure...</p></div>
+            <div><h2>Prajesh Thapa</h2><p>Assisted in database development and performed system testing for reliability.</p></div>
         </article>
 
         <article class="developer-card" onclick="showDeveloperPopup(5)">
@@ -126,7 +126,7 @@
                 <img src="${pageContext.request.contextPath}/static/images/Aditya.jpg" alt="Aditya"/>
                 <span>Quality Analyst</span>
             </div>
-            <div><h2>Aditya Ale Magar</h2><p>Reviews behavior...</p></div>
+            <div><h2>Aditya Ale Magar</h2><p>Managed quality assurance and analyzed system performance and usability.</p></div>
         </article>
 
     </div>
@@ -153,12 +153,12 @@
     const ctx = '<%= request.getContextPath() %>';
 
     const developers = [
-        { photo: ctx + "/static/images/Krits.jpg",   name: "Kritagya Shrestha",  role: "CEO",                    desc: "Drives the product vision and strategy for SkyLine Airlines..." },
-        { photo: ctx + "/static/images/SujalP.jpg",  name: "Sujal Pariyar",      role: "Co-Founder",             desc: "Shapes core workflows and helps turn team ideas into reality..." },
-        { photo: ctx + "/static/images/SujalT.jpg",  name: "Sujal Tiwari",       role: "Lead Backend Developer", desc: "Works on server-side logic, servlets, and the DAO layer..." },
-        { photo: ctx + "/static/images/Binod.jpg",   name: "Binod Tamang",        role: "UI/UX Lead",             desc: "Focuses on clean screens and intuitive user experience..." },
-        { photo: ctx + "/static/images/Prajesh.jpg", name: "Prajesh Thapa",       role: "Database Engineer",      desc: "Maintains data structure, SQL schemas and query optimization..." },
-        { photo: ctx + "/static/images/Aditya.jpg",  name: "Aditya Ale Magar",    role: "Quality Analyst",        desc: "Reviews behavior, checks edge cases and ensures stability..." }
+        { photo: ctx + "/static/images/Krits.jpg",   name: "Kritagya Shrestha",  role: "CEO",                    desc: "Responsible for designing interactive user interfaces, developing responsive frontend components, and supporting backend functionality to ensure a seamless user experience within the SkyLine Airlines system." },
+        { photo: ctx + "/static/images/SujalP.jpg",  name: "Sujal Pariyar",      role: "Co-Founder",             desc: "Conducted user interface analysis, created system wireframes and layout structures, and contributed to backend development to improve overall system usability and functionality." },
+        { photo: ctx + "/static/images/SujalT.jpg",  name: "Sujal Tiwari",       role: "IT Systems Manager",         desc: "Managed database creation, normalization, and data structure optimization while assisting in backend development to ensure efficient system performance and secure data management." },
+        { photo: ctx + "/static/images/Binod.jpg",   name: "Binod Tamang",        role: "UI/UX",             desc: "Designed user-friendly UI/UX components, developed frontend visuals, and prepared ERD and relational database models to support accurate system architecture and database relationships." },
+        { photo: ctx + "/static/images/Prajesh.jpg", name: "Prajesh Thapa",       role: "System Tester",      desc: "Assisted in database creation and performed system testing to identify errors, validate functionalities, and ensure the reliability and stability of the application." },
+        { photo: ctx + "/static/images/Aditya.jpg",  name: "Aditya Ale Magar",    role: "Quality Analyst",        desc: "Oversaw quality assurance processes, evaluated system performance and usability, and ensured that the project met required standards, functionality, and user expectations." }
     ];
 
     function showDeveloperPopup(index) {
