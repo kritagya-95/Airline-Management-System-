@@ -20,7 +20,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Direct access to login page
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 
@@ -31,26 +30,29 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // 1. Sanitize Inputs
         if (email != null) email = email.trim();
         if (password != null) password = password.trim();
 
-        // 2. Database Lookup
         User user = userDao.findByEmail(email);
 
-        // 3. Unified Authentication Logic
-        // This remains the same for the long run; logic changes only in PasswordUtil
         if (user != null && PasswordUtil.checkPassword(password, user.getPassword())) {
 
-            // Success: Initialize Session
             SessionUtil.setAttribute(request, "user", user);
 
-            String role = user.getRole().toUpperCase();
+            String role = (user.getRole() != null) ? user.getRole().trim().toUpperCase() : "";
             String contextPath = request.getContextPath();
 
             System.out.println("[Login] Authorized: " + email + " as " + role);
 
-            // 4. Role-Based Routing
+            String redirectTarget = request.getParameter("redirect");
+            String flightId = request.getParameter("flightId");
+
+            if ("booking".equals(redirectTarget) && flightId != null && !flightId.trim().isEmpty()) {
+                System.out.println("[Login] Intercept detected. Rerouting user directly to checkout for flight ID: " + flightId);
+                response.sendRedirect(contextPath + "/booking?flightId=" + flightId.trim());
+                return;
+            }
+
             switch (role) {
                 case "ADMIN":
                     response.sendRedirect(contextPath + "/admin/dashboard");
@@ -63,7 +65,6 @@ public class LoginServlet extends HttpServlet {
                     break;
             }
         } else {
-            // Failure: Return to log in with error message
             System.out.println("[Login] Refused: " + email);
             request.setAttribute("error", "Invalid email or password.");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
