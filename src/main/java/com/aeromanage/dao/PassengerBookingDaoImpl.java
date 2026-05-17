@@ -1,7 +1,6 @@
 package com.aeromanage.dao;
 
 import com.aeromanage.utils.DBConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class PassengerBookingDaoImpl implements PassengerBookingDao {
 
@@ -80,6 +80,36 @@ public class PassengerBookingDaoImpl implements PassengerBookingDao {
                 ORDER BY COALESCE(c.requested_at, b.created_at) DESC
                 """;
         return fetchBookings(sql, userId);
+    }
+
+    @Override
+    public boolean createBooking(int userId, int flightId, String ticketClass, double totalFare) {
+        String insertBooking = """
+                INSERT INTO bookings (user_id, flight_id, booking_ref, class, num_passengers, total_fare, booking_status)
+                VALUES (?, ?, ?, ?, 1, ?, 'CONFIRMED')
+                """;
+
+        // Generate a 10-character unique alphanumeric booking confirmation string
+        String bookingRef = UUID.randomUUID().toString()
+                .replace("-", "")
+                .substring(0, 10)
+                .toUpperCase();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(insertBooking)) {
+
+            ps.setInt(1, userId);
+            ps.setInt(2, flightId);
+            ps.setString(3, bookingRef);
+            ps.setString(4, ticketClass.toUpperCase());
+            ps.setDouble(5, totalFare);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.err.println("[PassengerBookingDaoImpl] createBooking database transaction error: " + e.getMessage());
+            return false;
+        }
     }
 
     @Override
@@ -161,7 +191,7 @@ public class PassengerBookingDaoImpl implements PassengerBookingDao {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("[PassengerBookingDaoImpl] fetchBookings error: " + e.getMessage());
+            System.err.println("[PassengerBookingDaoImpl] fetchBookings mapping error: " + e.getMessage());
         }
 
         return bookings;

@@ -9,4 +9,5 @@ public interface PassengerBookingDao {
     List<Map<String, Object>> getPastBookings(int userId);
     List<Map<String, Object>> getCancelledBookings(int userId);
     boolean cancelBooking(int userId, int bookingId, String reason);
+    boolean createBooking(int userId, int flightId, String ticketClass, double totalFare);
 }
