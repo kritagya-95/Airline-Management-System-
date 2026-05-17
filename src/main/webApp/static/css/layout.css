@@ -1,5 +1,5 @@
 /* ==========================================================================
-   layout.css — SkyLine Airlines Global Structure Stylesheet
+   layout.css — SkyLine Airlines Global Structure Stylesheet (Refined Layout)
    ========================================================================== */
 
 * {
@@ -27,10 +27,10 @@ body {
 
 .logo-text {
     font-family: 'Cinzel', serif;
-    font-size: 22px;
+    font-size: 19px;             /* Made slightly smaller for an elegant balance */
     font-weight: 700;
     color: #8B0000;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;     /* Enhanced spacing for premium text feel */
 }
 
 .welcome-text-link {
@@ -60,7 +60,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 40px;
-    height: 64px;
+    height: 100px;
     background: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     position: sticky;
@@ -77,7 +77,9 @@ body {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;                  /* Enhanced gap between structural blocks */
+    margin-left: 50px;          /* Shifts menu entries smoothly closer to logo text */
+    margin-right: auto;         /* CRITICAL: Automatically pushes right assets panel out to right edge */
 }
 
 .nav-dropdown {
@@ -90,7 +92,7 @@ body {
     gap: 4px;
     padding: 8px 14px;
     font-family: 'Cinzel', serif;
-    font-size: 14px;
+    font-size: 13px;            /* Refined typeface size to balance with smaller logo scale */
     font-weight: 600;
     color: #8B0000;
     text-decoration: none;
@@ -118,7 +120,7 @@ body {
     border: 1px solid #eee;
     border-radius: 8px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    min-width: 180px;
+    min-width: 190px;
     z-index: 300;
     overflow: hidden;
 }
@@ -146,17 +148,17 @@ body {
 .header-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;                  /* Elevated padding spacing across search and authentication targets */
 }
 
 .header-search {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     background: #f5f5f5;
     border: 1px solid #ddd;
     border-radius: 20px;
-    padding: 6px 14px;
+    padding: 7px 16px;
 }
 
 .search-icon {
@@ -171,13 +173,13 @@ body {
     font-size: 13px;
     color: #333;
     outline: none;
-    width: 110px;
+    width: 140px;               /* Expanded box layout so placeholder words don't get cut off anymore */
 }
 
 .header-auth {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .btn-header-login {
@@ -336,6 +338,7 @@ body {
 /* ══ RESPONSIVE INTERFACES (LAYOUT SECTOR) ══ */
 @media (max-width: 1024px) {
     .info-grid { grid-template-columns: repeat(2, 1fr); }
+    .header-search-input { width: 160px; } /* Graceful scaling down for mid-size displays */
 }
 
 @media (max-width: 768px) {

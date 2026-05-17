@@ -116,7 +116,6 @@ public class AdminDaoImpl implements AdminDao {
 
     @Override
     public List<Map<String, Object>> searchFlights(String from, String to, String departureDate) {
-        // Leverages your clean architecture joins while filtering on user input criteria
         String sql = """
             SELECT f.flight_id, f.flight_number, f.departure_time, f.arrival_time,
                    f.status, f.base_economy_fare, f.base_business_fare,
@@ -155,6 +154,51 @@ public class AdminDaoImpl implements AdminDao {
             }
         } catch (SQLException e) {
             System.err.println("[AdminDaoImpl] searchFlights error: " + e.getMessage());
+        }
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> searchFlightsByKeyword(String keyword) {
+        // Leverages standard structural joins while running wildcards against city, airport code, and airline name
+        String sql = """
+            SELECT f.flight_id, f.flight_number, f.departure_time, f.arrival_time,
+                   f.status, f.base_economy_fare, f.base_business_fare,
+                   al.airline_name,
+                   oa.iata_code AS origin_code, oa.city AS origin_city,
+                   da.iata_code AS dest_code,   da.city AS dest_city,
+                   ac.model AS aircraft_model
+            FROM flights f
+            JOIN airlines al ON al.airline_id      = f.airline_id
+            JOIN airports oa ON oa.airport_id      = f.origin_airport_id
+            JOIN airports da ON da.airport_id      = f.dest_airport_id
+            JOIN aircraft ac ON ac.aircraft_id     = f.aircraft_id
+            WHERE oa.city LIKE ? 
+               OR oa.iata_code LIKE ?
+               OR da.city LIKE ? 
+               OR da.iata_code LIKE ?
+               OR al.airline_name LIKE ?
+            ORDER BY f.departure_time DESC
+            """;
+
+        List<Map<String, Object>> list = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            String wildcard = "%" + keyword + "%";
+            ps.setString(1, wildcard);
+            ps.setString(2, wildcard);
+            ps.setString(3, wildcard);
+            ps.setString(4, wildcard);
+            ps.setString(5, wildcard);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(rowToMap(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[AdminDaoImpl] searchFlightsByKeyword error: " + e.getMessage());
         }
         return list;
     }

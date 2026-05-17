@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * AdminDao — defines all data access operations for the admin dashboard.
+ * AdminDao — defines all data access operations for the admin dashboard and flight routing.
  */
 public interface AdminDao {
 
@@ -31,6 +31,14 @@ public interface AdminDao {
      * @return A list of database rows containing matching flight details
      */
     List<Map<String, Object>> searchFlights(String from, String to, String departureDate);
+
+    /**
+     * Searches across live flight paths using a broad keyword string against
+     * origin cities, destination cities, airport codes, or partner airline names.
+     * @param keyword The user-submitted string from the global header search input
+     * @return A list of database rows containing matching flight details
+     */
+    List<Map<String, Object>> searchFlightsByKeyword(String keyword);
 
     //List<Map<String, Object>> getPopularFlights(int limit);
 
