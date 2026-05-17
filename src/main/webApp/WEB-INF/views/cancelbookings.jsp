@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
@@ -8,48 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Cancel Booking - SkyLine Airlines</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/home.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/cancelbookings.css"/>
 </head>
 <body>
 
-<header class="header">
-    <div class="header-logo">
-        <a href="${pageContext.request.contextPath}/" class="logo-link"><span class="logo-text"><h1>SkyLine</h1></span></a>
-    </div>
-    <div class="nav-dropdown">
-        <a href="#" class="nav-link"><h2>Book</h2> <span class="arrow">&#9662;</span></a>
-        <div class="dropdown-menu">
-            <a href="${pageContext.request.contextPath}/search-flights">Search Flights</a>
-            <a href="${pageContext.request.contextPath}/book-flight">Book a Flight</a>
-            <a href="${pageContext.request.contextPath}/booking/manage">Manage Booking</a>
-        </div>
-    </div>
-    <div class="nav-dropdown">
-        <a href="#" class="nav-link"><h2>Manage</h2> <span class="arrow">&#9662;</span></a>
-        <div class="dropdown-menu">
-            <a href="${pageContext.request.contextPath}/my-bookings">My Bookings</a>
-            <a href="${pageContext.request.contextPath}/cancel-booking">Cancel Booking</a>
-            <a href="${pageContext.request.contextPath}/flight-schedule">Flight Schedule</a>
-        </div>
-    </div>
-    <div class="nav-dropdown">
-        <a href="#" class="nav-link"><h2>Experience</h2> <span class="arrow">&#9662;</span></a>
-        <div class="dropdown-menu">
-            <a href="${pageContext.request.contextPath}/popular-routes">Popular Routes</a>
-            <a href="${pageContext.request.contextPath}/partner-airlines">Partner Airlines</a>
-            <a href="${pageContext.request.contextPath}/travel-guide">Travel Guide</a>
-        </div>
-    </div>
-    <div class="header-right">
-        <div class="header-search"><span class="search-icon"></span><input type="text" placeholder="Search" class="header-search-input"/></div>
-        <div class="header-auth">
-            <a href="${pageContext.request.contextPath}/profile" class="welcome-text-link"><c:out value="${user.fullName}"/></a>
-            <a href="${pageContext.request.contextPath}/logout" class="btn-header-login">Log Out</a>
-        </div>
-    </div>
-</header>
+<%@ include file="/WEB-INF/views/fragments/header.jsp" %>
 
 <main class="cancel-page">
     <section class="cancel-hero">
@@ -102,29 +66,7 @@
     </section>
 </main>
 
-<footer class="prof-footer">
-    <div class="prof-footer-inner">
-        <div class="prof-footer-logo"><span class="prof-footer-logo-text">SkyLine</span></div>
-        <p class="prof-footer-copy">&copy; 2026 SkyLine Airlines. All rights reserved.</p>
-        <div class="prof-footer-social">
-            <a href="#" class="prof-social-link" target="_blank"><img src="${pageContext.request.contextPath}/static/images/facebook.png" alt="Facebook" width="20"/></a>
-            <a href="#" class="prof-social-link" target="_blank"><img src="${pageContext.request.contextPath}/static/images/twitter.png" alt="Twitter" width="20"/></a>
-            <a href="#" class="prof-social-link" target="_blank"><img src="${pageContext.request.contextPath}/static/images/instagram.png" alt="Instagram" width="20"/></a>
-        </div>
-    </div>
-</footer>
-
-<script>
-    document.querySelectorAll(".nav-dropdown").forEach(dd => {
-        dd.addEventListener("click", function(e) {
-            e.stopPropagation();
-            this.classList.toggle("open");
-        });
-    });
-    document.addEventListener("click", () => {
-        document.querySelectorAll(".nav-dropdown").forEach(d => d.classList.remove("open"));
-    });
-</script>
+<%@ include file="/WEB-INF/views/fragments/footer.jsp" %>
 
 </body>
 </html>

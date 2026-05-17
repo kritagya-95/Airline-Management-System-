@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,23 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Travel Guide - SkyLine</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/landing.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/travel-guide.css"/>
 </head>
 <body>
-<header class="land-header">
-    <div class="land-logo">
-        <img src="${pageContext.request.contextPath}/static/images/logo.png" class="land-logo-img" alt="SkyLine"/>
-        <span class="land-logo-text"><h1>SkyLine</h1></span>
-    </div>
-    <nav class="land-nav">
-        <a href="${pageContext.request.contextPath}/popular-routes" class="land-nav-link"><h2>Routes</h2></a>
-        <a href="${pageContext.request.contextPath}/partner-airlines" class="land-nav-link"><h2>Airlines</h2></a>
-        <a href="${pageContext.request.contextPath}/travel-guide" class="land-nav-link"><h2>Travel Guide</h2></a>
-        <a href="${pageContext.request.contextPath}/home" class="land-nav-link"><h2>Home</h2></a>
-    </nav>
-</header>
+
+<%@ include file="/WEB-INF/views/fragments/header.jsp" %>
 
 <section class="land-hero">
     <div class="land-hero-inner">
@@ -34,7 +25,6 @@
 
 <section class="travel-page-section">
     <div class="guide-grid">
-        <!-- Card 1 -->
         <article class="guide-card">
             <div class="guide-icon">✈️</div>
             <h2>Pre-Flight Checklist</h2>
@@ -45,7 +35,6 @@
             </ul>
         </article>
 
-        <!-- Card 2 -->
         <article class="guide-card">
             <div class="guide-icon">🛫</div>
             <h2>Airport Navigation</h2>
@@ -56,7 +45,6 @@
             </ul>
         </article>
 
-        <!-- Card 3 -->
         <article class="guide-card">
             <div class="guide-icon">🛩️</div>
             <h2>In-Flight Services & Rights</h2>
@@ -69,6 +57,7 @@
     </div>
 </section>
 
-<jsp:include page="/WEB-INF/views/partials/landing-footer.jsp"/>
+<%@ include file="/WEB-INF/views/fragments/footer.jsp" %>
+
 </body>
 </html>

@@ -49,8 +49,8 @@ public class SearchFlightsServlet extends HttpServlet {
         request.setAttribute("searchedTo", to);
         request.setAttribute("searchedDate", departure);
 
-        // FORWARDS SECURELY TO YOUR DEDICATED VIEW PAGE
-        request.getRequestDispatcher("/WEB-INF/views/staff/search-flights.jsp")
+
+        request.getRequestDispatcher("/WEB-INF/views/search-flights.jsp")
                 .forward(request, response);
     }
 }

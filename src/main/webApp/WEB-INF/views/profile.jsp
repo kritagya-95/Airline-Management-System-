@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c"  uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
@@ -8,12 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Profile — SkyLine</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/profile.css"/>
 </head>
 <body>
 
-<!-- ══ SUCCESS POPUP OVERLAY ══ -->
 <c:if test="${showSuccess || not empty successMsg}">
   <div class="prof-popup-overlay" id="successPopup">
     <div class="prof-popup-box">
@@ -30,24 +29,8 @@
   </div>
 </c:if>
 
-<!-- ══ HEADER ══ -->
-<header class="prof-header">
-  <div class="prof-header-logo">
-    <a href="${pageContext.request.contextPath}/home" class="prof-logo-link">
-      <img src="${pageContext.request.contextPath}/static/images/logo.png"
-           class="prof-logo-img" alt="SkyLine"/>
-      <span class="prof-logo-text">SkyLine</span>
-    </a>
-  </div>
-  <nav class="prof-nav">
-    <a href="${pageContext.request.contextPath}/home"    class="prof-nav-link">Book Flights</a>
-    <a href="${pageContext.request.contextPath}/home"    class="prof-nav-link">Flights</a>
-    <a href="${pageContext.request.contextPath}/profile" class="prof-nav-link active">My Profile</a>
-  </nav>
-  <a href="${pageContext.request.contextPath}/logout" class="prof-btn-logout">Logout</a>
-</header>
+<%@ include file="/WEB-INF/views/fragments/header.jsp" %>
 
-<!-- ══ PROFILE BANNER ══ -->
 <div class="prof-banner">
   <div class="prof-banner-inner">
     <div class="prof-avatar">
@@ -74,7 +57,6 @@
   </div>
 </div>
 
-<!-- ══ TABS ══ -->
 <div class="prof-tabs-wrap">
   <div class="prof-tabs">
     <button class="prof-tab active" onclick="showTab('overview', this)">Overview</button>
@@ -83,10 +65,8 @@
   </div>
 </div>
 
-<!-- ══ TAB CONTENT ══ -->
 <div class="prof-content">
 
-  <!-- ── OVERVIEW TAB ── -->
   <div id="tab-overview" class="prof-tab-panel">
     <div class="prof-card">
       <div class="prof-card-header">
@@ -94,7 +74,6 @@
         <button class="prof-btn-edit" onclick="toggleEdit()">✏️ Edit</button>
       </div>
 
-      <!-- VIEW MODE -->
       <div id="view-mode" class="prof-info-grid">
         <div class="prof-info-item">
           <span class="prof-info-label">👤 First Name</span>
@@ -128,7 +107,6 @@
         </div>
       </div>
 
-      <!-- EDIT MODE -->
       <form id="edit-mode" class="prof-edit-form"
             action="${pageContext.request.contextPath}/profile/update"
             method="post" enctype="multipart/form-data" style="display:none;">
@@ -175,7 +153,6 @@
     </div>
   </div>
 
-  <!-- ── MY FLIGHTS TAB ── -->
   <div id="tab-myflights" class="prof-tab-panel" style="display:none;">
     <div class="prof-card">
       <div class="prof-card-header">
@@ -189,7 +166,6 @@
     </div>
   </div>
 
-  <!-- ── SETTINGS TAB ── -->
   <div id="tab-settings" class="prof-tab-panel" style="display:none;">
     <div class="prof-card">
       <div class="prof-card-header">
@@ -246,10 +222,7 @@
     </div>
   </div>
 
-</div><!-- end .prof-content -->
-
-<!-- ══ CHANGE PASSWORD POPUP ══ -->
-<div class="prof-popup-overlay" id="passwordPopup">
+</div><div class="prof-popup-overlay" id="passwordPopup">
   <div class="prof-popup-box">
     <h3 class="prof-popup-title">Change Password</h3>
     <form action="${pageContext.request.contextPath}/profile/password"
@@ -266,63 +239,7 @@
   </div>
 </div>
 
-<!-- ══ INFO SECTION ══ -->
-<section class="prof-info-section">
-  <div class="prof-info-footer-grid">
-    <div class="prof-info-col">
-      <h4 class="prof-info-heading">About Us</h4>
-      <a href="${pageContext.request.contextPath}/aboutus-airline" class="prof-info-link">About SkyLine</a>
-      <a href="#" class="prof-info-link">Newsroom</a>
-      <a href="#" class="prof-info-link">Corporate Information</a>
-      <a href="#" class="prof-info-link">Tenders</a>
-      <a href="#" class="prof-info-link">Careers</a>
-    </div>
-    <div class="prof-info-col">
-      <h4 class="prof-info-heading">Book &amp; Manage</h4>
-      <a href="#" class="prof-info-link">Search Flights</a>
-      <a href="#" class="prof-info-link">Manage Booking</a>
-      <a href="#" class="prof-info-link">Flight Schedule</a>
-      <a href="#" class="prof-info-link">Cargo</a>
-    </div>
-    <div class="prof-info-col">
-      <h4 class="prof-info-heading">Where We Fly?</h4>
-      <a href="#" class="prof-info-link">Route Map</a>
-      <a href="#" class="prof-info-link">Nonstop Flights</a>
-      <a href="#" class="prof-info-link">Popular Flights</a>
-      <a href="#" class="prof-info-link">Partner Airlines</a>
-    </div>
-    <div class="prof-info-col">
-      <h4 class="prof-info-heading">Prepare To Travel</h4>
-      <a href="#" class="prof-info-link">Baggage Guidelines</a>
-      <a href="#" class="prof-info-link">Airport Information</a>
-      <a href="#" class="prof-info-link">First-time Travellers</a>
-      <a href="#" class="prof-info-link">Visas &amp; Documents</a>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FOOTER ══ -->
-<footer class="prof-footer">
-  <div class="prof-footer-inner">
-    <div class="prof-footer-logo">
-      <img src="${pageContext.request.contextPath}/static/images/logo.png"
-           class="prof-footer-logo-img" alt="SkyLine"/>
-      <span class="prof-footer-logo-text">SkyLine</span>
-    </div>
-    <p class="prof-footer-copy">&copy; 2026 SkyLine Airlines. All rights reserved.</p>
-    <div class="prof-footer-social">
-      <a href="#" class="prof-social-link" target="_blank">
-        <img src="${pageContext.request.contextPath}/static/images/facebook.png" alt="Facebook" width="20"/>
-      </a>
-      <a href="#" class="prof-social-link" target="_blank">
-        <img src="${pageContext.request.contextPath}/static/images/twitter.png" alt="Twitter" width="20"/>
-      </a>
-      <a href="#" class="prof-social-link" target="_blank">
-        <img src="${pageContext.request.contextPath}/static/images/instagram.png" alt="Instagram" width="20"/>
-      </a>
-    </div>
-  </div>
-</footer>
+<%@ include file="/WEB-INF/views/fragments/footer.jsp" %>
 
 <script>
   function showTab(tabId, btn) {

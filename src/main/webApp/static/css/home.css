@@ -1,211 +1,8 @@
-/* home.css — SkyLine Airlines Home Page */
+/* ==========================================================================
+   home.css — SkyLine Airlines Home View Custom Functional Components
+   ========================================================================== */
 
-.welcome-text-link {
-    font-family: 'Chivo', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #555;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.welcome-text-link:hover {
-    color: #8B0000;
-    text-decoration: underline;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    font-family: 'Chivo', sans-serif;
-    background: #faf7f2;
-    color: #333;
-}
-
-/* ══ HEADER ══ */
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 40px;
-    height: 64px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    position: sticky;
-    top: 0;
-    z-index: 200;
-}
-
-.header-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* Clickable Logo Wrap Configuration */
-.logo-link {
-    text-decoration: none;
-    color: inherit;
-    display: inline-block;
-}
-
-.logo-link:hover {
-    text-decoration: none;
-}
-
-.logo-text {
-    font-family: 'Cinzel', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #8B0000;
-    letter-spacing: 0.06em;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.nav-dropdown { position: relative; }
-
-.nav-link {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 14px;
-    font-family: 'Cinzel', serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #8B0000;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background 0.2s;
-    cursor: pointer;
-}
-
-.nav-link:hover {
-    background: #fdf0f0;
-    text-decoration: none;
-}
-
-.arrow { font-size: 11px; color: #8B0000; }
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    min-width: 180px;
-    z-index: 300;
-    overflow: hidden;
-}
-
-.nav-dropdown.open .dropdown-menu { display: block; }
-
-.dropdown-menu a {
-    display: block;
-    padding: 11px 18px;
-    font-family: 'Chivo', sans-serif;
-    font-size: 14px;
-    color: #333;
-    text-decoration: none;
-    transition: background 0.15s;
-}
-
-.dropdown-menu a:hover {
-    background: #fdf0f0;
-    color: #8B0000;
-    text-decoration: none;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.header-search {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    padding: 6px 14px;
-}
-
-.search-icon { font-size: 13px; color: #888; }
-
-.header-search-input {
-    border: none;
-    background: transparent;
-    font-family: 'Chivo', sans-serif;
-    font-size: 13px;
-    color: #333;
-    outline: none;
-    width: 110px;
-}
-
-.header-auth {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.welcome-text {
-    font-family: 'Chivo', sans-serif;
-    font-size: 13px;
-    color: #555;
-}
-
-.btn-header-login {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #8B0000;
-    text-decoration: none;
-    padding: 8px 20px;
-    border: 1.5px solid #8B0000;
-    border-radius: 20px;
-    background: white;
-    transition: all 0.2s;
-    white-space: nowrap;
-}
-
-.btn-header-login:hover {
-    background: #8B0000;
-    color: white;
-    text-decoration: none;
-}
-
-.btn-header-signup {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: white;
-    text-decoration: none;
-    padding: 8px 20px;
-    border: 1.5px solid #8B0000;
-    border-radius: 20px;
-    background: #8B0000;
-    transition: all 0.2s;
-    white-space: nowrap;
-}
-
-.btn-header-signup:hover {
-    background: #660000;
-    border-color: #660000;
-    color: white;
-    text-decoration: none;
-}
-
-/* ══ HERO ══ */
+/* ══ HERO SECTION ══ */
 .hero {
     position: relative;
     width: 100%;
@@ -318,7 +115,10 @@ body {
     padding: 14px 16px;
 }
 
-.field-icon { font-size: 16px; flex-shrink: 0; }
+.field-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
 
 .search-input {
     border: none;
@@ -330,7 +130,9 @@ body {
     width: 100%;
 }
 
-.search-input::placeholder { color: #aaa; }
+.search-input::placeholder {
+    color: #aaa;
+}
 
 .search-btn-wrap {
     flex: 0 0 auto;
@@ -357,9 +159,11 @@ body {
     height: 52px;
 }
 
-.search-btn:hover { background: #f5e0e0; }
+.search-btn:hover {
+    background: #f5e0e0;
+}
 
-/* ══ POPULAR FLIGHTS ══ */
+/* ══ POPULAR FLIGHT DEALS ══ */
 .popular-section {
     padding: 60px 28px 70px;
 }
@@ -409,7 +213,9 @@ body {
     transition: border-color 0.2s;
 }
 
-.filter-input-wrap:focus-within { border-color: #8B0000; }
+.filter-input-wrap:focus-within {
+    border-color: #8B0000;
+}
 
 .filter-input {
     border: none;
@@ -526,7 +332,9 @@ body {
     letter-spacing: 0.03em;
 }
 
-.book-btn:hover { background: #660000; }
+.book-btn:hover {
+    background: #660000;
+}
 
 .flight-card-body a {
     display: block;
@@ -534,145 +342,25 @@ body {
     margin-top: auto;
 }
 
-/* ══ INFO SECTION ══ */
-.info-section {
-    background: #faf7f2;
-    border-top: 1px solid #e8e0d5;
-    padding: 48px 80px 40px;
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-}
-
-.info-col {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.info-heading {
-    font-family: 'Cinzel', serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #8B0000;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 8px;
-}
-
-.info-link {
-    font-family: 'Chivo', sans-serif;
-    font-size: 13px;
-    color: #555;
-    text-decoration: none;
-    transition: color 0.15s;
-    line-height: 1.6;
-}
-
-.info-link:hover {
-    color: #8B0000;
-    text-decoration: none;
-}
-
-/* ══ FOOTER ══ */
-.prof-footer {
-    background: #f0ebe3;
-    border-top: 1.5px solid #ddd;
-    padding: 22px 80px;
-}
-
-.prof-footer-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-}
-
-.prof-footer-logo {
-    display: flex;
-    align-items: center;
-    flex: 1;
-}
-
-.prof-footer-logo-text {
-    font-family: 'Cinzel', serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: #8B0000;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.prof-footer-copy {
-    font-family: 'Chivo', sans-serif;
-    font-size: 13px;
-    color: #777;
-    text-align: center;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.prof-footer-social {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex: 1;
-    justify-content: flex-end;
-}
-
-.prof-social-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1.5px solid #bbb;
-    transition: border-color 0.2s;
-    text-decoration: none;
-}
-
-.prof-social-link:hover { border-color: #8B0000; }
-
-/* ══ RESPONSIVE ══ */
+/* ══ COMPONENT SPECIFIC MEDIA RESPONSIVENESS ══ */
 @media (max-width: 1024px) {
     .flight-grid { grid-template-columns: repeat(2, 1fr); }
-    .info-grid   { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-    .header      { padding: 0 20px; }
-    .nav-links   { display: none; }
-    .hero        { height: 300px; }
+    .hero { height: 300px; }
     .hero-content h1 { font-size: 28px; }
     .hero-content h2 { font-size: 20px; }
     .search-container { padding: 0 20px; margin-top: 20px; }
-    .search-box  { padding: 24px 20px 28px; }
+    .search-box { padding: 24px 20px 28px; }
     .search-form { flex-direction: column; }
     .search-btn-wrap { width: 100%; }
-    .search-btn  { width: 100%; justify-content: center; }
+    .search-btn { width: 100%; justify-content: center; }
     .popular-section { padding: 40px 20px 50px; }
     .flight-grid { grid-template-columns: 1fr; }
-    .info-section { padding: 36px 30px 30px; }
-    .info-grid   { grid-template-columns: 1fr 1fr; }
-    .footer      { padding: 18px 30px; }
-    .footer-inner { flex-direction: column; text-align: center; }
-    .footer-logo { justify-content: center; }
-    .footer-social { justify-content: center; }
 }
 
 @media (max-width: 480px) {
-    .info-grid   { grid-template-columns: 1fr; }
     .hero-content h1 { font-size: 22px; }
     .hero-content h2 { font-size: 16px; }
 }

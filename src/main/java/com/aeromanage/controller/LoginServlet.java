@@ -20,6 +20,10 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Pass query parameters to the JSP so the form can embed them if they exist
+        request.setAttribute("redirect", request.getParameter("redirect"));
+        request.setAttribute("flightId", request.getParameter("flightId"));
+
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 
@@ -44,6 +48,7 @@ public class LoginServlet extends HttpServlet {
 
             System.out.println("[Login] Authorized: " + email + " as " + role);
 
+            // Safe lookup for intercept and redirect parameters
             String redirectTarget = request.getParameter("redirect");
             String flightId = request.getParameter("flightId");
 
@@ -53,6 +58,7 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
 
+            // Fallback Role-Based Routing
             switch (role) {
                 case "ADMIN":
                     response.sendRedirect(contextPath + "/admin/dashboard");
@@ -61,12 +67,17 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect(contextPath + "/staff/dashboard");
                     break;
                 default:
-                    response.sendRedirect(contextPath + "/profile");
+                    response.sendRedirect(contextPath + "/home"); // Changed from /profile to /home for a better user landing flow!
                     break;
             }
         } else {
             System.out.println("[Login] Refused: " + email);
             request.setAttribute("error", "Invalid email or password.");
+
+            // Keep the parameters alive on postback failure so the intercept state isn't lost
+            request.setAttribute("redirect", request.getParameter("redirect"));
+            request.setAttribute("flightId", request.getParameter("flightId"));
+
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }
     }

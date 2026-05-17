@@ -32,9 +32,8 @@ public class BookFlightServlet extends HttpServlet {
         List<Map<String, Object>> flights = adminDao.getAllFlights();
         request.setAttribute("flights", flights);
 
-        // 3. Directly forward straight to your booking dashboard layout
-        // (Make sure the file on disk is spelled "book-flight.jsp", not "book-fligt.jsp"!)
-        request.getRequestDispatcher("/WEB-INF/views/staff/book-flight.jsp")
+
+        request.getRequestDispatcher("/WEB-INF/views/book-flight.jsp")
                 .forward(request, response);
     }
 }

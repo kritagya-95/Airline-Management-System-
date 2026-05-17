@@ -14,14 +14,14 @@ import java.io.IOException;
 /**
  * Security filter responsible for enforcing Role-Based Access Control (RBAC).
  *
- * <p>Intercepts requests to protected resources (/admin/*, /staff/*, /profile/*).
+ * <p>Intercepts requests to protected resources (/admin/*, /staff/*, /profile/*, /booking/*).
  * It verifies the existence of a valid session and ensures the authenticated user
  * possesses the required role for the requested URI. Unauthorized access attempts
  * result in a redirect to the login view or a 403 Forbidden error.</p>
  *
- * <p>Mapped patterns: {@code /admin/*}, {@code /staff/*}, {@code /profile/*}</p>
+ * <p>Mapped patterns: {@code /admin/*}, {@code /staff/*}, {@code /profile/*}, {@code /booking/*}</p>
  */
-@WebFilter(urlPatterns = {"/admin/*", "/staff/*", "/profile/*"})
+@WebFilter(urlPatterns = {"/admin/*", "/staff/*", "/profile/*", "/booking/*"})
 public class AuthenticationFilter implements Filter {
 
     /**

@@ -8,42 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Book Flights - SkyLine Airlines</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Chivo:wght@400;500;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/book-flight.css"/>
 </head>
 <body>
 
-<header class="header">
-    <div class="header-logo">
-        <a href="${pageContext.request.contextPath}/home" class="logo-link">
-            <span class="logo-text"><h1>SkyLine</h1></span>
-        </a>
-    </div>
-
-    <nav class="nav-links">
-        <div class="nav-dropdown">
-            <a href="#" class="nav-link"><h2>Book</h2> <span class="arrow">▾</span></a>
-            <div class="dropdown-menu">
-                <a href="${pageContext.request.contextPath}/book-flight">Book a Flight</a>
-                <a href="#">Manage Booking</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="header-right">
-        <div class="header-auth">
-            <c:choose>
-                <c:when test="${not empty user}">
-                    <a href="#" class="welcome-text-link">👤 <c:out value="${user.fullName}"/></a>
-                </c:when>
-                <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/login" class="btn-header-login">Log In</a>
-                </c:otherwise>
-            </c:choose>
-        </div>
-    </div>
-</header>
+<%@ include file="/WEB-INF/views/fragments/header.jsp" %>
 
 <section class="hero-banner"></section>
 
@@ -88,13 +58,13 @@
     <div class="flight-filter">
         <div class="filter-field">
             <label>From</label>
-            <div class="filter-input-wrap-local">
+            <div class="filter-input-wrap">
                 <input type="text" id="filterFrom" placeholder="Input Origin" class="filter-input" oninput="filterCards()"/>
             </div>
         </div>
         <div class="filter-field">
             <label>To</label>
-            <div class="filter-input-wrap-local">
+            <div class="filter-input-wrap">
                 <input type="text" id="filterTo" placeholder="Input Destination" class="filter-input" oninput="filterCards()"/>
             </div>
         </div>
@@ -107,7 +77,6 @@
             </c:when>
             <c:otherwise>
                 <c:forEach var="f" items="${flights}">
-                    <%-- FIXED: Safe fallback attributes added using single quotes to avoid evaluation breaks if codes are empty --%>
                     <article class="flight-card" data-from="<c:out value='${f.origin_city} ${f.origin_code}'/>" data-to="<c:out value='${f.dest_city} ${f.dest_code}'/>">
                         <div class="flight-card-img">
                             <c:choose>
@@ -123,8 +92,14 @@
                             <p class="flight-card-depart">Depart: <c:out value="${f.departure_time}"/></p>
                             <p class="flight-card-price">NPR <fmt:formatNumber value="${f.base_economy_fare}" pattern="#,##0.00"/></p>
 
-                                <%-- FIXED: Linked SecurityFilter configuration check directly to button output processing --%>
-                            <a class="book-btn" href="${pageContext.request.contextPath}/booking?flightId=${f.flight_id}">Book Now</a>
+                            <c:choose>
+                                <c:when test="${not empty user}">
+                                    <a class="book-btn" href="${pageContext.request.contextPath}/booking?flightId=${f.flight_id}">Book Now</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="book-btn" href="${pageContext.request.contextPath}/login?redirect=booking&flightId=${f.flight_id}">Book Now</a>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </article>
                 </c:forEach>
@@ -133,41 +108,7 @@
     </div>
 </main>
 
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-section brand-info">
-            <h2 class="footer-logo">SkyLine</h2>
-            <p>Elevating your travel journey with world-class service, premier route operations, and dynamic booking accessibility.</p>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-        </div>
-        <div class="footer-section links-services">
-            <h3>Our Services</h3>
-            <ul>
-                <li><a href="${pageContext.request.contextPath}/book-flight">Book Flights</a></li>
-                <li><a href="#">Corporate Travel</a></li>
-                <li><a href="#">Cargo Flights</a></li>
-                <li><a href="#">Premium Lounges</a></li>
-            </ul>
-        </div>
-        <div class="footer-section links-support">
-            <h3>Support & Info</h3>
-            <ul>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Baggage Guidelines</a></li>
-                <li><a href="#">Refund Policy</a></li>
-                <li><a href="#">FAQs</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2026 SkyLine Airlines. All Rights Reserved.</p>
-    </div>
-</footer>
+<%@ include file="/WEB-INF/views/fragments/footer.jsp" %>
 
 <script>
     function filterCards() {
@@ -181,19 +122,9 @@
             const matchFrom = fromValue === "" || cardFrom.includes(fromValue);
             const matchTo = toValue === "" || cardTo.includes(toValue);
 
-            card.style.display = (matchFrom && matchTo) ? "flex" : "none";
+            card.style.display = (matchFrom && matchTo) ? "" : "none";
         });
     }
-
-    document.querySelectorAll(".nav-dropdown").forEach(dd => {
-        dd.addEventListener("click", function(e) {
-            e.stopPropagation();
-            this.classList.toggle("open");
-        });
-    });
-    document.addEventListener("click", () => {
-        document.querySelectorAll(".nav-dropdown").forEach(d => d.classList.remove("open"));
-    });
 </script>
 </body>
 </html>
