@@ -91,6 +91,11 @@
                                 <c:when test="${f.dest_city == 'London'}"><img src="${pageContext.request.contextPath}/static/images/london.jpg" alt="London"></c:when>
                                 <c:when test="${f.dest_city == 'Kathmandu'}"><img src="${pageContext.request.contextPath}/static/images/Kathmandu.jpg" alt="Kathmandu"></c:when>
                                 <c:when test="${f.dest_city == 'New Delhi'}"><img src="${pageContext.request.contextPath}/static/images/Delhi.jpg" alt="Delhi"></c:when>
+                                <c:when test="${f.dest_city == 'Doha'}"><img src="${pageContext.request.contextPath}/static/images/Doha.jpg" alt="Doha"></c:when>
+                                <c:when test="${f.dest_city == 'Bangkok'}"><img src="${pageContext.request.contextPath}/static/images/Bangkok.jpg" alt="Bangkok"></c:when>
+                                <c:when test="${f.dest_city == 'Frankfurt'}"><img src="${pageContext.request.contextPath}/static/images/Frankfurt.jpg" alt="Frankfurt"></c:when>
+                                <c:when test="${f.dest_city == 'Madrid'}"><img src="${pageContext.request.contextPath}/static/images/madrid.jpg" alt="Madrid"></c:when>
+                                <c:when test="${f.dest_city == 'Rome'}"><img src="${pageContext.request.contextPath}/static/images/Rome.jpg" alt="Rome"></c:when>
                                 <c:otherwise><img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight Path"></c:otherwise>
                             </c:choose>
                         </div>
