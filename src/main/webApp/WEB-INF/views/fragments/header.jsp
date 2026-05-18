@@ -13,10 +13,9 @@
       <a href="#" class="nav-link"><h2>Book</h2> <span class="arrow">▾</span></a>
       <div class="dropdown-menu">
         <a href="${pageContext.request.contextPath}/book-flight">Book a Flight</a>
-        <a href="${pageContext.request.contextPath}/flight-schedule">Flight Schedule</a>
-        <a href="${pageContext.request.contextPath}/ad-ons">Ad-ons</a>
-        <a href="${pageContext.request.contextPath}/hotel">Hotel</a>
-
+        <a href="${pageContext.request.contextPath}/public-schedule">Flight Schedule</a>
+        <a href="${pageContext.request.contextPath}/add-ons">Add-ons</a>
+        <a href="${pageContext.request.contextPath}/seat-selection">Seat Selection</a>
       </div>
     </div>
 
@@ -41,10 +40,9 @@
     <div class="nav-dropdown">
       <a href="#" class="nav-link"><h2>Prepare</h2> <span class="arrow">▾</span></a>
       <div class="dropdown-menu">
-        <a href="${pageContext.request.contextPath}/prepare/luggage">Luggage Guidelines</a>
-        <a href="${pageContext.request.contextPath}/prepare/airport-info">Airport Information</a>
-        <a href="${pageContext.request.contextPath}/prepare/first-time">First Time Travelers</a>
-        <a href="${pageContext.request.contextPath}/prepare/visa-docs">Visa & Documents</a>
+        <a href="${pageContext.request.contextPath}/luggage-guidelines">Luggage Guidelines</a>
+        <a href="${pageContext.request.contextPath}/airport-information">Airport Information</a>
+        <a href="${pageContext.request.contextPath}/visa-documents">Visa & Documents</a>
       </div>
     </div>
   </nav>

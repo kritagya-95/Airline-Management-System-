@@ -20,10 +20,9 @@
         </div>
         <div class="info-col">
             <h3 class="info-heading">Prepare To Travel</h3>
-            <a href="#" class="info-link"><h4>Luggage Guidelines</h4></a>
-            <a href="#" class="info-link"><h4>Airport Information</h4></a>
-            <a href="#" class="info-link"><h4>First Time Travelers</h4></a>
-            <a href="#" class="info-link"><h4>Visa &amp; Documents</h4></a>
+            <a href="${pageContext.request.contextPath}/luggage-guidelines" class="info-link"><h4>Luggage Guidelines</h4></a>
+            <a href="${pageContext.request.contextPath}/airport-information" class="info-link"><h4>Airport Information</h4></a>
+            <a href="${pageContext.request.contextPath}/visa-documents" class="info-link"><h4>Visa & Documents</h4></a>
         </div>
     </div>
 </section>

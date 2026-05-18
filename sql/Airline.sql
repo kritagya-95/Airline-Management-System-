@@ -1,6 +1,7 @@
--- =============================================
--- Drop everything cleanly (reverse FK order)
--- =============================================
+-- =====================================================================
+-- SkyLine Airlines - Complete Database Schema & Refined Sample Data
+-- =====================================================================
+
 DROP DATABASE IF EXISTS skyline_airlines;
 
 CREATE DATABASE skyline_airlines
@@ -8,6 +9,10 @@ CREATE DATABASE skyline_airlines
   COLLATE utf8mb4_unicode_ci;
 
 USE skyline_airlines;
+
+-- =====================================================================
+-- 1. CORE RELATION TABLES
+-- =====================================================================
 
 -- 1. AIRPORTS
 CREATE TABLE airports (
@@ -30,15 +35,15 @@ CREATE TABLE airlines (
 
 -- 3. USERS
 CREATE TABLE users (
-                       user_id    INT          AUTO_INCREMENT PRIMARY KEY,
-                       full_name  VARCHAR(100) NOT NULL,
-                       email      VARCHAR(150) NOT NULL UNIQUE,
-                       password   VARCHAR(255) NOT NULL,
-                       phone      VARCHAR(20),
-                       role       ENUM('ADMIN','PASSENGER','STAFF') NOT NULL DEFAULT 'PASSENGER',
-                       status     ENUM('PENDING','APPROVED','REJECTED') NOT NULL DEFAULT 'PENDING',
+                       user_id        INT          AUTO_INCREMENT PRIMARY KEY,
+                       full_name      VARCHAR(100) NOT NULL,
+                       email          VARCHAR(150) NOT NULL UNIQUE,
+                       password       VARCHAR(255) NOT NULL,
+                       phone          VARCHAR(20),
+                       role           ENUM('ADMIN','PASSENGER','STAFF') NOT NULL DEFAULT 'PASSENGER',
+                       status         ENUM('PENDING','APPROVED','REJECTED') NOT NULL DEFAULT 'PENDING',
                        profile_image  VARCHAR(255) NULL DEFAULT 'default-avatar.png',
-                       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+                       created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 4. AIRCRAFT
@@ -51,8 +56,7 @@ CREATE TABLE aircraft (
                           economy_seats  INT         NOT NULL DEFAULT 0,
                           business_seats INT         NOT NULL DEFAULT 0,
                           first_seats    INT         NOT NULL DEFAULT 0,
-                          CONSTRAINT fk_aircraft_airline FOREIGN KEY (airline_id)
-                              REFERENCES airlines(airline_id) ON DELETE CASCADE
+                          CONSTRAINT fk_aircraft_airline FOREIGN KEY (airline_id) REFERENCES airlines(airline_id) ON DELETE CASCADE
 );
 
 -- 5. FLIGHTS
@@ -83,8 +87,7 @@ CREATE TABLE seats (
                        seat_number VARCHAR(5) NOT NULL,
                        class       ENUM('ECONOMY','BUSINESS','FIRST') NOT NULL DEFAULT 'ECONOMY',
                        UNIQUE KEY uq_seat (aircraft_id, seat_number),
-                       CONSTRAINT fk_seat_aircraft FOREIGN KEY (aircraft_id)
-                           REFERENCES aircraft(aircraft_id) ON DELETE CASCADE
+                       CONSTRAINT fk_seat_aircraft FOREIGN KEY (aircraft_id) REFERENCES aircraft(aircraft_id) ON DELETE CASCADE
 );
 
 -- 7. FLIGHT SEAT AVAILABILITY
@@ -136,8 +139,7 @@ CREATE TABLE payments (
                           status         ENUM('PENDING','COMPLETED','FAILED','REFUNDED') NOT NULL DEFAULT 'PENDING',
                           transaction_id VARCHAR(100),
                           paid_at        TIMESTAMP,
-                          CONSTRAINT fk_payment_booking FOREIGN KEY (booking_id)
-                              REFERENCES bookings(booking_id) ON DELETE CASCADE
+                          CONSTRAINT fk_payment_booking FOREIGN KEY (booking_id) REFERENCES bookings(booking_id) ON DELETE CASCADE
 );
 
 -- 11. TICKETS
@@ -239,82 +241,9 @@ CREATE TABLE reports (
 );
 
 
--- =============================================
--- SAMPLE DATA
--- =============================================
-
--- AIRPORTS (9 total, inserted once cleanly)
-INSERT INTO airports (iata_code, airport_name, city, country, timezone) VALUES
-                                                                            ('KTM', 'Tribhuvan International Airport',     'Kathmandu', 'Nepal',          'Asia/Kathmandu'),
-                                                                            ('DEL', 'Indira Gandhi International Airport', 'New Delhi', 'India',          'Asia/Kolkata'),
-                                                                            ('DXB', 'Dubai International Airport',         'Dubai',     'UAE',            'Asia/Dubai'),
-                                                                            ('DOH', 'Hamad International Airport',         'Doha',      'Qatar',          'Asia/Qatar'),
-                                                                            ('BKK', 'Suvarnabhumi Airport',                'Bangkok',   'Thailand',       'Asia/Bangkok'),
-                                                                            ('LHR', 'Heathrow Airport',                    'London',    'United Kingdom', 'Europe/London'),
-                                                                            ('FCO', 'Leonardo da Vinci Airport',           'Rome',      'Italy',          'Europe/Rome'),
-                                                                            ('MAD', 'Adolfo Suarez Madrid-Barajas',        'Madrid',    'Spain',          'Europe/Madrid'),
-                                                                            ('FRA', 'Frankfurt Airport',                   'Frankfurt', 'Germany',        'Europe/Berlin');
-
--- airport_id mapping (guaranteed by insertion order):
--- 1=KTM  2=DEL  3=DXB  4=DOH  5=BKK  6=LHR  7=FCO  8=MAD  9=FRA
-
--- AIRLINES
-INSERT INTO airlines (iata_code, airline_name, country) VALUES
-                                                            ('RA', 'Nepal Airlines', 'Nepal'),
-                                                            ('9N', 'Tropic Air',     'Nepal'),
-                                                            ('EK', 'Emirates',       'UAE');
-
--- airline_id mapping: 1=Nepal Airlines  2=Tropic Air  3=Emirates
-
--- AIRCRAFT (4 total)
-INSERT INTO aircraft (airline_id, registration, model, total_seats, economy_seats, business_seats, first_seats) VALUES
-                                                                                                                    (1, '9N-AKW', 'Boeing 757-200',  167, 137,  30,  0),
-                                                                                                                    (1, '9N-ABB', 'Airbus A320',     162, 132,  30,  0),
-                                                                                                                    (3, 'A6-EEW', 'Boeing 777-300',  360, 304,  42, 14),
-                                                                                                                    (3, 'A6-ENA', 'Airbus A380-800', 489, 399,  76, 14);
-
--- aircraft_id mapping: 1=Boeing757  2=A320  3=Boeing777  4=A380
-
--- SEATS (for aircraft 1 only)
-INSERT INTO seats (aircraft_id, seat_number, class) VALUES
-                                                        (1,'1A','BUSINESS'),(1,'1B','BUSINESS'),(1,'1C','BUSINESS'),
-                                                        (1,'2A','BUSINESS'),(1,'2B','BUSINESS'),(1,'2C','BUSINESS'),
-                                                        (1,'10A','ECONOMY'),(1,'10B','ECONOMY'),(1,'10C','ECONOMY'),
-                                                        (1,'11A','ECONOMY'),(1,'11B','ECONOMY'),(1,'11C','ECONOMY');
-
--- FLIGHTS (9 total)
-INSERT INTO flights (airline_id, aircraft_id, flight_number, origin_airport_id, dest_airport_id,
-                     departure_time, arrival_time, status, base_economy_fare, base_business_fare)
-VALUES
--- Nepal Airlines: KTM ↔ DEL
-(1, 1, 'RA201', 1, 2, '2026-07-01 08:00:00', '2026-07-01 09:30:00', 'SCHEDULED',  8500.00,  25000.00),
-(1, 2, 'RA202', 2, 1, '2026-07-01 12:00:00', '2026-07-01 13:30:00', 'SCHEDULED',  8500.00,  25000.00),
-
--- Emirates: KTM → Dubai
-(3, 3, 'EK612', 1, 3, '2026-07-02 22:30:00', '2026-07-03 01:30:00', 'SCHEDULED', 45000.00, 120000.00),
-
--- Emirates: KTM → London
-(3, 4, 'EK118', 1, 6, '2026-07-03 23:00:00', '2026-07-04 06:30:00', 'SCHEDULED', 85000.00, 220000.00),
-
--- Emirates: KTM → Rome
-(3, 4, 'EK312', 1, 7, '2026-07-04 21:00:00', '2026-07-05 04:00:00', 'SCHEDULED', 78000.00, 200000.00),
-
--- Emirates: KTM → Madrid
-(3, 4, 'EK762', 1, 8, '2026-07-05 22:00:00', '2026-07-06 05:30:00', 'SCHEDULED', 80000.00, 210000.00),
-
--- Emirates: KTM → Frankfurt
-(3, 4, 'EK048', 1, 9, '2026-07-06 20:30:00', '2026-07-07 03:45:00', 'SCHEDULED', 75000.00, 195000.00),
-
--- Emirates: KTM → Bangkok
-(3, 3, 'EK384', 1, 5, '2026-07-07 18:00:00', '2026-07-07 23:45:00', 'SCHEDULED', 35000.00,  95000.00),
-
--- Emirates: KTM → Doha
-(3, 3, 'EK640', 1, 4, '2026-07-08 02:00:00', '2026-07-08 04:30:00', 'SCHEDULED', 42000.00, 110000.00);
-
-
--- =============================================
--- VIEWS
--- =============================================
+-- =====================================================================
+-- 2. DYNAMIC ANALYTICS VIEWS
+-- =====================================================================
 
 CREATE OR REPLACE VIEW v_flight_search AS
 SELECT
@@ -327,7 +256,7 @@ SELECT
     da.city             AS dest_city,
     f.departure_time,
     f.arrival_time,
-    TIMEDIFF(f.arrival_time, f.departure_time) AS duration,
+    CONCAT(HOUR(TIMEDIFF(f.arrival_time, f.departure_time)), 'h ', MINUTE(TIMEDIFF(f.arrival_time, f.departure_time)), 'm') AS duration,
     f.status,
     f.base_economy_fare,
     f.base_business_fare,
@@ -363,3 +292,54 @@ FROM bookings b
          JOIN airports oa ON oa.airport_id    = f.origin_airport_id
          JOIN airports da ON da.airport_id    = f.dest_airport_id
          LEFT JOIN payments p ON p.booking_id = b.booking_id;
+
+
+-- =====================================================================
+-- 3. UNIFIED MOCK SYSTEM DATA (EXPLICIT KEYS ALIGNED TO MAY 18, 2026)
+-- =====================================================================
+
+-- Airports Dataset
+INSERT INTO airports (airport_id, iata_code, airport_name, city, country, timezone) VALUES
+                                                                                        (1, 'KTM', 'Tribhuvan International Airport',     'Kathmandu', 'Nepal',          'Asia/Kathmandu'),
+                                                                                        (2, 'DEL', 'Indira Gandhi International Airport', 'New Delhi', 'India',          'Asia/Kolkata'),
+                                                                                        (3, 'DXB', 'Dubai International Airport',         'Dubai',     'UAE',            'Asia/Dubai'),
+                                                                                        (4, 'DOH', 'Hamad International Airport',         'Doha',      'Qatar',          'Asia/Qatar'),
+                                                                                        (5, 'BKK', 'Suvarnabhumi Airport',                'Bangkok',   'Thailand',       'Asia/Bangkok'),
+                                                                                        (6, 'LHR', 'Heathrow Airport',                    'London',    'United Kingdom', 'Europe/London'),
+                                                                                        (7, 'FCO', 'Leonardo da Vinci Airport',           'Rome',      'Italy',          'Europe/Rome'),
+                                                                                        (8, 'MAD', 'Adolfo Suarez Madrid-Barajas',        'Madrid',    'Spain',          'Europe/Madrid'),
+                                                                                        (9, 'FRA', 'Frankfurt Airport',                   'Frankfurt', 'Germany',        'Europe/Berlin');
+
+-- Airlines Dataset
+INSERT INTO airlines (airline_id, iata_code, airline_name, country) VALUES
+                                                                        (1, 'RA', 'Nepal Airlines', 'Nepal'),
+                                                                        (2, '9N', 'Tropic Air',     'Nepal'),
+                                                                        (3, 'EK', 'Emirates',       'UAE');
+
+-- Aircraft Fleet Assets
+INSERT INTO aircraft (aircraft_id, airline_id, registration, model, total_seats, economy_seats, business_seats, first_seats) VALUES
+                                                                                                                                 (1, 1, '9N-AKW', 'Boeing 757-200',  167, 137,  30,  0),
+                                                                                                                                 (2, 1, '9N-ABB', 'Airbus A320',     162, 132,  30,  0),
+                                                                                                                                 (3, 3, 'A6-EEW', 'Boeing 777-300',  360, 304,  42, 14),
+                                                                                                                                 (4, 3, 'A6-ENA', 'Airbus A380-800', 489, 399,  76, 14);
+
+-- Core Structural Seating Layout Configurations
+INSERT INTO seats (aircraft_id, seat_number, class) VALUES
+                                                        (1,'1A','BUSINESS'),(1,'1B','BUSINESS'),(1,'1C','BUSINESS'),
+                                                        (1,'2A','BUSINESS'),(1,'2B','BUSINESS'),(1,'2C','BUSINESS'),
+                                                        (1,'10A','ECONOMY'),(1,'10B','ECONOMY'),(1,'10C','ECONOMY'),
+                                                        (1,'11A','ECONOMY'),(1,'11B','ECONOMY'),(1,'11C','ECONOMY');
+
+-- Real-Time Flights Timelines (Synchronized to Today: 2026-05-18)
+INSERT INTO flights (flight_id, airline_id, aircraft_id, flight_number, origin_airport_id, dest_airport_id, departure_time, arrival_time, status, base_economy_fare, base_business_fare) VALUES
+                                                                                                                                                                                             (1, 1, 1, 'RA-201', 1, 2, '2026-05-18 08:00:00', '2026-05-18 09:30:00', 'SCHEDULED',  8500.00,  25000.00),
+                                                                                                                                                                                             (2, 1, 2, 'RA-202', 2, 1, '2026-05-18 12:00:00', '2026-05-18 13:30:00', 'SCHEDULED',  8500.00,  25000.00),
+                                                                                                                                                                                             (3, 3, 3, 'EK-612', 1, 3, '2026-05-18 22:30:00', '2026-05-19 01:30:00', 'SCHEDULED', 45000.00, 120000.00),
+                                                                                                                                                                                             (4, 3, 4, 'EK-118', 1, 6, '2026-05-18 15:50:00', '2026-05-19 06:15:00', 'SCHEDULED', 85000.00, 220000.00),
+                                                                                                                                                                                             (5, 3, 4, 'EK-312', 1, 7, '2026-05-18 21:00:00', '2026-05-19 04:00:00', 'SCHEDULED', 78000.00, 200000.00),
+                                                                                                                                                                                             (6, 3, 4, 'EK-762', 1, 8, '2026-05-18 22:00:00', '2026-05-19 05:30:00', 'SCHEDULED', 80000.00, 210000.00),
+                                                                                                                                                                                             (7, 3, 4, 'EK-048', 1, 9, '2026-05-18 20:30:00', '2026-05-19 03:45:00', 'SCHEDULED', 75000.00, 195000.00),
+                                                                                                                                                                                             (8, 3, 3, 'EK-384', 1, 5, '2026-05-18 18:00:00', '2026-05-18 23:45:00', 'SCHEDULED', 35000.00,  95000.00),
+                                                                                                                                                                                             (9, 3, 3, 'EK-640', 1, 4, '2026-05-18 02:00:00', '2026-05-18 05:30:00', 'SCHEDULED', 42000.00, 110000.00);
+
+COMMIT;
