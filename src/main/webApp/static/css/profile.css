@@ -382,6 +382,68 @@ body {
     color: #fff;
 }
 
+.prof-flight-table-wrap {
+    overflow-x: auto;
+    padding: 24px 32px 28px;
+}
+
+.prof-card .prof-flight-table {
+    border-collapse: collapse;
+    font-family: 'Chivo', sans-serif;
+    min-width: 900px;
+    width: 100%;
+}
+
+.prof-card .prof-flight-table th {
+    background: #f7eee8;
+    color: #5f2727;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 12px 14px;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.prof-card .prof-flight-table td {
+    border-bottom: 1px solid #f0e7df;
+    color: #333;
+    font-size: 14px;
+    padding: 13px 14px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.prof-card .prof-flight-table td:first-child {
+    font-weight: 700;
+}
+
+.prof-flight-status {
+    background: #fdf0f0;
+    border: 1px solid #edcaca;
+    border-radius: 999px;
+    color: #8B0000;
+    display: inline-block;
+    font-family: 'Chivo', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 11px;
+    text-transform: uppercase;
+}
+
+.prof-flight-status.confirmed {
+    background: #fdf0f0;
+    border-color: #edcaca;
+    color: #8B0000;
+}
+
+.prof-flight-status.pending {
+    background: #fdf0f0;
+    border-color: #edcaca;
+    color: #8B0000;
+}
+
 /* ══ SETTINGS ════════════════════════════════════════════ */
 .prof-settings-list {
     padding: 8px 0;
@@ -595,6 +657,7 @@ body {
     .prof-content { padding: 0 20px; margin: 24px auto; }
     .prof-info-grid  { grid-template-columns: 1fr; }
     .prof-edit-grid  { grid-template-columns: 1fr; }
+    .prof-flight-table-wrap { padding: 0 16px 20px; }
     .prof-info-footer-grid { grid-template-columns: 1fr 1fr; }
     .prof-footer  { padding: 18px 24px; }
     .prof-footer-inner { flex-direction: column; text-align: center; }

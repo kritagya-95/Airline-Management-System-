@@ -56,7 +56,7 @@ public class SeatSelectionServlet extends HttpServlet {
         request.setAttribute("flight", flight);
         SeatPageData seatPageData = loadSeatPageData(resolvedFlightId, bookingId, user.getUserId());
         request.setAttribute("seats", seatPageData.seats);
-        request.setAttribute("selectedSeat", seatPageData.selectedSeat);
+        request.setAttribute("selectedSeats", seatPageData.selectedSeats);
         if (seatPageData.errorMessage != null) {
             request.setAttribute("seatError", seatPageData.errorMessage);
         }
@@ -76,17 +76,17 @@ public class SeatSelectionServlet extends HttpServlet {
 
         Integer bookingId = parseInt(request.getParameter("bookingId"));
         Integer flightId = parseInt(request.getParameter("flightId"));
-        Integer seatId = parseInt(request.getParameter("seatId"));
+        List<Integer> seatIds = parseIntValues(request.getParameterValues("seatId"));
         String next = request.getParameter("next");
 
-        if (bookingId == null || flightId == null || seatId == null) {
-            redirectBack(request, response, bookingId, flightId, "Please select an available seat.", next);
+        if (bookingId == null || flightId == null || seatIds.isEmpty()) {
+            redirectBack(request, response, bookingId, flightId, "Please select at least one available seat.", next);
             return;
         }
 
-        boolean saved = saveSelectedSeat(user.getUserId(), bookingId, flightId, seatId);
+        boolean saved = saveSelectedSeats(user.getUserId(), bookingId, flightId, seatIds);
         if (!saved) {
-            redirectBack(request, response, bookingId, flightId, "Selected seat is no longer available.", next);
+            redirectBack(request, response, bookingId, flightId, "One or more selected seats are no longer available.", next);
             return;
         }
 
@@ -179,7 +179,7 @@ public class SeatSelectionServlet extends HttpServlet {
     private SeatPageData loadSeatPageData(int flightId, Integer bookingId, int passengerId) {
         SeatPageData data = new SeatPageData();
         data.seats = findSeats(flightId, bookingId, passengerId);
-        data.selectedSeat = findSelectedSeat(flightId, bookingId, passengerId);
+        data.selectedSeats = findSelectedSeats(flightId, bookingId, passengerId);
 
         if (data.seats == null) {
             data.seats = new ArrayList<>();
@@ -240,9 +240,10 @@ public class SeatSelectionServlet extends HttpServlet {
         return seats;
     }
 
-    private Map<String, Object> findSelectedSeat(int flightId, Integer bookingId, int passengerId) {
+    private List<Map<String, Object>> findSelectedSeats(int flightId, Integer bookingId, int passengerId) {
+        List<Map<String, Object>> selectedSeats = new ArrayList<>();
         if (bookingId == null) {
-            return null;
+            return selectedSeats;
         }
 
         String sql = """
@@ -253,6 +254,7 @@ public class SeatSelectionServlet extends HttpServlet {
                 WHERE ss.flight_id = ?
                   AND ss.booking_id = ?
                   AND ss.passenger_id = ?
+                ORDER BY s.seat_number
                 """;
 
         try (Connection conn = DBConnection.getConnection();
@@ -262,18 +264,18 @@ public class SeatSelectionServlet extends HttpServlet {
             ps.setInt(3, passengerId);
 
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rowToMap(rs);
+                while (rs.next()) {
+                    selectedSeats.add(rowToMap(rs));
                 }
             }
         } catch (SQLException e) {
-            System.err.println("[SeatSelectionServlet] findSelectedSeat error: " + e.getMessage());
+            System.err.println("[SeatSelectionServlet] findSelectedSeats error: " + e.getMessage());
         }
 
-        return null;
+        return selectedSeats;
     }
 
-    private boolean saveSelectedSeat(int passengerId, int bookingId, int flightId, int seatId) {
+    private boolean saveSelectedSeats(int passengerId, int bookingId, int flightId, List<Integer> seatIds) {
         String validateBooking = "SELECT booking_id FROM bookings WHERE booking_id = ? AND user_id = ? AND flight_id = ?";
         String validateSeat = """
                 SELECT s.seat_id
@@ -291,7 +293,7 @@ public class SeatSelectionServlet extends HttpServlet {
                   AND COALESCE(fsa.is_available, 1) = 1
                   AND ss.selected_seat_id IS NULL
                 """;
-        String oldSeat = "SELECT seat_id FROM selected_seats WHERE booking_id = ? AND passenger_id = ?";
+        String oldSeats = "SELECT seat_id FROM selected_seats WHERE booking_id = ? AND passenger_id = ?";
         String deleteOld = "DELETE FROM selected_seats WHERE booking_id = ? AND passenger_id = ?";
         String releaseSeat = """
                 UPDATE flight_seat_availability
@@ -323,12 +325,14 @@ public class SeatSelectionServlet extends HttpServlet {
                     return false;
                 }
 
-                if (!exists(conn, validateSeat, bookingId, passengerId, flightId, seatId)) {
-                    conn.rollback();
-                    return false;
+                for (Integer seatId : seatIds) {
+                    if (!exists(conn, validateSeat, bookingId, passengerId, flightId, seatId)) {
+                        conn.rollback();
+                        return false;
+                    }
                 }
 
-                Integer previousSeatId = findPreviousSeat(conn, oldSeat, bookingId, passengerId);
+                List<Integer> previousSeatIds = findPreviousSeats(conn, oldSeats, bookingId, passengerId);
 
                 try (PreparedStatement ps = conn.prepareStatement(deleteOld)) {
                     ps.setInt(1, bookingId);
@@ -336,7 +340,7 @@ public class SeatSelectionServlet extends HttpServlet {
                     ps.executeUpdate();
                 }
 
-                if (previousSeatId != null && previousSeatId != seatId) {
+                for (Integer previousSeatId : previousSeatIds) {
                     try (PreparedStatement ps = conn.prepareStatement(releaseSeat)) {
                         ps.setInt(1, flightId);
                         ps.setInt(2, previousSeatId);
@@ -346,18 +350,20 @@ public class SeatSelectionServlet extends HttpServlet {
                     }
                 }
 
-                try (PreparedStatement ps = conn.prepareStatement(insertSelected)) {
-                    ps.setInt(1, bookingId);
-                    ps.setInt(2, passengerId);
-                    ps.setInt(3, flightId);
-                    ps.setInt(4, seatId);
-                    ps.executeUpdate();
-                }
+                for (Integer seatId : seatIds) {
+                    try (PreparedStatement ps = conn.prepareStatement(insertSelected)) {
+                        ps.setInt(1, bookingId);
+                        ps.setInt(2, passengerId);
+                        ps.setInt(3, flightId);
+                        ps.setInt(4, seatId);
+                        ps.executeUpdate();
+                    }
 
-                try (PreparedStatement ps = conn.prepareStatement(holdAvailability)) {
-                    ps.setInt(1, flightId);
-                    ps.setInt(2, seatId);
-                    ps.executeUpdate();
+                    try (PreparedStatement ps = conn.prepareStatement(holdAvailability)) {
+                        ps.setInt(1, flightId);
+                        ps.setInt(2, seatId);
+                        ps.executeUpdate();
+                    }
                 }
 
                 conn.commit();
@@ -369,7 +375,7 @@ public class SeatSelectionServlet extends HttpServlet {
                 conn.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            System.err.println("[SeatSelectionServlet] saveSelectedSeat error: " + e.getMessage());
+            System.err.println("[SeatSelectionServlet] saveSelectedSeats error: " + e.getMessage());
             return false;
         }
     }
@@ -385,19 +391,20 @@ public class SeatSelectionServlet extends HttpServlet {
         }
     }
 
-    private Integer findPreviousSeat(Connection conn, String sql, int bookingId, int passengerId)
+    private List<Integer> findPreviousSeats(Connection conn, String sql, int bookingId, int passengerId)
             throws SQLException {
+        List<Integer> seatIds = new ArrayList<>();
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, bookingId);
             ps.setInt(2, passengerId);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("seat_id");
+                while (rs.next()) {
+                    seatIds.add(rs.getInt("seat_id"));
                 }
             }
         }
 
-        return null;
+        return seatIds;
     }
 
     private void redirectBack(HttpServletRequest request, HttpServletResponse response,
@@ -429,6 +436,22 @@ public class SeatSelectionServlet extends HttpServlet {
         }
     }
 
+    private List<Integer> parseIntValues(String[] values) {
+        List<Integer> parsedValues = new ArrayList<>();
+        if (values == null) {
+            return parsedValues;
+        }
+
+        for (String value : values) {
+            Integer parsedValue = parseInt(value);
+            if (parsedValue != null && !parsedValues.contains(parsedValue)) {
+                parsedValues.add(parsedValue);
+            }
+        }
+
+        return parsedValues;
+    }
+
     private Map<String, Object> rowToMap(ResultSet rs) throws SQLException {
         Map<String, Object> row = new LinkedHashMap<>();
         ResultSetMetaData meta = rs.getMetaData();
@@ -442,7 +465,7 @@ public class SeatSelectionServlet extends HttpServlet {
 
     private static class SeatPageData {
         private List<Map<String, Object>> seats;
-        private Map<String, Object> selectedSeat;
+        private List<Map<String, Object>> selectedSeats;
         private String errorMessage;
     }
 }

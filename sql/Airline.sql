@@ -162,7 +162,7 @@ CREATE TABLE cancellations (
                                reason              TEXT,
                                cancellation_status ENUM('REQUESTED','APPROVED','REJECTED') NOT NULL DEFAULT 'REQUESTED',
                                requested_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                               processed_at        TIMESTAMP,
+                               processed_at        TIMESTAMP NULL DEFAULT NULL,
                                CONSTRAINT fk_cancel_booking FOREIGN KEY (booking_id)   REFERENCES bookings(booking_id),
                                CONSTRAINT fk_cancel_user    FOREIGN KEY (cancelled_by) REFERENCES users(user_id)
 );

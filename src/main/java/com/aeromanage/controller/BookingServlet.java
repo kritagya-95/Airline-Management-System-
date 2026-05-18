@@ -21,7 +21,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -230,7 +232,9 @@ public class BookingServlet extends HttpServlet {
 
         if (booking != null) {
             int bookingId = ((Number) booking.get("booking_id")).intValue();
-            request.setAttribute("selectedSeat", findSelectedSeat(user.getUserId(), bookingId));
+            List<Map<String, Object>> selectedSeats = findSelectedSeats(user.getUserId(), bookingId);
+            request.setAttribute("selectedSeats", selectedSeats);
+            request.setAttribute("selectedSeat", selectedSeats.isEmpty() ? null : selectedSeats.get(0));
             request.setAttribute("payment", findPayment(bookingId));
             request.setAttribute("ticket", findTicket(bookingId));
         }
@@ -268,14 +272,20 @@ public class BookingServlet extends HttpServlet {
     }
 
     private Map<String, Object> findSelectedSeat(int userId, int bookingId) {
+        List<Map<String, Object>> selectedSeats = findSelectedSeats(userId, bookingId);
+        return selectedSeats.isEmpty() ? null : selectedSeats.get(0);
+    }
+
+    private List<Map<String, Object>> findSelectedSeats(int userId, int bookingId) {
         String sql = """
                 SELECT ss.selected_seat_id, s.seat_number, s.class
                 FROM selected_seats ss
                 JOIN seats s ON s.seat_id = ss.seat_id
                 WHERE ss.booking_id = ?
                   AND ss.passenger_id = ?
+                ORDER BY s.seat_number
                 """;
-        return findSingle(sql, bookingId, userId);
+        return findRows(sql, bookingId, userId);
     }
 
     private Map<String, Object> findPayment(int bookingId) {
@@ -463,6 +473,26 @@ public class BookingServlet extends HttpServlet {
         }
 
         return null;
+    }
+
+    private List<Map<String, Object>> findRows(String sql, int... params) {
+        List<Map<String, Object>> rows = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            for (int i = 0; i < params.length; i++) {
+                ps.setInt(i + 1, params[i]);
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    rows.add(rowToMap(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[BookingServlet] findRows error: " + e.getMessage());
+        }
+
+        return rows;
     }
 
     private BigDecimal resolveFare(Map<String, Object> flight, String ticketClass) {

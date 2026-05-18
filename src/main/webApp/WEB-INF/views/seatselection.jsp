@@ -18,7 +18,7 @@
     <section class="seat-hero">
         <p class="seat-kicker">Booking Flow</p>
         <h1>Seat Selection</h1>
-        <p>Select one available seat before continuing to payment confirmation.</p>
+        <p>Select available seats before continuing to payment confirmation.</p>
     </section>
 
     <c:if test="${not empty param.error}">
@@ -68,11 +68,14 @@
             </div>
 
             <div class="selected-seat-box">
-                <span>Selected Seat</span>
+                <span>Selected Seats</span>
                 <strong>
                     <c:choose>
-                        <c:when test="${not empty selectedSeat}">
-                            <c:out value="${selectedSeat.seat_number}"/>
+                        <c:when test="${not empty selectedSeats}">
+                            <c:forEach var="selectedSeat" items="${selectedSeats}" varStatus="status">
+                                <c:if test="${not status.first}">, </c:if>
+                                <c:out value="${selectedSeat.seat_number}"/>
+                            </c:forEach>
                         </c:when>
                         <c:otherwise>None</c:otherwise>
                     </c:choose>
@@ -96,7 +99,7 @@
                         <div class="cabin-label">Front Cabin</div>
                         <div class="seat-map">
                             <c:forEach var="s" items="${seats}">
-                                <c:set var="seatUnavailable" value="${s.is_booked == 1 or s.is_available == 0}"/>
+                                <c:set var="seatUnavailable" value="${(s.is_booked == 1 or s.is_available == 0) and s.is_selected != 1}"/>
                                 <c:set var="seatSelected" value="${s.is_selected == 1}"/>
                                 <c:choose>
                                     <c:when test="${seatUnavailable}">
@@ -112,23 +115,21 @@
                                 <label class="seat-cell ${seatStateClass}">
                                     <c:choose>
                                         <c:when test="${seatUnavailable}">
-                                            <input type="radio"
+                                            <input type="checkbox"
                                                    name="seatId"
                                                    value="${s.seat_id}"
                                                    disabled="disabled"/>
                                         </c:when>
                                         <c:when test="${seatSelected}">
-                                            <input type="radio"
+                                            <input type="checkbox"
                                                    name="seatId"
                                                    value="${s.seat_id}"
-                                                   checked="checked"
-                                                   required="required"/>
+                                                   checked="checked"/>
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="radio"
+                                            <input type="checkbox"
                                                    name="seatId"
-                                                   value="${s.seat_id}"
-                                                   required="required"/>
+                                                   value="${s.seat_id}"/>
                                         </c:otherwise>
                                     </c:choose>
                                     <span><c:out value="${s.seat_number}"/></span>

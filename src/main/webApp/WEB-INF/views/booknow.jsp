@@ -117,7 +117,12 @@
                     <div><span>Booking Reference</span><strong><c:out value="${booking.booking_ref}"/></strong></div>
                     <div><span>Passenger</span><strong><c:out value="${booking.passenger_name}"/></strong></div>
                     <div><span>Class</span><strong><c:out value="${booking['class']}"/></strong></div>
-                    <div><span>Seat</span><strong><c:out value="${selectedSeat.seat_number}"/></strong></div>
+                    <div><span>Seats</span><strong>
+                        <c:forEach var="seat" items="${selectedSeats}" varStatus="status">
+                            <c:if test="${not status.first}">, </c:if>
+                            <c:out value="${seat.seat_number}"/>
+                        </c:forEach>
+                    </strong></div>
                     <div><span>Total Fare</span><strong>NPR <fmt:formatNumber value="${booking.total_fare}" pattern="#,##0.00"/></strong></div>
                     <div><span>Status</span><strong><c:out value="${booking.booking_status}"/></strong></div>
                 </div>
@@ -164,7 +169,12 @@
                     <div><span>Ticket Number</span><strong><c:out value="${ticket.ticket_number}"/></strong></div>
                     <div><span>Payment Status</span><strong><c:out value="${payment.status}"/></strong></div>
                     <div><span>Method</span><strong><c:out value="${payment.method}"/></strong></div>
-                    <div><span>Seat</span><strong><c:out value="${selectedSeat.seat_number}"/></strong></div>
+                    <div><span>Seats</span><strong>
+                        <c:forEach var="seat" items="${selectedSeats}" varStatus="status">
+                            <c:if test="${not status.first}">, </c:if>
+                            <c:out value="${seat.seat_number}"/>
+                        </c:forEach>
+                    </strong></div>
                     <div><span>Booking Status</span><strong><c:out value="${booking.booking_status}"/></strong></div>
                 </div>
 

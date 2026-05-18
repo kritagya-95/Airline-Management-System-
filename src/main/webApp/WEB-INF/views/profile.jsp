@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c"  uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,7 @@
   <title>My Profile — SkyLine</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout.css"/>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/profile.css"/>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/profile.css?v=flights-table"/>
 </head>
 <body>
 
@@ -158,11 +159,47 @@
       <div class="prof-card-header">
         <h2 class="prof-card-title">My Flights</h2>
       </div>
+      <c:if test="${empty profileBookings}">
       <div class="prof-empty-state">
         <div class="prof-empty-icon">✈️</div>
         <p>No flights booked yet.</p>
         <a href="${pageContext.request.contextPath}/home" class="prof-btn-book">Book a Flight</a>
       </div>
+      </c:if>
+      <c:if test="${not empty profileBookings}">
+        <div class="prof-flight-table-wrap">
+          <table class="prof-flight-table">
+            <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Flight</th>
+              <th>Route</th>
+              <th>Departure</th>
+              <th>Class</th>
+              <th>Status</th>
+              <th>Fare</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="b" items="${profileBookings}">
+              <tr>
+                <td><strong><c:out value="${b.booking_ref}"/></strong></td>
+                <td><c:out value="${b.flight_number}"/></td>
+                <td><c:out value="${b.origin_code}"/> to <c:out value="${b.dest_code}"/></td>
+                <td><c:out value="${b.departure_time}"/></td>
+                <td><c:out value="${b['class']}"/></td>
+                <td>
+                  <span class="prof-flight-status ${fn:toLowerCase(b.booking_status)}">
+                    <c:out value="${b.booking_status}"/>
+                  </span>
+                </td>
+                <td>NPR <fmt:formatNumber value="${b.total_fare}" pattern="#,##0.00"/></td>
+              </tr>
+            </c:forEach>
+            </tbody>
+          </table>
+        </div>
+      </c:if>
     </div>
   </div>
 

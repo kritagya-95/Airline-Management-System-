@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS selected_seats (
     selected_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     UNIQUE KEY uq_selected_seat_flight (flight_id, seat_id),
-    UNIQUE KEY uq_selected_seat_booking_passenger (booking_id, passenger_id),
+    KEY idx_selected_seat_booking (booking_id),
 
     CONSTRAINT fk_selected_seat_booking
         FOREIGN KEY (booking_id) REFERENCES bookings(booking_id) ON DELETE CASCADE,

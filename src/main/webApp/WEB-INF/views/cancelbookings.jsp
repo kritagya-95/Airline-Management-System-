@@ -23,11 +23,17 @@
     </section>
 
     <c:if test="${not empty sessionScope.bookingSuccess}">
-        <div class="cancel-alert success"><c:out value="${sessionScope.bookingSuccess}"/></div>
+        <div class="cancel-alert success" data-dismissible-alert>
+            <span><c:out value="${sessionScope.bookingSuccess}"/></span>
+            <button type="button" class="cancel-alert-close" aria-label="Close message">&times;</button>
+        </div>
         <c:remove var="bookingSuccess" scope="session"/>
     </c:if>
     <c:if test="${not empty sessionScope.bookingError}">
-        <div class="cancel-alert error"><c:out value="${sessionScope.bookingError}"/></div>
+        <div class="cancel-alert error" data-dismissible-alert>
+            <span><c:out value="${sessionScope.bookingError}"/></span>
+            <button type="button" class="cancel-alert-close" aria-label="Close message">&times;</button>
+        </div>
         <c:remove var="bookingError" scope="session"/>
     </c:if>
 
@@ -50,7 +56,7 @@
                             <th>Departure</th>
                             <th>Fare</th>
                             <th>Reason</th>
-                            <th>Cancellation Status</th>
+                            <th>Status</th>
                             <th>Requested At</th>
                         </tr>
                         </thead>
@@ -63,7 +69,7 @@
                                 <td><c:out value="${b.departure_time}"/></td>
                                 <td>NPR <fmt:formatNumber value="${b.total_fare}" pattern="#,##0.00"/></td>
                                 <td><c:out value="${empty b.reason ? 'Not provided' : b.reason}"/></td>
-                                <td><span class="cancel-badge"><c:out value="${empty b.cancellation_status ? b.booking_status : b.cancellation_status}"/></span></td>
+                                <td><span class="cancel-badge"><c:out value="${b.booking_status}"/></span></td>
                                 <td><c:out value="${b.requested_at}"/></td>
                             </tr>
                         </c:forEach>
@@ -76,6 +82,21 @@
 </main>
 
 <%@ include file="/WEB-INF/views/fragments/footer.jsp" %>
+
+<script>
+    document.querySelectorAll('[data-dismissible-alert]').forEach(function (alert) {
+        var closeButton = alert.querySelector('.cancel-alert-close');
+        var hide = function () {
+            alert.style.display = 'none';
+        };
+
+        if (closeButton) {
+            closeButton.addEventListener('click', hide);
+        }
+
+        window.setTimeout(hide, 6000);
+    });
+</script>
 
 </body>
 </html>

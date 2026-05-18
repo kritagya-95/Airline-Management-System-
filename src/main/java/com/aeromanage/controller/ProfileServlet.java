@@ -1,5 +1,7 @@
 package com.aeromanage.controller;
 
+import com.aeromanage.dao.PassengerBookingDao;
+import com.aeromanage.dao.PassengerBookingDaoImpl;
 import com.aeromanage.dao.UserDao;
 import com.aeromanage.dao.UserDaoImpl;
 import com.aeromanage.entity.User;
@@ -13,6 +15,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Servlet controller responsible for rendering the passenger profile page.
@@ -36,6 +41,7 @@ import java.io.IOException;
 public class ProfileServlet extends HttpServlet {
 
     private final UserDao userDao = new UserDaoImpl();
+    private final PassengerBookingDao bookingDao = new PassengerBookingDaoImpl();
 
     /**
      * Handles GET requests to render the passenger profile view.
@@ -95,7 +101,19 @@ public class ProfileServlet extends HttpServlet {
         }
 
         request.setAttribute("user", user);
+        request.setAttribute("profileBookings", getProfileBookings(user.getUserId()));
         request.getRequestDispatcher("/WEB-INF/views/profile.jsp")
                 .forward(request, response);
+    }
+
+    private List<Map<String, Object>> getProfileBookings(int userId) {
+        List<Map<String, Object>> bookings = new ArrayList<>();
+        bookings.addAll(bookingDao.getCurrentBookings(userId));
+        for (Map<String, Object> booking : bookingDao.getPastBookings(userId)) {
+            if (!"CANCELLED".equals(booking.get("booking_status"))) {
+                bookings.add(booking);
+            }
+        }
+        return bookings;
     }
 }
