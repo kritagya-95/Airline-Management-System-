@@ -15,6 +15,7 @@
         <a href="${pageContext.request.contextPath}/book-flight">Book a Flight</a>
         <a href="${pageContext.request.contextPath}/flight-schedule">Flight Schedule</a>
         <a href="${pageContext.request.contextPath}/ad-ons">Ad-ons</a>
+        <a href="${pageContext.request.contextPath}/hotel">Hotel</a>
 
       </div>
     </div>
