@@ -1,28 +1,73 @@
 USE skyline_airlines;
 
-CREATE TABLE IF NOT EXISTS selected_seats (
-    selected_seat_id INT AUTO_INCREMENT PRIMARY KEY,
-    booking_id       INT NOT NULL,
-    passenger_id     INT NOT NULL,
-    flight_id        INT NOT NULL,
-    seat_id          INT NOT NULL,
-    selected_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+-- =============================================
+-- SELECTED_SEATS TABLE (Fixed for Multiple Seats)
+-- =============================================
 
-    UNIQUE KEY uq_selected_seat_flight (flight_id, seat_id),
+CREATE TABLE IF NOT EXISTS selected_seats (
+                                              selected_seat_id INT AUTO_INCREMENT PRIMARY KEY,
+                                              booking_id       INT NOT NULL,
+                                              passenger_id     INT NOT NULL,
+                                              flight_id        INT NOT NULL,
+                                              seat_id          INT NOT NULL,
+                                              selected_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                                              UNIQUE KEY uq_selected_seat_flight (flight_id, seat_id),     -- Only this should be unique
     KEY idx_selected_seat_booking (booking_id),
+    KEY idx_selected_seat_passenger (passenger_id),
 
     CONSTRAINT fk_selected_seat_booking
-        FOREIGN KEY (booking_id) REFERENCES bookings(booking_id) ON DELETE CASCADE,
+    FOREIGN KEY (booking_id) REFERENCES bookings(booking_id) ON DELETE CASCADE,
     CONSTRAINT fk_selected_seat_passenger
-        FOREIGN KEY (passenger_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (passenger_id) REFERENCES users(user_id) ON DELETE CASCADE,
     CONSTRAINT fk_selected_seat_flight
-        FOREIGN KEY (flight_id) REFERENCES flights(flight_id) ON DELETE CASCADE,
+    FOREIGN KEY (flight_id) REFERENCES flights(flight_id) ON DELETE CASCADE,
     CONSTRAINT fk_selected_seat_seat
-        FOREIGN KEY (seat_id) REFERENCES seats(seat_id) ON DELETE CASCADE
-);
+    FOREIGN KEY (seat_id) REFERENCES seats(seat_id) ON DELETE CASCADE
+    );
 
--- Ensure every seeded aircraft has selectable seats for the booking flow.
--- Existing aircraft 1 seats are preserved; these rows only fill missing aircraft.
+-- =============================================
+-- FIX: Remove old blocking unique constraint
+-- =============================================
+
+ALTER TABLE selected_seats
+DROP FOREIGN KEY IF EXISTS fk_selected_seat_booking;
+
+ALTER TABLE selected_seats
+DROP FOREIGN KEY IF EXISTS fk_selected_seat_passenger;
+
+ALTER TABLE selected_seats
+DROP INDEX IF EXISTS uq_selected_seat_booking_passenger;
+
+ALTER TABLE selected_seats
+DROP INDEX IF EXISTS uq_selected_seat_booking;
+
+-- Re-add foreign keys cleanly
+ALTER TABLE selected_seats
+    ADD CONSTRAINT fk_selected_seat_booking
+        FOREIGN KEY (booking_id) REFERENCES bookings(booking_id) ON DELETE CASCADE;
+
+ALTER TABLE selected_seats
+    ADD CONSTRAINT fk_selected_seat_passenger
+        FOREIGN KEY (passenger_id) REFERENCES users(user_id) ON DELETE CASCADE;
+
+-- Make sure correct unique key exists
+ALTER TABLE selected_seats
+    ADD UNIQUE KEY IF NOT EXISTS uq_selected_seat_flight (flight_id, seat_id);
+
+-- =============================================
+-- INSERT SEAT DATA FOR AIRCRAFTS
+-- =============================================
+
+-- Preserve existing seats for aircraft 1
+INSERT IGNORE INTO seats (aircraft_id, seat_number, class) VALUES
+    (1, '1A', 'BUSINESS'), (1, '1B', 'BUSINESS'), (1, '1C', 'BUSINESS'),
+    (1, '2A', 'BUSINESS'), (1, '2B', 'BUSINESS'), (1, '2C', 'BUSINESS'),
+    (1, '10A', 'ECONOMY'), (1, '10B', 'ECONOMY'), (1, '10C', 'ECONOMY'),
+    (1, '11A', 'ECONOMY'), (1, '11B', 'ECONOMY'), (1, '11C', 'ECONOMY'),
+    (1, '12A', 'ECONOMY'), (1, '12B', 'ECONOMY'), (1, '12C', 'ECONOMY');
+
+-- Add seats for other aircrafts
 INSERT IGNORE INTO seats (aircraft_id, seat_number, class) VALUES
     (2, '1A', 'BUSINESS'), (2, '1B', 'BUSINESS'), (2, '1C', 'BUSINESS'), (2, '1D', 'BUSINESS'),
     (2, '2A', 'BUSINESS'), (2, '2B', 'BUSINESS'), (2, '2C', 'BUSINESS'), (2, '2D', 'BUSINESS'),

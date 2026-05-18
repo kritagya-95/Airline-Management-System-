@@ -388,16 +388,26 @@ public class SeatSelectionServlet extends HttpServlet {
     }
 
     private void ensureMultipleSeatsPerBookingAllowed() {
-        String sql = "ALTER TABLE selected_seats DROP INDEX uq_selected_seat_booking_passenger";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            String message = e.getMessage() == null ? "" : e.getMessage().toLowerCase();
-            if (!message.contains("check that column/key exists")
-                    && !message.contains("can't drop")
-                    && !message.contains("doesn't exist")) {
-                System.err.println("[SeatSelectionServlet] ensureMultipleSeatsPerBookingAllowed error: " + e.getMessage());
+        String[] sqls = {
+                "ALTER TABLE selected_seats DROP INDEX uq_selected_seat_booking_passenger",
+                "ALTER TABLE selected_seats DROP INDEX uq_selected_seat_booking",
+                "ALTER TABLE selected_seats DROP CONSTRAINT uq_selected_seat_booking_passenger",
+                "ALTER TABLE selected_seats DROP INDEX IF EXISTS uq_selected_seat_passenger"
+        };
+
+        for (String sql : sqls) {
+            try (Connection conn = DBConnection.getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.executeUpdate();
+                System.out.println("[Seat] Constraint dropped successfully: " + sql);
+                return;
+            } catch (SQLException e) {
+                String msg = e.getMessage() == null ? "" : e.getMessage().toLowerCase();
+                if (msg.contains("doesn't exist") || msg.contains("unknown") ||
+                        msg.contains("check that column/key exists")) {
+                    continue; // already gone
+                }
+                System.err.println("[Seat] Warning dropping constraint: " + e.getMessage());
             }
         }
     }
