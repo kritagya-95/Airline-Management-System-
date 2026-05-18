@@ -40,10 +40,9 @@
     <div class="nav-dropdown">
       <a href="#" class="nav-link"><h2>Prepare</h2> <span class="arrow">▾</span></a>
       <div class="dropdown-menu">
-        <a href="${pageContext.request.contextPath}/prepare/luggage">Luggage Guidelines</a>
-        <a href="${pageContext.request.contextPath}/prepare/airport-info">Airport Information</a>
-        <a href="${pageContext.request.contextPath}/prepare/first-time">First Time Travelers</a>
-        <a href="${pageContext.request.contextPath}/prepare/visa-docs">Visa & Documents</a>
+        <a href="${pageContext.request.contextPath}/luggage-guidelines">Luggage Guidelines</a>
+        <a href="${pageContext.request.contextPath}/airport-information">Airport Information</a>
+        <a href="${pageContext.request.contextPath}/visa-documents">Visa & Documents</a>
       </div>
     </div>
   </nav>
