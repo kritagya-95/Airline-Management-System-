@@ -13,9 +13,9 @@
       <a href="#" class="nav-link"><h2>Book</h2> <span class="arrow">▾</span></a>
       <div class="dropdown-menu">
         <a href="${pageContext.request.contextPath}/book-flight">Book a Flight</a>
-        <a href="${pageContext.request.contextPath}/flight-schedule">Flight Schedule</a>
+        <a href="${pageContext.request.contextPath}/public-schedule">Flight Schedule</a>
         <a href="${pageContext.request.contextPath}/ad-ons">Ad-ons</a>
-        <a href="${pageContext.request.contextPath}/hotel">Hotel</a>
+        <a href="${pageContext.request.contextPath}/Seat Selection">Select Selection</a>
 
       </div>
     </div>
