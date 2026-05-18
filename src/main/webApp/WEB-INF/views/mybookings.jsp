@@ -73,7 +73,10 @@
                                 <td><span class="booking-badge"><c:out value="${b.booking_status}"/></span></td>
                                 <td>NPR <fmt:formatNumber value="${b.total_fare}" pattern="#,##0.00"/></td>
                                 <td>
-                                    <form action="${pageContext.request.contextPath}/my-bookings" method="post" class="cancel-form">
+                                    <form action="${pageContext.request.contextPath}/my-bookings"
+                                          method="post"
+                                          class="cancel-form"
+                                          onsubmit="return confirm('Do you want to cancel your booking for flight ${b.flight_number} (${b.origin_code} to ${b.dest_code})?');">
                                         <input type="hidden" name="bookingId" value="${b.booking_id}"/>
                                         <input type="hidden" name="reason" value="Cancelled by passenger"/>
                                         <button type="submit" class="cancel-btn">Cancel</button>

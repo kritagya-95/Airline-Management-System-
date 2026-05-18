@@ -54,8 +54,12 @@ public class SeatSelectionServlet extends HttpServlet {
         request.setAttribute("next", request.getParameter("next"));
         request.setAttribute("selected", request.getParameter("selected"));
         request.setAttribute("flight", flight);
-        request.setAttribute("seats", findSeats(resolvedFlightId, bookingId, user.getUserId()));
-        request.setAttribute("selectedSeat", findSelectedSeat(resolvedFlightId, bookingId, user.getUserId()));
+        SeatPageData seatPageData = loadSeatPageData(resolvedFlightId, bookingId, user.getUserId());
+        request.setAttribute("seats", seatPageData.seats);
+        request.setAttribute("selectedSeat", seatPageData.selectedSeat);
+        if (seatPageData.errorMessage != null) {
+            request.setAttribute("seatError", seatPageData.errorMessage);
+        }
 
         request.getRequestDispatcher("/WEB-INF/views/seatselection.jsp")
                 .forward(request, response);
@@ -172,6 +176,19 @@ public class SeatSelectionServlet extends HttpServlet {
         return null;
     }
 
+    private SeatPageData loadSeatPageData(int flightId, Integer bookingId, int passengerId) {
+        SeatPageData data = new SeatPageData();
+        data.seats = findSeats(flightId, bookingId, passengerId);
+        data.selectedSeat = findSelectedSeat(flightId, bookingId, passengerId);
+
+        if (data.seats == null) {
+            data.seats = new ArrayList<>();
+            data.errorMessage = "Seat selection table is not ready. Please import SeatSelection.sql after Airline.sql.";
+        }
+
+        return data;
+    }
+
     private List<Map<String, Object>> findSeats(int flightId, Integer bookingId, int passengerId) {
         String sql = """
                 SELECT s.seat_id, s.seat_number, s.class,
@@ -215,6 +232,9 @@ public class SeatSelectionServlet extends HttpServlet {
             }
         } catch (SQLException e) {
             System.err.println("[SeatSelectionServlet] findSeats error: " + e.getMessage());
+            if (e.getMessage() != null && e.getMessage().contains("selected_seats")) {
+                return null;
+            }
         }
 
         return seats;
@@ -418,5 +438,11 @@ public class SeatSelectionServlet extends HttpServlet {
         }
 
         return row;
+    }
+
+    private static class SeatPageData {
+        private List<Map<String, Object>> seats;
+        private Map<String, Object> selectedSeat;
+        private String errorMessage;
     }
 }

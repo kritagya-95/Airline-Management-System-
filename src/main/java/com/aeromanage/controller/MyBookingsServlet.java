@@ -62,7 +62,7 @@ public class MyBookingsServlet extends HttpServlet {
             request.getSession().setAttribute("bookingError", "Invalid booking selected.");
         }
 
-        response.sendRedirect(request.getContextPath() + "/my-bookings");
+        response.sendRedirect(request.getContextPath() + "/cancel-booking");
     }
 
     private void bindBookings(HttpServletRequest request, int userId) {

@@ -22,6 +22,15 @@
         <p>Your cancelled flight details are listed below.</p>
     </section>
 
+    <c:if test="${not empty sessionScope.bookingSuccess}">
+        <div class="cancel-alert success"><c:out value="${sessionScope.bookingSuccess}"/></div>
+        <c:remove var="bookingSuccess" scope="session"/>
+    </c:if>
+    <c:if test="${not empty sessionScope.bookingError}">
+        <div class="cancel-alert error"><c:out value="${sessionScope.bookingError}"/></div>
+        <c:remove var="bookingError" scope="session"/>
+    </c:if>
+
     <section class="cancel-section">
         <c:choose>
             <c:when test="${empty cancelledBookings}">

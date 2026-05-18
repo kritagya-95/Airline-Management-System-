@@ -1,0 +1,281 @@
+.booknow-page {
+    background: #faf7f2;
+    min-height: calc(100vh - 100px);
+    padding: 42px 40px 64px;
+}
+
+.booknow-hero,
+.flow-steps,
+.booknow-alert,
+.flight-card-summary,
+.booknow-panel {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.booknow-hero {
+    padding: 24px 0 24px;
+}
+
+.booknow-kicker {
+    color: #8B0000;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.booknow-hero h1 {
+    color: #1f1f1f;
+    font-family: 'Cinzel', serif;
+    font-size: 34px;
+    line-height: 1.2;
+    margin: 8px 0;
+}
+
+.booknow-hero p,
+.panel-copy,
+.success-panel p {
+    color: #666;
+    font-family: 'Chivo', sans-serif;
+    font-size: 15px;
+}
+
+.flow-steps {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(6, 1fr);
+    margin-bottom: 22px;
+}
+
+.flow-steps span {
+    background: #fff;
+    border: 1px solid #eadfd5;
+    border-radius: 999px;
+    color: #777;
+    font-family: 'Chivo', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 9px 10px;
+    text-align: center;
+}
+
+.flow-steps span.active {
+    background: #8B0000;
+    border-color: #8B0000;
+    color: #fff;
+}
+
+.booknow-alert {
+    border-radius: 8px;
+    font-family: 'Chivo', sans-serif;
+    font-weight: 700;
+    margin-bottom: 18px;
+    padding: 14px 18px;
+}
+
+.booknow-alert.error {
+    background: #fff0f0;
+    border: 1px solid #e6b8b8;
+    color: #8B0000;
+}
+
+.flight-card-summary,
+.booknow-panel {
+    background: #fff;
+    border: 1px solid #eadfd5;
+    border-radius: 8px;
+    box-shadow: 0 6px 22px rgba(40, 30, 20, 0.06);
+}
+
+.flight-card-summary {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(5, 1fr);
+    margin-bottom: 24px;
+    padding: 20px 24px;
+}
+
+.flight-card-summary span,
+.confirm-grid span {
+    color: #777;
+    display: block;
+    font-family: 'Chivo', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.flight-card-summary strong,
+.confirm-grid strong {
+    color: #222;
+    font-family: 'Chivo', sans-serif;
+    font-size: 15px;
+}
+
+.booknow-panel {
+    padding: 28px;
+}
+
+.booknow-panel h2 {
+    color: #8B0000;
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    margin-bottom: 18px;
+}
+
+.form-grid,
+.confirm-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.booknow-form label {
+    color: #555;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    gap: 8px;
+}
+
+.booknow-form input,
+.booknow-form select {
+    background: #fff;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    color: #333;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    outline: none;
+    padding: 12px 14px;
+}
+
+.booknow-form input:focus,
+.booknow-form select:focus {
+    border-color: #8B0000;
+}
+
+.confirm-grid {
+    background: #faf7f2;
+    border: 1px solid #eadfd5;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.booknow-actions {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.primary-btn,
+.secondary-btn,
+.primary-link {
+    border-radius: 6px;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 11px 18px;
+    text-decoration: none;
+}
+
+.primary-btn,
+.primary-link {
+    background: #8B0000;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.primary-btn:hover,
+.primary-link:hover {
+    background: #660000;
+    color: #fff;
+    text-decoration: none;
+}
+
+.secondary-btn {
+    background: #fff;
+    border: 1px solid #8B0000;
+    color: #8B0000;
+}
+
+.secondary-btn:hover {
+    background: #fdf0f0;
+    text-decoration: none;
+}
+
+.payment-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 20px;
+}
+
+.payment-option {
+    border: 1px solid #eadfd5;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 130px;
+    padding: 24px;
+    text-align: left;
+}
+
+.payment-option span {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.payment-option strong {
+    font-family: 'Chivo', sans-serif;
+    font-size: 15px;
+}
+
+.payment-option.esewa {
+    background: #effaf0;
+    color: #157a28;
+}
+
+.payment-option.khalti {
+    background: #f4effa;
+    color: #5b2590;
+}
+
+.success-panel {
+    text-align: left;
+}
+
+.success-panel p {
+    margin-bottom: 18px;
+}
+
+@media (max-width: 900px) {
+    .booknow-page {
+        padding: 28px 20px 48px;
+    }
+
+    .flow-steps,
+    .flight-card-summary,
+    .form-grid,
+    .confirm-grid,
+    .payment-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .booknow-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}

@@ -5,6 +5,7 @@
 }
 
 .cancel-hero,
+.cancel-alert,
 .cancel-section {
     max-width: 1100px;
     margin: 0 auto;
@@ -36,6 +37,26 @@
     color: #666;
     font-family: 'Chivo', sans-serif;
     font-size: 15px;
+}
+
+.cancel-alert {
+    border-radius: 8px;
+    font-family: 'Chivo', sans-serif;
+    font-weight: 700;
+    margin-bottom: 18px;
+    padding: 14px 18px;
+}
+
+.cancel-alert.success {
+    background: #eef8f1;
+    border: 1px solid #b9e2c3;
+    color: #216d35;
+}
+
+.cancel-alert.error {
+    background: #fff0f0;
+    border: 1px solid #e6b8b8;
+    color: #8B0000;
 }
 
 .cancel-section {

@@ -98,15 +98,41 @@
                             <c:forEach var="s" items="${seats}">
                                 <c:set var="seatUnavailable" value="${s.is_booked == 1 or s.is_available == 0}"/>
                                 <c:set var="seatSelected" value="${s.is_selected == 1}"/>
-                                <label class="seat-cell ${seatUnavailable ? 'booked' : 'available'} ${seatSelected ? 'selected' : ''}">
-                                    <input type="radio"
-                                           name="seatId"
-                                           value="${s.seat_id}"
-                                           ${seatUnavailable ? 'disabled' : ''}
-                                           ${seatSelected ? 'checked' : ''}
-                                           required/>
+                                <c:choose>
+                                    <c:when test="${seatUnavailable}">
+                                        <c:set var="seatStateClass" value="booked"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="seatStateClass" value="available"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:if test="${seatSelected}">
+                                    <c:set var="seatStateClass" value="${seatStateClass} selected"/>
+                                </c:if>
+                                <label class="seat-cell ${seatStateClass}">
+                                    <c:choose>
+                                        <c:when test="${seatUnavailable}">
+                                            <input type="radio"
+                                                   name="seatId"
+                                                   value="${s.seat_id}"
+                                                   disabled="disabled"/>
+                                        </c:when>
+                                        <c:when test="${seatSelected}">
+                                            <input type="radio"
+                                                   name="seatId"
+                                                   value="${s.seat_id}"
+                                                   checked="checked"
+                                                   required="required"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="radio"
+                                                   name="seatId"
+                                                   value="${s.seat_id}"
+                                                   required="required"/>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <span><c:out value="${s.seat_number}"/></span>
-                                    <small><c:out value="${s.class}"/></small>
+                                    <small><c:out value="${s['class']}"/></small>
                                 </label>
                             </c:forEach>
                         </div>
@@ -114,9 +140,18 @@
 
                         <div class="seat-actions">
                             <a href="${pageContext.request.contextPath}/book-flight" class="seat-secondary">Back to Flights</a>
-                            <button type="submit" class="seat-primary" ${empty bookingId ? 'disabled' : ''}>
-                                Save Seat Selection
-                            </button>
+                            <c:choose>
+                                <c:when test="${empty bookingId}">
+                                    <button type="submit" class="seat-primary" disabled="disabled">
+                                        Save Seat Selection
+                                    </button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="submit" class="seat-primary">
+                                        Save Seat Selection
+                                    </button>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
 
                         <c:if test="${empty bookingId}">
