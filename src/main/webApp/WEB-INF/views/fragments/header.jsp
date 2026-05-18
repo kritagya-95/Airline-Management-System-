@@ -14,9 +14,8 @@
       <div class="dropdown-menu">
         <a href="${pageContext.request.contextPath}/book-flight">Book a Flight</a>
         <a href="${pageContext.request.contextPath}/public-schedule">Flight Schedule</a>
-        <a href="${pageContext.request.contextPath}/ad-ons">Ad-ons</a>
-        <a href="${pageContext.request.contextPath}/Seat Selection">Select Selection</a>
-
+        <a href="${pageContext.request.contextPath}/add-ons">Add-ons</a>
+        <a href="${pageContext.request.contextPath}/seat-selection">Seat Selection</a>
       </div>
     </div>
 

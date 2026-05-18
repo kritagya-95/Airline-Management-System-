@@ -1,6 +1,6 @@
 package com.aeromanage.controller;
 
-import com.aeromanage.dao.FlightScheduleDao; // Added Interface Import
+import com.aeromanage.dao.FlightScheduleDao;
 import com.aeromanage.dao.FlightScheduleDaoImpl;
 import com.aeromanage.entity.User;
 import com.aeromanage.utils.SessionUtil;
@@ -15,35 +15,25 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/book-flight-schedule")
+@WebServlet("/public-schedule")
 public class PublicFlightScheduleServlet extends HttpServlet {
 
-    // Programmed to the Interface to match your standard DAO architecture patterns
     private final FlightScheduleDao scheduleDao = new FlightScheduleDaoImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Binds user session info if a traveler happens to be logged in
-        User user = (User) SessionUtil.getAttribute(request, "user");
-        if (user != null) {
-            request.setAttribute("user", user);
-        }
+        // Pull the flight list from the DAO layer
+        List<Map<String, Object>> flights = scheduleDao.searchPublicSchedules(null, null);
 
-        // Catch filtration properties from your interactive route lookup form
-        String origin = request.getParameter("originCity");
-        String destination = request.getParameter("destCity");
+        // Debug Verification: Print out to verify the collection isn't empty inside the servlet context
+        System.out.println("Servlet diagnostic check: items count -> " + (flights != null ? flights.size() : "NULL"));
 
-        // Execute query lookup execution against our decoupled interface layer
-        List<Map<String, Object>> scheduledFlights = scheduleDao.searchPublicSchedules(origin, destination);
+        // CRITICAL STRING BINDING MATCH: "scheduledFlights" must match the JSP's items key exactly
+        request.setAttribute("scheduledFlights", flights);
 
-        // Expose items straight to the view layer attributes
-        request.setAttribute("scheduledFlights", scheduledFlights);
-        request.setAttribute("searchedOrigin", origin != null ? origin.trim() : "");
-        request.setAttribute("searchedDest", destination != null ? destination.trim() : "");
-
-        // Forward to the specific isolated view file
+        // Forward safely into the internal JSP view layer path
         request.getRequestDispatcher("/WEB-INF/views/public-schedule.jsp")
                 .forward(request, response);
     }
