@@ -1,17 +1,19 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Airport Information - SkyLine</title>
+    <title>Airport Information - SkyLine Airlines</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/landing.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/airport-information.css"/>
 </head>
 <body>
-<header class="land-header"> ... (same header as above) </header>
+
+<%@ include file="/WEB-INF/views/fragments/header.jsp" %>
 
 <section class="land-hero">
     <div class="land-hero-inner">
@@ -52,6 +54,7 @@
     </div>
 </section>
 
-<jsp:include page="/WEB-INF/views/partials/landing-footer.jsp"/>
+<%@ include file="/WEB-INF/views/fragments/footer.jsp" %>
+
 </body>
 </html>
