@@ -38,6 +38,7 @@
                     <article class="flight-card">
                         <div class="flight-card-img">
                             <c:choose>
+                                <c:when test="${not empty f.flight_image}"><img src="${pageContext.request.contextPath}/uploads/${f.flight_image}" alt="Flight Path"></c:when>
                                 <c:when test="${f.dest_city == 'Dubai'}"><img src="${pageContext.request.contextPath}/static/images/dubai.jpg" alt="Dubai"></c:when>
                                 <c:when test="${f.dest_city == 'London'}"><img src="${pageContext.request.contextPath}/static/images/london.jpg" alt="London"></c:when>
                                 <c:when test="${f.dest_city == 'Kathmandu'}"><img src="${pageContext.request.contextPath}/static/images/Kathmandu.jpg" alt="Kathmandu"></c:when>

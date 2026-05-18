@@ -1,6 +1,7 @@
 package com.aeromanage.dao;
 
 import com.aeromanage.entity.User;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,18 @@ public interface AdminDao {
 
     // ── Flights ────────────────────────────────────────────
     List<Map<String, Object>> getAllFlights();
+    List<Map<String, Object>> getAllAirlines();
+    List<Map<String, Object>> getAllAircraft();
+    boolean addFlight(int airlineId, int aircraftId, String flightNumber,
+                      String originCode, String originCity, String originCountry,
+                      String destCode, String destCity, String destCountry,
+                      Timestamp departureTime, Timestamp arrivalTime, String status,
+                      double economyFare, double businessFare, String flightImage);
+    boolean updateFlight(int flightId, int airlineId, int aircraftId, String flightNumber,
+                         String originCode, String originCity, String originCountry,
+                         String destCode, String destCity, String destCountry,
+                         Timestamp departureTime, Timestamp arrivalTime, String status,
+                         double economyFare, double businessFare, String flightImage);
 
     /**
      * Searches and filters live flight paths based on passenger criteria.

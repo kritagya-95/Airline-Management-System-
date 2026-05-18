@@ -128,12 +128,13 @@ public class PassengerBookingDaoImpl implements PassengerBookingDao {
                   AND user_id = ?
                 """;
         String insertCancellation = """
-                INSERT INTO cancellations (booking_id, cancelled_by, reason, cancellation_status)
-                VALUES (?, ?, ?, 'REQUESTED')
+                INSERT INTO cancellations (booking_id, cancelled_by, reason, cancellation_status, processed_at)
+                VALUES (?, ?, ?, 'REQUESTED', CURRENT_TIMESTAMP)
                 ON DUPLICATE KEY UPDATE
                     reason = VALUES(reason),
                     cancellation_status = VALUES(cancellation_status),
-                    requested_at = CURRENT_TIMESTAMP
+                    requested_at = CURRENT_TIMESTAMP,
+                    processed_at = VALUES(processed_at)
                 """;
 
         try (Connection conn = DBConnection.getConnection()) {

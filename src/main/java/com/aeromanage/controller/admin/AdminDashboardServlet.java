@@ -41,6 +41,8 @@ public class AdminDashboardServlet extends HttpServlet {
         request.setAttribute("pendingUserList", adminDao.getPendingUsers());
         request.setAttribute("recentBookings",  adminDao.getRecentBookings(5));
         request.setAttribute("flightList",      adminDao.getAllFlights());
+        request.setAttribute("airlineList",     adminDao.getAllAirlines());
+        request.setAttribute("aircraftList",    adminDao.getAllAircraft());
         request.setAttribute("userList",        adminDao.getAllUsers());
 
         // 4. Forward to the view layer

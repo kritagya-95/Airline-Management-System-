@@ -247,6 +247,13 @@
                 </span>
             </div>
 
+            <c:if test="${param.flightSaved == 'true'}">
+                <div class="admin-alert success">Flight details saved successfully.</div>
+            </c:if>
+            <c:if test="${param.flightError == 'true'}">
+                <div class="admin-alert error">Unable to save flight details. Please check the form values.</div>
+            </c:if>
+
             <c:choose>
                 <c:when test="${empty flightList}">
                     <div class="empty-state">
@@ -269,6 +276,7 @@
                                 <th>Economy (NPR)</th>
                                 <th>Business (NPR)</th>
                                 <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -309,6 +317,9 @@
                                                     ${f.status}
                                             </span>
                                     </td>
+                                    <td>
+                                        <button type="button" class="btn-edit-flight" onclick="openFlightModal('editFlightModal${f.flight_id}')">Edit</button>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -316,6 +327,119 @@
                     </div>
                 </c:otherwise>
             </c:choose>
+
+            <div class="flight-add-row">
+                <button type="button" class="btn-add" onclick="openFlightModal('addFlightModal')">Add Flight</button>
+            </div>
+
+            <div class="flight-modal" id="addFlightModal" aria-hidden="true">
+                <form class="flight-editor" action="${pageContext.request.contextPath}/admin/flights" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="add"/>
+                    <div class="modal-header">
+                        <h3>Add Flight</h3>
+                        <button type="button" class="modal-close" onclick="closeFlightModal('addFlightModal')">&times;</button>
+                    </div>
+                    <div class="flight-form-grid">
+                        <label>Flight No.<input type="text" name="flightNumber" maxlength="10" required/></label>
+                        <label>Airline
+                            <select name="airlineId" required>
+                                <c:forEach var="airline" items="${airlineList}">
+                                    <option value="${airline.airline_id}">${airline.airline_name} (${airline.iata_code})</option>
+                                </c:forEach>
+                            </select>
+                        </label>
+                        <label>Aircraft
+                            <select name="aircraftId" required>
+                                <c:forEach var="aircraft" items="${aircraftList}">
+                                    <option value="${aircraft.aircraft_id}">${aircraft.model} - ${aircraft.registration}</option>
+                                </c:forEach>
+                            </select>
+                        </label>
+                        <label>Origin Code<input type="text" name="originCode" maxlength="3" required/></label>
+                        <label>Origin City<input type="text" name="originCity" required/></label>
+                        <label>Origin Country<input type="text" name="originCountry" required/></label>
+                        <label>Destination Code<input type="text" name="destCode" maxlength="3" required/></label>
+                        <label>Destination City<input type="text" name="destCity" required/></label>
+                        <label>Destination Country<input type="text" name="destCountry" required/></label>
+                        <label>Departure<input type="datetime-local" name="departureTime" required/></label>
+                        <label>Arrival<input type="datetime-local" name="arrivalTime" required/></label>
+                        <label>Status
+                            <select name="status" required>
+                                <option value="SCHEDULED">SCHEDULED</option>
+                                <option value="BOARDING">BOARDING</option>
+                                <option value="DEPARTED">DEPARTED</option>
+                                <option value="ARRIVED">ARRIVED</option>
+                                <option value="DELAYED">DELAYED</option>
+                                <option value="CANCELLED">CANCELLED</option>
+                            </select>
+                        </label>
+                        <label>Economy Fare<input type="number" name="economyFare" step="0.01" min="0" required/></label>
+                        <label>Business Fare<input type="number" name="businessFare" step="0.01" min="0" required/></label>
+                        <label>Flight Photo<input type="file" name="flightImage" accept="image/jpeg,image/png,image/jpg"/></label>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-reject" onclick="closeFlightModal('addFlightModal')">Cancel</button>
+                        <button type="submit" class="btn-approve">Add Flight</button>
+                    </div>
+                </form>
+            </div>
+
+            <c:forEach var="f" items="${flightList}">
+                <div class="flight-modal" id="editFlightModal${f.flight_id}" aria-hidden="true">
+                    <form class="flight-editor compact" action="${pageContext.request.contextPath}/admin/flights" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="action" value="update"/>
+                        <input type="hidden" name="flightId" value="${f.flight_id}"/>
+                        <div class="modal-header">
+                            <h3>Edit Flight</h3>
+                            <button type="button" class="modal-close" onclick="closeFlightModal('editFlightModal${f.flight_id}')">&times;</button>
+                        </div>
+                        <div class="flight-form-grid">
+                            <label>Flight No.<input type="text" name="flightNumber" maxlength="10" value="${f.flight_number}" required/></label>
+                            <label>Airline
+                                <select name="airlineId" required>
+                                    <c:forEach var="airline" items="${airlineList}">
+                                        <option value="${airline.airline_id}" <c:if test="${airline.airline_id == f.airline_id}">selected</c:if>>${airline.airline_name}</option>
+                                    </c:forEach>
+                                </select>
+                            </label>
+                            <label>Aircraft
+                                <select name="aircraftId" required>
+                                    <c:forEach var="aircraft" items="${aircraftList}">
+                                        <option value="${aircraft.aircraft_id}" <c:if test="${aircraft.aircraft_id == f.aircraft_id}">selected</c:if>>${aircraft.model} - ${aircraft.registration}</option>
+                                    </c:forEach>
+                                </select>
+                            </label>
+                            <label>Origin Code<input type="text" name="originCode" maxlength="3" value="${f.origin_code}" required/></label>
+                            <label>Origin City<input type="text" name="originCity" value="${f.origin_city}" required/></label>
+                            <label>Origin Country<input type="text" name="originCountry" value="${f.origin_country}" required/></label>
+                            <label>Destination Code<input type="text" name="destCode" maxlength="3" value="${f.dest_code}" required/></label>
+                            <label>Destination City<input type="text" name="destCity" value="${f.dest_city}" required/></label>
+                            <label>Destination Country<input type="text" name="destCountry" value="${f.dest_country}" required/></label>
+                            <fmt:formatDate value="${f.departure_time}" pattern="yyyy-MM-dd'T'HH:mm" var="departureValue"/>
+                            <label>Departure<input type="datetime-local" name="departureTime" value="${departureValue}" required/></label>
+                            <fmt:formatDate value="${f.arrival_time}" pattern="yyyy-MM-dd'T'HH:mm" var="arrivalValue"/>
+                            <label>Arrival<input type="datetime-local" name="arrivalTime" value="${arrivalValue}" required/></label>
+                            <label>Status
+                                <select name="status" required>
+                                    <option value="SCHEDULED" <c:if test="${f.status == 'SCHEDULED'}">selected</c:if>>SCHEDULED</option>
+                                    <option value="BOARDING" <c:if test="${f.status == 'BOARDING'}">selected</c:if>>BOARDING</option>
+                                    <option value="DEPARTED" <c:if test="${f.status == 'DEPARTED'}">selected</c:if>>DEPARTED</option>
+                                    <option value="ARRIVED" <c:if test="${f.status == 'ARRIVED'}">selected</c:if>>ARRIVED</option>
+                                    <option value="DELAYED" <c:if test="${f.status == 'DELAYED'}">selected</c:if>>DELAYED</option>
+                                    <option value="CANCELLED" <c:if test="${f.status == 'CANCELLED'}">selected</c:if>>CANCELLED</option>
+                                </select>
+                            </label>
+                            <label>Economy Fare<input type="number" name="economyFare" step="0.01" min="0" value="${f.base_economy_fare}" required/></label>
+                            <label>Business Fare<input type="number" name="businessFare" step="0.01" min="0" value="${f.base_business_fare}" required/></label>
+                            <label>Replace Photo<input type="file" name="flightImage" accept="image/jpeg,image/png,image/jpg"/></label>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="button" class="btn-reject" onclick="closeFlightModal('editFlightModal${f.flight_id}')">Cancel</button>
+                            <button type="submit" class="btn-approve">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </c:forEach>
         </section>
 
         <!-- ── RECENT BOOKINGS ── -->
@@ -420,6 +544,30 @@
             item.classList.remove('active');
             if (item.getAttribute('href') === '#' + current) {
                 item.classList.add('active');
+            }
+        });
+    });
+
+    function openFlightModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+    }
+
+    function closeFlightModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+    }
+
+    document.querySelectorAll('.flight-modal').forEach(modal => {
+        modal.addEventListener('click', event => {
+            if (event.target === modal) {
+                closeFlightModal(modal.id);
             }
         });
     });

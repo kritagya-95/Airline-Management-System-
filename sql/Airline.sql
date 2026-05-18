@@ -73,6 +73,7 @@ CREATE TABLE flights (
                          base_economy_fare  DECIMAL(10,2) NOT NULL DEFAULT 0.00,
                          base_business_fare DECIMAL(10,2) NOT NULL DEFAULT 0.00,
                          base_first_fare    DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+                         flight_image        VARCHAR(255) NULL,
                          created_at         TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
                          CONSTRAINT fk_flight_airline  FOREIGN KEY (airline_id)        REFERENCES airlines(airline_id),
                          CONSTRAINT fk_flight_aircraft FOREIGN KEY (aircraft_id)       REFERENCES aircraft(aircraft_id),
@@ -261,6 +262,7 @@ SELECT
     f.base_economy_fare,
     f.base_business_fare,
     f.base_first_fare,
+    f.flight_image,
     ac.total_seats,
     (SELECT COUNT(*) FROM flight_seat_availability fsa
      WHERE fsa.flight_id = f.flight_id AND fsa.is_available = 0) AS booked_seats

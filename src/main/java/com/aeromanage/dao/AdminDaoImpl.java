@@ -97,12 +97,15 @@ public class AdminDaoImpl implements AdminDao {
 
     @Override
     public List<Map<String, Object>> getAllFlights() {
+        ensureFlightImageColumn();
         String sql = """
             SELECT f.flight_id, f.flight_number, f.departure_time, f.arrival_time,
                    f.status, f.base_economy_fare, f.base_business_fare,
+                   f.flight_image,
                    al.airline_name,
-                   oa.iata_code AS origin_code, oa.city AS origin_city,
-                   da.iata_code AS dest_code,   da.city AS dest_city,
+                   f.airline_id, f.aircraft_id,
+                   oa.iata_code AS origin_code, oa.city AS origin_city, oa.country AS origin_country,
+                   da.iata_code AS dest_code,   da.city AS dest_city, da.country AS dest_country,
                    ac.model AS aircraft_model
             FROM flights f
             JOIN airlines al ON al.airline_id      = f.airline_id
@@ -115,13 +118,113 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
+    public List<Map<String, Object>> getAllAirlines() {
+        return fetchMaps("SELECT airline_id, airline_name, iata_code FROM airlines ORDER BY airline_name ASC");
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllAircraft() {
+        String sql = """
+            SELECT ac.aircraft_id, ac.registration, ac.model, al.airline_name
+            FROM aircraft ac
+            JOIN airlines al ON al.airline_id = ac.airline_id
+            ORDER BY al.airline_name ASC, ac.model ASC
+            """;
+        return fetchMaps(sql);
+    }
+
+    @Override
+    public boolean addFlight(int airlineId, int aircraftId, String flightNumber,
+                             String originCode, String originCity, String originCountry,
+                             String destCode, String destCity, String destCountry,
+                             Timestamp departureTime, Timestamp arrivalTime, String status,
+                             double economyFare, double businessFare, String flightImage) {
+        ensureFlightImageColumn();
+        String sql = """
+            INSERT INTO flights (airline_id, aircraft_id, flight_number, origin_airport_id,
+                                 dest_airport_id, departure_time, arrival_time, status,
+                                 base_economy_fare, base_business_fare, flight_image)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """;
+
+        try (Connection conn = DBConnection.getConnection()) {
+            conn.setAutoCommit(false);
+            try {
+                int originAirportId = getOrCreateAirport(conn, originCode, originCity, originCountry);
+                int destAirportId = getOrCreateAirport(conn, destCode, destCity, destCountry);
+
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    bindFlight(ps, airlineId, aircraftId, flightNumber, originAirportId, destAirportId,
+                            departureTime, arrivalTime, status, economyFare, businessFare, flightImage);
+                    boolean success = ps.executeUpdate() > 0;
+                    conn.commit();
+                    return success;
+                }
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            } finally {
+                conn.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            System.err.println("[AdminDaoImpl] addFlight error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateFlight(int flightId, int airlineId, int aircraftId, String flightNumber,
+                                String originCode, String originCity, String originCountry,
+                                String destCode, String destCity, String destCountry,
+                                Timestamp departureTime, Timestamp arrivalTime, String status,
+                                double economyFare, double businessFare, String flightImage) {
+        ensureFlightImageColumn();
+        String sql = """
+            UPDATE flights
+            SET airline_id = ?, aircraft_id = ?, flight_number = ?, origin_airport_id = ?,
+                dest_airport_id = ?, departure_time = ?, arrival_time = ?, status = ?,
+                base_economy_fare = ?, base_business_fare = ?,
+                flight_image = COALESCE(?, flight_image)
+            WHERE flight_id = ?
+            """;
+
+        try (Connection conn = DBConnection.getConnection()) {
+            conn.setAutoCommit(false);
+            try {
+                int originAirportId = getOrCreateAirport(conn, originCode, originCity, originCountry);
+                int destAirportId = getOrCreateAirport(conn, destCode, destCity, destCountry);
+
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    bindFlight(ps, airlineId, aircraftId, flightNumber, originAirportId, destAirportId,
+                            departureTime, arrivalTime, status, economyFare, businessFare, flightImage);
+                    ps.setInt(12, flightId);
+                    boolean success = ps.executeUpdate() > 0;
+                    conn.commit();
+                    return success;
+                }
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            } finally {
+                conn.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            System.err.println("[AdminDaoImpl] updateFlight error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
     public List<Map<String, Object>> searchFlights(String from, String to, String departureDate) {
+        ensureFlightImageColumn();
         String sql = """
             SELECT f.flight_id, f.flight_number, f.departure_time, f.arrival_time,
                    f.status, f.base_economy_fare, f.base_business_fare,
+                   f.flight_image,
                    al.airline_name,
-                   oa.iata_code AS origin_code, oa.city AS origin_city,
-                   da.iata_code AS dest_code,   da.city AS dest_city,
+                   f.airline_id, f.aircraft_id,
+                   oa.iata_code AS origin_code, oa.city AS origin_city, oa.country AS origin_country,
+                   da.iata_code AS dest_code,   da.city AS dest_city, da.country AS dest_country,
                    ac.model AS aircraft_model
             FROM flights f
             JOIN airlines al ON al.airline_id      = f.airline_id
@@ -160,13 +263,16 @@ public class AdminDaoImpl implements AdminDao {
 
     @Override
     public List<Map<String, Object>> searchFlightsByKeyword(String keyword) {
+        ensureFlightImageColumn();
         // Leverages standard structural joins while running wildcards against city, airport code, and airline name
         String sql = """
             SELECT f.flight_id, f.flight_number, f.departure_time, f.arrival_time,
                    f.status, f.base_economy_fare, f.base_business_fare,
+                   f.flight_image,
                    al.airline_name,
-                   oa.iata_code AS origin_code, oa.city AS origin_city,
-                   da.iata_code AS dest_code,   da.city AS dest_city,
+                   f.airline_id, f.aircraft_id,
+                   oa.iata_code AS origin_code, oa.city AS origin_city, oa.country AS origin_country,
+                   da.iata_code AS dest_code,   da.city AS dest_city, da.country AS dest_country,
                    ac.model AS aircraft_model
             FROM flights f
             JOIN airlines al ON al.airline_id      = f.airline_id
@@ -238,6 +344,66 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     // ── Helpers ────────────────────────────────────────────────────────────
+
+    private void ensureFlightImageColumn() {
+        String sql = "ALTER TABLE flights ADD COLUMN flight_image VARCHAR(255) NULL AFTER base_first_fare";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            if (!e.getMessage().toLowerCase().contains("duplicate column")) {
+                System.err.println("[AdminDaoImpl] ensureFlightImageColumn error: " + e.getMessage());
+            }
+        }
+    }
+
+    private int getOrCreateAirport(Connection conn, String code, String city, String country) throws SQLException {
+        String normalizedCode = code.trim().toUpperCase();
+        String selectSql = "SELECT airport_id FROM airports WHERE iata_code = ?";
+        try (PreparedStatement ps = conn.prepareStatement(selectSql)) {
+            ps.setString(1, normalizedCode);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("airport_id");
+                }
+            }
+        }
+
+        String insertSql = """
+            INSERT INTO airports (iata_code, airport_name, city, country, timezone)
+            VALUES (?, ?, ?, ?, 'UTC')
+            """;
+        try (PreparedStatement ps = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, normalizedCode);
+            ps.setString(2, city.trim() + " Airport");
+            ps.setString(3, city.trim());
+            ps.setString(4, country.trim().isEmpty() ? "Unknown" : country.trim());
+            ps.executeUpdate();
+            try (ResultSet keys = ps.getGeneratedKeys()) {
+                if (keys.next()) {
+                    return keys.getInt(1);
+                }
+            }
+        }
+        throw new SQLException("Unable to create airport for " + normalizedCode);
+    }
+
+    private void bindFlight(PreparedStatement ps, int airlineId, int aircraftId, String flightNumber,
+                            int originAirportId, int destAirportId, Timestamp departureTime,
+                            Timestamp arrivalTime, String status, double economyFare,
+                            double businessFare, String flightImage) throws SQLException {
+        ps.setInt(1, airlineId);
+        ps.setInt(2, aircraftId);
+        ps.setString(3, flightNumber.trim().toUpperCase());
+        ps.setInt(4, originAirportId);
+        ps.setInt(5, destAirportId);
+        ps.setTimestamp(6, departureTime);
+        ps.setTimestamp(7, arrivalTime);
+        ps.setString(8, status);
+        ps.setDouble(9, economyFare);
+        ps.setDouble(10, businessFare);
+        ps.setString(11, flightImage);
+    }
 
     private List<Map<String, Object>> fetchMaps(String sql) {
         List<Map<String, Object>> list = new ArrayList<>();

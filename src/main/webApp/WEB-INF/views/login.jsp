@@ -81,6 +81,20 @@
 
         .btn-login:hover { background: #660000; }
 
+        .remember-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: -4px 0 18px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .remember-row input {
+            width: auto;
+            accent-color: #8B0000;
+        }
+
         .link {
             text-align: center;
             margin-top: 20px;
@@ -202,7 +216,7 @@
                 <input type="email"
                        name="email"
                        placeholder="Your Email Address"
-                       value="<c:out value='${param.email}' default='' />"
+                       value="<c:out value='${not empty param.email ? param.email : rememberedEmail}' default='' />"
                        required />
             </div>
 
@@ -218,6 +232,11 @@
                           onclick="togglePassword()">👁</span>
                 </div>
             </div>
+
+            <label class="remember-row">
+                <input type="checkbox" name="rememberMe" <c:if test="${not empty rememberedEmail}">checked</c:if> />
+                Remember Me
+            </label>
 
             <button type="submit" class="btn-login">Log In</button>
 

@@ -3,6 +3,7 @@ package com.aeromanage.controller;
 import com.aeromanage.dao.UserDao;
 import com.aeromanage.dao.UserDaoImpl;
 import com.aeromanage.entity.User;
+import com.aeromanage.utils.CookieUtil;
 import com.aeromanage.utils.PasswordUtil;
 import com.aeromanage.utils.SessionUtil;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,8 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
+    private static final String REMEMBER_EMAIL_COOKIE = "skyline_remember_email";
+    private static final int REMEMBER_EMAIL_MAX_AGE = 7 * 24 * 60 * 60;
     private final UserDao userDao = new UserDaoImpl();
 
     @Override
@@ -23,6 +26,7 @@ public class LoginServlet extends HttpServlet {
         // Pass query parameters to the JSP so the form can embed them if they exist
         request.setAttribute("redirect", request.getParameter("redirect"));
         request.setAttribute("flightId", request.getParameter("flightId"));
+        request.setAttribute("rememberedEmail", CookieUtil.getCookieValue(request, REMEMBER_EMAIL_COOKIE));
 
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
@@ -42,6 +46,12 @@ public class LoginServlet extends HttpServlet {
         if (user != null && PasswordUtil.checkPassword(password, user.getPassword())) {
 
             SessionUtil.setAttribute(request, "user", user);
+
+            if ("on".equals(request.getParameter("rememberMe"))) {
+                CookieUtil.addCookie(response, REMEMBER_EMAIL_COOKIE, user.getEmail(), REMEMBER_EMAIL_MAX_AGE);
+            } else {
+                CookieUtil.deleteCookie(response, REMEMBER_EMAIL_COOKIE);
+            }
 
             String role = (user.getRole() != null) ? user.getRole().trim().toUpperCase() : "";
             String contextPath = request.getContextPath();
@@ -77,6 +87,7 @@ public class LoginServlet extends HttpServlet {
             // Keep the parameters alive on postback failure so the intercept state isn't lost
             request.setAttribute("redirect", request.getParameter("redirect"));
             request.setAttribute("flightId", request.getParameter("flightId"));
+            request.setAttribute("rememberedEmail", email);
 
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }

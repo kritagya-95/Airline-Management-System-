@@ -15,7 +15,7 @@
 
 <%@ include file="/WEB-INF/views/fragments/header.jsp" %>
 
-<section class="land-hero">
+<section class="land-hero image-hero">
     <div class="land-hero-inner">
         <span class="land-hero-tag">Travel with Confidence</span>
         <h1 class="land-hero-title">Airport <span class="land-hero-accent">Information</span></h1>
