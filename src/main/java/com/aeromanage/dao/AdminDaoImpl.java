@@ -346,14 +346,28 @@ public class AdminDaoImpl implements AdminDao {
     // ── Helpers ────────────────────────────────────────────────────────────
 
     private void ensureFlightImageColumn() {
-        String sql = "ALTER TABLE flights ADD COLUMN flight_image VARCHAR(255) NULL AFTER base_first_fare";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            if (!e.getMessage().toLowerCase().contains("duplicate column")) {
-                System.err.println("[AdminDaoImpl] ensureFlightImageColumn error: " + e.getMessage());
+        String withAfter = "ALTER TABLE flights ADD COLUMN flight_image VARCHAR(255) NULL AFTER base_first_fare";
+        String withoutAfter = "ALTER TABLE flights ADD COLUMN flight_image VARCHAR(255) NULL";
+        try (Connection conn = DBConnection.getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement(withAfter)) {
+                ps.executeUpdate();
+                return;
+            } catch (SQLException firstError) {
+                String firstMessage = firstError.getMessage() == null ? "" : firstError.getMessage().toLowerCase();
+                if (firstMessage.contains("duplicate column")) {
+                    return;
+                }
+                try (PreparedStatement ps = conn.prepareStatement(withoutAfter)) {
+                    ps.executeUpdate();
+                } catch (SQLException secondError) {
+                    String secondMessage = secondError.getMessage() == null ? "" : secondError.getMessage().toLowerCase();
+                    if (!secondMessage.contains("duplicate column")) {
+                        System.err.println("[AdminDaoImpl] ensureFlightImageColumn error: " + secondError.getMessage());
+                    }
+                }
             }
+        } catch (SQLException e) {
+            System.err.println("[AdminDaoImpl] ensureFlightImageColumn connection error: " + e.getMessage());
         }
     }
 

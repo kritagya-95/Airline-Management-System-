@@ -276,6 +276,8 @@ public class SeatSelectionServlet extends HttpServlet {
     }
 
     private boolean saveSelectedSeats(int passengerId, int bookingId, int flightId, List<Integer> seatIds) {
+        ensureMultipleSeatsPerBookingAllowed();
+
         String validateBooking = "SELECT booking_id FROM bookings WHERE booking_id = ? AND user_id = ? AND flight_id = ?";
         String validateSeat = """
                 SELECT s.seat_id
@@ -288,9 +290,14 @@ public class SeatSelectionServlet extends HttpServlet {
                        ON ss.flight_id = f.flight_id
                       AND ss.seat_id = s.seat_id
                       AND NOT (ss.booking_id = ? AND ss.passenger_id = ?)
+                LEFT JOIN selected_seats own
+                       ON own.flight_id = f.flight_id
+                      AND own.seat_id = s.seat_id
+                      AND own.booking_id = ?
+                      AND own.passenger_id = ?
                 WHERE f.flight_id = ?
                   AND s.seat_id = ?
-                  AND COALESCE(fsa.is_available, 1) = 1
+                  AND (COALESCE(fsa.is_available, 1) = 1 OR own.selected_seat_id IS NOT NULL)
                   AND ss.selected_seat_id IS NULL
                 """;
         String oldSeats = "SELECT seat_id FROM selected_seats WHERE booking_id = ? AND passenger_id = ?";
@@ -326,7 +333,7 @@ public class SeatSelectionServlet extends HttpServlet {
                 }
 
                 for (Integer seatId : seatIds) {
-                    if (!exists(conn, validateSeat, bookingId, passengerId, flightId, seatId)) {
+                    if (!exists(conn, validateSeat, bookingId, passengerId, bookingId, passengerId, flightId, seatId)) {
                         conn.rollback();
                         return false;
                     }
@@ -377,6 +384,21 @@ public class SeatSelectionServlet extends HttpServlet {
         } catch (SQLException e) {
             System.err.println("[SeatSelectionServlet] saveSelectedSeats error: " + e.getMessage());
             return false;
+        }
+    }
+
+    private void ensureMultipleSeatsPerBookingAllowed() {
+        String sql = "ALTER TABLE selected_seats DROP INDEX uq_selected_seat_booking_passenger";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            String message = e.getMessage() == null ? "" : e.getMessage().toLowerCase();
+            if (!message.contains("check that column/key exists")
+                    && !message.contains("can't drop")
+                    && !message.contains("doesn't exist")) {
+                System.err.println("[SeatSelectionServlet] ensureMultipleSeatsPerBookingAllowed error: " + e.getMessage());
+            }
         }
     }
 
