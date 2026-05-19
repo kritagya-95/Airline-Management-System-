@@ -18,8 +18,8 @@
 <main class="cancel-page">
     <section class="cancel-hero">
         <p class="cancel-kicker">Manage</p>
-        <h1>Cancelled Bookings</h1>
-        <p>Your cancelled flight details are listed below.</p>
+        <h1>Cancel Booking</h1>
+        <p>Cancel an active booking or review your cancelled flight records.</p>
     </section>
 
     <c:if test="${not empty sessionScope.bookingSuccess}">
@@ -38,9 +38,69 @@
     </c:if>
 
     <section class="cancel-section">
+        <div class="cancel-section-head">
+            <h2>Active Bookings</h2>
+            <span>${currentBookings.size()} available</span>
+        </div>
+        <c:choose>
+            <c:when test="${empty currentBookings}">
+                <div class="cancel-empty compact">
+                    <h2>No active bookings to cancel</h2>
+                    <p>Your confirmed or pending bookings will appear here.</p>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="cancel-table-wrap">
+                    <table class="cancel-table">
+                        <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Passenger</th>
+                            <th>Flight</th>
+                            <th>Route</th>
+                            <th>Departure</th>
+                            <th>Status</th>
+                            <th>Fare</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="b" items="${currentBookings}">
+                            <tr>
+                                <td><strong><c:out value="${b.booking_ref}"/></strong></td>
+                                <td><c:out value="${empty b.passenger_name ? 'Passenger' : b.passenger_name}"/></td>
+                                <td><c:out value="${b.flight_number}"/></td>
+                                <td><c:out value="${b.origin_code}"/> to <c:out value="${b.dest_code}"/></td>
+                                <td><c:out value="${b.departure_time}"/></td>
+                                <td><span class="cancel-badge active"><c:out value="${b.booking_status}"/></span></td>
+                                <td>NPR <fmt:formatNumber value="${b.total_fare}" pattern="#,##0.00"/></td>
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/my-bookings"
+                                          method="post"
+                                          class="cancel-action-form"
+                                          onsubmit="return confirm('Do you want to cancel booking ${b.booking_ref}?');">
+                                        <input type="hidden" name="bookingId" value="${b.booking_id}"/>
+                                        <input type="hidden" name="reason" value="Cancelled by passenger"/>
+                                        <button type="submit" class="cancel-action-btn">Cancel</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </section>
+
+    <section class="cancel-section">
+        <div class="cancel-section-head">
+            <h2>Cancelled Bookings</h2>
+            <span>${cancelledBookings.size()} records</span>
+        </div>
         <c:choose>
             <c:when test="${empty cancelledBookings}">
-                <div class="cancel-empty">
+                <div class="cancel-empty compact">
                     <h2>No cancelled bookings yet</h2>
                     <p>Cancelled flight records will appear here after a booking is cancelled.</p>
                 </div>

@@ -17,12 +17,14 @@ public class PassengerBookingDaoImpl implements PassengerBookingDao {
     private static final String BOOKING_SELECT = """
             SELECT b.booking_id, b.booking_ref, b.class, b.num_passengers,
                    b.total_fare, b.booking_status, b.created_at,
+                   bp.full_name AS passenger_name, bp.passport_no, bp.nationality,
                    f.flight_number, f.departure_time, f.arrival_time, f.status AS flight_status,
                    al.airline_name,
                    oa.iata_code AS origin_code, oa.city AS origin_city,
                    da.iata_code AS dest_code, da.city AS dest_city,
                    p.status AS payment_status
             FROM bookings b
+            LEFT JOIN booking_passengers bp ON bp.booking_id = b.booking_id
             JOIN flights f ON f.flight_id = b.flight_id
             JOIN airlines al ON al.airline_id = f.airline_id
             JOIN airports oa ON oa.airport_id = f.origin_airport_id
@@ -34,8 +36,12 @@ public class PassengerBookingDaoImpl implements PassengerBookingDao {
     @Override
     public List<Map<String, Object>> getCurrentBookings(int userId) {
         String sql = BOOKING_SELECT + """
-                AND f.departure_time >= NOW()
                 AND b.booking_status <> 'CANCELLED'
+                AND (
+                    f.departure_time >= NOW()
+                    OR f.status IN ('SCHEDULED','BOARDING','DELAYED')
+                    OR b.booking_status = 'PENDING'
+                )
                 ORDER BY f.departure_time ASC
                 """;
         return fetchBookings(sql, userId);
@@ -54,6 +60,8 @@ public class PassengerBookingDaoImpl implements PassengerBookingDao {
     public List<Map<String, Object>> getPastBookings(int userId) {
         String sql = BOOKING_SELECT + """
                 AND f.departure_time < NOW()
+                AND f.status IN ('DEPARTED','ARRIVED')
+                AND b.booking_status <> 'CANCELLED'
                 ORDER BY f.departure_time DESC
                 """;
         return fetchBookings(sql, userId);

@@ -1,14 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <section class="gift-buy-panel" id="buyGiftCard">
-    <div class="gift-card-visual" id="giftCardVisual">Classic Travel Gift Card</div>
+    <div class="gift-card-visual" id="giftCardVisual">
+        <img id="giftCardImage"
+             src="${pageContext.request.contextPath}/static/images/Classic Travel Gift Card.png"
+             alt="Classic Travel Gift Card">
+    </div>
     <div class="gift-buy-content">
         <h2>Buy a Gift Card</h2>
         <div class="gift-style-options" role="group" aria-label="Gift card styles">
-            <button type="button" class="gift-style selected" data-style="Classic Travel" data-visual="Classic Travel Gift Card">Classic Travel</button>
-            <button type="button" class="gift-style" data-style="Premium Escape" data-visual="Premium Escape Gift Card">Premium Escape</button>
-            <button type="button" class="gift-style" data-style="Family Trip" data-visual="Family Trip Gift Card">Family Trip</button>
-            <button type="button" class="gift-style" data-style="Student Fare" data-visual="Student Fare Gift Card">Student Fare</button>
+            <button type="button" class="gift-style selected" data-style="Classic Travel" data-visual="Classic Travel Gift Card" data-image="Classic Travel Gift Card.png">Classic Travel</button>
+            <button type="button" class="gift-style" data-style="Premium Escape" data-visual="Premium Escape Gift Card" data-image="Premium Escape Gift Card.png">Premium Escape</button>
+            <button type="button" class="gift-style" data-style="Family Trip" data-visual="Family Trip Gift Card" data-image="Family Trip Gift Card.png">Family Trip</button>
+            <button type="button" class="gift-style" data-style="Student Fare" data-visual="Student Fare Gift Card" data-image="Student Fare Gift Card.png">Student Fare</button>
         </div>
 
         <div class="gift-denominations" role="group" aria-label="Gift card denominations">
@@ -52,7 +56,8 @@
         const customAmount = document.getElementById("giftCustomAmount");
         const confirmation = document.getElementById("giftBuyConfirmation");
         const purchaseButton = document.getElementById("giftPurchaseButton");
-        const giftCardVisual = document.getElementById("giftCardVisual");
+        const giftCardImage = document.getElementById("giftCardImage");
+        const giftCardImageBase = "${pageContext.request.contextPath}/static/images/";
         let selectedAmount = 25;
         let selectedStyle = "Classic Travel";
 
@@ -75,7 +80,8 @@
                 styles.forEach(item => item.classList.remove("selected"));
                 style.classList.add("selected");
                 selectedStyle = style.getAttribute("data-style");
-                giftCardVisual.textContent = style.getAttribute("data-visual");
+                giftCardImage.src = giftCardImageBase + style.getAttribute("data-image");
+                giftCardImage.alt = style.getAttribute("data-visual");
             });
         });
 

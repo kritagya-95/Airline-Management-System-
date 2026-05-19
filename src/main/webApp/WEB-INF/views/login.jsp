@@ -192,6 +192,7 @@
 </head>
 
 <body>
+<a href="${pageContext.request.contextPath}/home" class="auth-home-link">← Back to Home Page</a>
 <div class="auth-page">
 
     <div class="auth-form">

@@ -3,7 +3,9 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <article class="hotel-card" data-city="<c:out value='${hotel.city}'/>">
-    <div class="hotel-card-image"><c:out value="${hotel.image}"/></div>
+    <div class="hotel-card-image">
+        <img src="${pageContext.request.contextPath}/static/images/${hotel.image}.jpg" alt="${hotel.name}">
+    </div>
     <div class="hotel-card-body">
         <div class="hotel-card-topline">
             <h3><c:out value="${hotel.name}"/></h3>

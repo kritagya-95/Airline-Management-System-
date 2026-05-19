@@ -9,6 +9,7 @@
     <title>Popular Routes - SkyLine</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Chivo:wght@300;400;500;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/home.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/landing.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/popular-routes.css"/>
 </head>
@@ -16,13 +17,16 @@
 
 <%@ include file="/WEB-INF/views/fragments/header.jsp" %>
 
-<section class="land-hero image-hero">
-    <div class="land-hero-inner">
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
         <span class="land-hero-tag">Where We Fly</span>
         <h1 class="land-hero-title">Popular <span class="land-hero-accent">Routes</span></h1>
         <p class="land-hero-desc">Explore active SkyLine routes built from the current flight schedule.</p>
     </div>
 </section>
+
+
 
 <section class="travel-page-section">
     <div class="route-card-grid">

@@ -11,7 +11,7 @@
     hotel.put("stars", 5);
     hotel.put("pricePerNight", 180);
     hotel.put("description", "Central stay with quiet rooms, airport transfer desk, and late-arrival dining.");
-    hotel.put("image", "Image 1");
+    hotel.put("image", "Hotel 1");
     hotels.add(hotel);
 
     hotel = new LinkedHashMap<>();
@@ -21,7 +21,7 @@
     hotel.put("stars", 4);
     hotel.put("pricePerNight", 95);
     hotel.put("description", "Compact city hotel near cafes, shopping streets, and onward travel counters.");
-    hotel.put("image", "Image 2");
+    hotel.put("image", "Hotel 2");
     hotels.add(hotel);
 
     hotel = new LinkedHashMap<>();
@@ -31,7 +31,7 @@
     hotel.put("stars", 5);
     hotel.put("pricePerNight", 240);
     hotel.put("description", "Polished creekside hotel with skyline views and quick access to business districts.");
-    hotel.put("image", "Image 3");
+    hotel.put("image", "Hotel 3");
     hotels.add(hotel);
 
     hotel = new LinkedHashMap<>();
@@ -41,7 +41,7 @@
     hotel.put("stars", 4);
     hotel.put("pricePerNight", 170);
     hotel.put("description", "Relaxed suites for short stays, family stopovers, and evening waterfront walks.");
-    hotel.put("image", "Image 4");
+    hotel.put("image", "Hotel 4");
     hotels.add(hotel);
 
     hotel = new LinkedHashMap<>();
@@ -51,7 +51,7 @@
     hotel.put("stars", 4);
     hotel.put("pricePerNight", 210);
     hotel.put("description", "Elegant rooms close to rail links, theatre nights, and classic city landmarks.");
-    hotel.put("image", "Image 5");
+    hotel.put("image", "Hotel 5");
     hotels.add(hotel);
 
     hotel = new LinkedHashMap<>();
@@ -61,7 +61,7 @@
     hotel.put("stars", 4);
     hotel.put("pricePerNight", 125);
     hotel.put("description", "Warm riverside base with market access, breakfast terrace, and flexible checkout.");
-    hotel.put("image", "Image 6");
+    hotel.put("image", "Hotel 6");
     hotels.add(hotel);
 
     request.setAttribute("hotels", hotels);

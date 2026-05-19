@@ -34,6 +34,7 @@ public class CancelBookingServlet extends HttpServlet {
         }
 
         request.setAttribute("user", user);
+        request.setAttribute("currentBookings", bookingDao.getCurrentBookings(user.getUserId()));
         request.setAttribute("cancelledBookings", bookingDao.getCancelledBookings(user.getUserId()));
         request.getRequestDispatcher("/WEB-INF/views/cancelbookings.jsp")
                 .forward(request, response);

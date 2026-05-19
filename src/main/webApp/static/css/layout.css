@@ -152,6 +152,21 @@ body {
     gap: 18px;                  /* Elevated padding spacing across search and authentication targets */
 }
 
+.header-about-link {
+    color: #8a8a8a;
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;
+}
+
+.header-about-link:hover {
+    color: #8B0000;
+    text-decoration: none;
+}
+
 .header-search {
     display: flex;
     align-items: center;
@@ -384,6 +399,10 @@ body {
         gap: 10px;
         justify-content: space-between;
         order: 2;
+    }
+
+    .header-about-link {
+        font-size: 12px;
     }
 
     .header-search {

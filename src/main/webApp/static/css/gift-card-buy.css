@@ -11,15 +11,21 @@
 
 .gift-card-visual {
     align-items: center;
-    background: #8B0000;
+    background: #f0ebe3;
     border-radius: 8px;
-    color: #fff;
     display: flex;
-    font-family: 'Cinzel', serif;
-    font-size: 28px;
-    font-weight: 700;
+    aspect-ratio: 16 / 10;
     justify-content: center;
-    min-height: 190px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.gift-card-visual img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
 }
 
 .gift-buy-content h2 {

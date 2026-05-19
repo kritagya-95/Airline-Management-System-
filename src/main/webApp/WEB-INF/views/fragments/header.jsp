@@ -52,6 +52,7 @@
   </nav>
 
   <div class="header-right">
+    <a href="${pageContext.request.contextPath}/aboutus-airline" class="header-about-link">About Us</a>
     <%@ include file="/WEB-INF/views/fragments/checklist.jsp" %>
     <div class="header-search">
       <span class="search-icon"></span>

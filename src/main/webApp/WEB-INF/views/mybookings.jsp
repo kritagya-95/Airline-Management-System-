@@ -53,6 +53,7 @@
                         <thead>
                         <tr>
                             <th>Reference</th>
+                            <th>Passenger</th>
                             <th>Flight</th>
                             <th>Route</th>
                             <th>Departure</th>
@@ -66,6 +67,7 @@
                         <c:forEach var="b" items="${currentBookings}">
                             <tr>
                                 <td><strong><c:out value="${b.booking_ref}"/></strong></td>
+                                <td><c:out value="${empty b.passenger_name ? 'Passenger' : b.passenger_name}"/></td>
                                 <td><c:out value="${b.flight_number}"/></td>
                                 <td><c:out value="${b.origin_code}"/> to <c:out value="${b.dest_code}"/></td>
                                 <td><c:out value="${b.departure_time}"/></td>
