@@ -86,6 +86,7 @@
     <c:url var="seatSelectionUrl" value="/seat-selection">
         <c:param name="bookingId" value="${param.bookingId}"/>
         <c:param name="flightId" value="${param.flightId}"/>
+        <c:param name="next" value="${param.next}"/>
     </c:url>
     <section class="hotels-hero">
         <a class="hotels-kicker hotels-back-link" href="${seatSelectionUrl}">&larr; Book</a>

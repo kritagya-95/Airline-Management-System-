@@ -166,13 +166,19 @@
     </section>
 
     <c:if test="${not empty flight}">
+        <c:url var="hotelUrl" value="/hotels">
+            <c:param name="city" value="${flight.dest_city}"/>
+            <c:param name="bookingId" value="${bookingId}"/>
+            <c:param name="flightId" value="${flightId}"/>
+            <c:param name="next" value="${next}"/>
+        </c:url>
         <section class="hotel-addon-banner" id="hotelAddonBanner">
             <div>
                 <h2>Add a hotel in <c:out value="${flight.dest_city}"/>?</h2>
                 <p>Keep planning your stay after choosing seats, without blocking the flight checkout.</p>
             </div>
             <div class="hotel-addon-actions">
-                <a class="hotel-addon-link" href="${pageContext.request.contextPath}/hotels?city=${flight.dest_city}&bookingId=${bookingId}&flightId=${flightId}">View Hotels</a>
+                <a class="hotel-addon-link" href="${hotelUrl}">View Hotels</a>
                 <button type="button" class="hotel-addon-dismiss" id="dismissHotelAddon">Dismiss</button>
             </div>
         </section>
