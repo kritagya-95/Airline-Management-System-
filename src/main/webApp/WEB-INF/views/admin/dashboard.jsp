@@ -23,22 +23,22 @@
         </div>
 
         <nav class="sidebar-nav">
-            <a href="#section-stats"   class="nav-item active">📊 Dashboard</a>
+            <a href="#section-stats"   class="nav-item active">Dashboard</a>
             <a href="#section-pending" class="nav-item">
-                ⏳ Pending Approvals
+                 Pending Approvals
                 <c:if test="${pendingUsers > 0}">
                     <span class="badge">${pendingUsers}</span>
                 </c:if>
             </a>
-            <a href="#section-users"    class="nav-item">👥 All Users</a>
-            <a href="#section-flights"  class="nav-item">✈️ Flights</a>
-            <a href="#section-bookings" class="nav-item">🎫 Recent Bookings</a>
+            <a href="#section-users"    class="nav-item">All Users</a>
+            <a href="#section-flights"  class="nav-item">Flights</a>
+            <a href="#section-bookings" class="nav-item">Recent Bookings</a>
         </nav>
 
         <div class="sidebar-footer">
             <!-- Clickable Admin Profile -->
             <a href="${pageContext.request.contextPath}/admin/profile" class="admin-user-link">
-                <span class="user-icon">👤</span>
+                <span class="user-icon"></span>
                 <span class="admin-name"><c:out value="${admin.fullName}"/></span>
             </a>
 
@@ -59,28 +59,28 @@
         <!-- ── STATS CARDS ── -->
         <section id="section-stats" class="stats-grid">
             <div class="stat-card">
-                <div class="stat-icon">👥</div>
+                <div class="stat-icon"></div>
                 <div class="stat-info">
                     <p class="stat-value">${totalUsers}</p>
                     <p class="stat-label">Total Users</p>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">✈️</div>
+                <div class="stat-icon"></div>
                 <div class="stat-info">
                     <p class="stat-value">${totalFlights}</p>
                     <p class="stat-label">Total Flights</p>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">🎫</div>
+                <div class="stat-icon"></div>
                 <div class="stat-info">
                     <p class="stat-value">${totalBookings}</p>
                     <p class="stat-label">Total Bookings</p>
                 </div>
             </div>
             <div class="stat-card highlight">
-                <div class="stat-icon">⏳</div>
+                <div class="stat-icon"></div>
                 <div class="stat-info">
                     <p class="stat-value">${pendingUsers}</p>
                     <p class="stat-label">Pending Approvals</p>
@@ -91,13 +91,13 @@
         <!-- ── PENDING APPROVALS ── -->
         <section id="section-pending" class="admin-section">
             <div class="section-header">
-                <h2>⏳ Pending User Approvals</h2>
+                <h2>Pending User Approvals</h2>
             </div>
 
             <c:choose>
                 <c:when test="${empty pendingUserList}">
                     <div class="empty-state">
-                        ✅ No pending approvals — all caught up!
+                         No pending approvals — all caught up!
                     </div>
                 </c:when>
                 <c:otherwise>
@@ -156,7 +156,7 @@
         <!-- ── ALL USERS ── -->
         <section id="section-users" class="admin-section">
             <div class="section-header">
-                <h2>👥 All Users</h2>
+                <h2>All Users</h2>
                 <span class="section-count">
                     Total: <strong>${totalUsers}</strong> users
                 </span>
@@ -241,7 +241,7 @@
         <!-- ── FLIGHTS ── -->
         <section id="section-flights" class="admin-section">
             <div class="section-header">
-                <h2>✈️ All Flights</h2>
+                <h2>All Flights</h2>
                 <span class="section-count">
                     Total: <strong>${totalFlights}</strong> flights
                 </span>
@@ -458,7 +458,7 @@
         <!-- ── RECENT BOOKINGS ── -->
         <section id="section-bookings" class="admin-section">
             <div class="section-header">
-                <h2>🎫 Recent Bookings</h2>
+                <h2>Recent Bookings</h2>
                 <span class="section-count">
                     Total: <strong>${totalBookings}</strong> bookings
                 </span>

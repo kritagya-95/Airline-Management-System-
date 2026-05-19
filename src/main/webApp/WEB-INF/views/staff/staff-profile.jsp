@@ -80,13 +80,13 @@
 <c:if test="${showSuccess}">
     <div style="background:#E3F9E5;color:#1a6e2e;border:1px solid #1a6e2e;border-radius:8px;
                 padding:12px 20px;margin:16px 40px;font-size:14px;font-weight:500;">
-        ✅ Profile updated successfully.
+         Profile updated successfully.
     </div>
 </c:if>
 <c:if test="${not empty errorMsg}">
     <div style="background:#FDE8E8;color:#8B0000;border:1px solid #8B0000;border-radius:8px;
                 padding:12px 20px;margin:16px 40px;font-size:14px;font-weight:500;">
-        ❌ <c:out value="${errorMsg}"/>
+         <c:out value="${errorMsg}"/>
     </div>
 </c:if>
 
@@ -116,7 +116,7 @@
     <div class="prof-card">
         <div class="prof-card-header">
             <h2>Personal &amp; Employment Information</h2>
-            <button class="prof-btn-edit" onclick="toggleEdit()">✏️ Edit Profile</button>
+            <button class="prof-btn-edit" onclick="toggleEdit()"> Edit Profile</button>
         </div>
 
         <!-- VIEW MODE -->

@@ -197,7 +197,7 @@
     <div class="auth-form">
         <form action="${pageContext.request.contextPath}/login" method="post">
 
-            <%-- 🔑 Captures the filter query parameters from the URL and hands them to LoginServlet --%>
+            <%-- Captures the filter query parameters from the URL and hands them to LoginServlet --%>
             <input type="hidden" name="redirect" value="<c:out value='${param.redirect}'/>" />
             <input type="hidden" name="flightId" value="<c:out value='${param.flightId}'/>" />
 

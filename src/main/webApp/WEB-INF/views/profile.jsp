@@ -17,7 +17,7 @@
 <c:if test="${showSuccess || not empty successMsg}">
   <div class="prof-popup-overlay" id="successPopup">
     <div class="prof-popup-box">
-      <div class="prof-popup-icon">✅</div>
+      <div class="prof-popup-icon"></div>
       <h3 class="prof-popup-title">Success</h3>
       <p class="prof-popup-msg">
         <c:choose>
@@ -72,18 +72,18 @@
     <div class="prof-card">
       <div class="prof-card-header">
         <h2 class="prof-card-title">Personal Information</h2>
-        <button class="prof-btn-edit" onclick="toggleEdit()">✏️ Edit</button>
+        <button class="prof-btn-edit" onclick="toggleEdit()">️ Edit</button>
       </div>
 
       <div id="view-mode" class="prof-info-grid">
         <div class="prof-info-item">
-          <span class="prof-info-label">👤 First Name</span>
+          <span class="prof-info-label">First Name</span>
           <span class="prof-info-value">
             <c:out value="${fn:split(user.fullName, ' ')[0]}"/>
           </span>
         </div>
         <div class="prof-info-item">
-          <span class="prof-info-label">👤 Last Name</span>
+          <span class="prof-info-label"> Last Name</span>
           <span class="prof-info-value">
             <c:choose>
               <c:when test="${fn:length(fn:split(user.fullName, ' ')) >= 2}">
@@ -94,11 +94,11 @@
           </span>
         </div>
         <div class="prof-info-item">
-          <span class="prof-info-label">✉️ Email</span>
+          <span class="prof-info-label">Email</span>
           <span class="prof-info-value"><c:out value="${user.email}"/></span>
         </div>
         <div class="prof-info-item">
-          <span class="prof-info-label">📞 Phone</span>
+          <span class="prof-info-label"> Phone</span>
           <span class="prof-info-value">
             <c:choose>
               <c:when test="${not empty user.phone}"><c:out value="${user.phone}"/></c:when>
@@ -113,7 +113,7 @@
             method="post" enctype="multipart/form-data" style="display:none;">
 
         <c:if test="${not empty errorMsg}">
-          <div class="prof-flash-error">❌ <c:out value="${errorMsg}"/></div>
+          <div class="prof-flash-error"> <c:out value="${errorMsg}"/></div>
         </c:if>
 
         <div class="prof-edit-grid">
@@ -161,7 +161,7 @@
       </div>
       <c:if test="${empty profileBookings}">
       <div class="prof-empty-state">
-        <div class="prof-empty-icon">✈️</div>
+        <div class="prof-empty-icon"></div>
         <p>No flights booked yet.</p>
         <a href="${pageContext.request.contextPath}/home" class="prof-btn-book">Book a Flight</a>
       </div>
@@ -229,10 +229,10 @@
         </div>
 
         <c:if test="${not empty passwordError}">
-          <div class="prof-flash-error">❌ <c:out value="${passwordError}"/></div>
+          <div class="prof-flash-error"> <c:out value="${passwordError}"/></div>
         </c:if>
         <c:if test="${not empty deleteError}">
-          <div class="prof-flash-error">❌ <c:out value="${deleteError}"/></div>
+          <div class="prof-flash-error"> <c:out value="${deleteError}"/></div>
         </c:if>
 
         <div class="prof-setting-item">

@@ -107,21 +107,21 @@
                         <span class="land-check-icon">🎯</span> Instant booking confirmation
                     </div>
                     <div class="land-check-item">
-                        <span class="land-check-icon">ðŸŽ¯</span> Free seat selection
+                        <span class="land-check-icon">🎯</span> Free seat selection
                     </div>
                     <div class="land-check-item">
-                        <span class="land-check-icon">ðŸŽ¯</span> Earn rewards on every flight
+                        <span class="land-check-icon">🎯</span> Earn rewards on every flight
                     </div>
                 </div>
                 <div class="land-check-col">
                     <div class="land-check-item">
-                        <span class="land-check-icon">ðŸŽ¯</span> Flexible cancellation policy
+                        <span class="land-check-icon">🎯</span> Flexible cancellation policy
                     </div>
                     <div class="land-check-item">
-                        <span class="land-check-icon">ðŸŽ¯</span> Priority boarding available
+                        <span class="land-check-icon">🎯</span> Priority boarding available
                     </div>
                     <div class="land-check-item">
-                        <span class="land-check-icon">ðŸŽ¯</span> Mobile boarding passes
+                        <span class="land-check-icon">🎯</span> Mobile boarding passes
                     </div>
                 </div>
             </div>

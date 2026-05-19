@@ -23,21 +23,21 @@
 
         <nav class="staff-nav">
             <a href="${pageContext.request.contextPath}/staff/dashboard"
-               class="staff-nav-item active">📊 Dashboard</a>
-            <a href="#section-ticket"   class="staff-nav-item">🎫 Ticket Verification</a>
-            <a href="#section-flights"  class="staff-nav-item">✈️ Today's Flights</a>
-            <a href="#section-status"   class="staff-nav-item">📢 Update Status</a>
-            <a href="#section-all-flights"   class="staff-nav-item">🌐 All Flights</a>
-            <a href="#section-history"  class="staff-nav-item">🕓 Status History</a>
-            <a href="#section-passengers" class="staff-nav-item">👥 All Passengers</a>
-            <a href="#section-bookings" class="staff-nav-item">📋 Recent Bookings</a>
-            <a href="#section-cancelled" class="staff-nav-item">❌ Cancellations</a>
+               class="staff-nav-item active"> Dashboard</a>
+            <a href="#section-ticket"   class="staff-nav-item"> Ticket Verification</a>
+            <a href="#section-flights"  class="staff-nav-item"> Today's Flights</a>
+            <a href="#section-status"   class="staff-nav-item"> Update Status</a>
+            <a href="#section-all-flights"   class="staff-nav-item"> All Flights</a>
+            <a href="#section-history"  class="staff-nav-item"> Status History</a>
+            <a href="#section-passengers" class="staff-nav-item"> All Passengers</a>
+            <a href="#section-bookings" class="staff-nav-item"> Recent Bookings</a>
+            <a href="#section-cancelled" class="staff-nav-item"> Cancellations</a>
         </nav>
 
         <div class="staff-sidebar-footer">
             <!-- Clickable Staff Profile -->
             <a href="${pageContext.request.contextPath}/staff/profile" class="staff-user-link">
-                <span class="user-icon">👤</span>
+                <span class="user-icon"></span>
                 <span class="staff-name"><strong><c:out value="${staff.fullName}"/></strong></span>
             </a>
 
@@ -62,13 +62,13 @@
         <!-- Flash messages -->
         <c:if test="${not empty sessionScope.flashSuccess}">
             <div class="flash-success">
-                ✅ <c:out value="${sessionScope.flashSuccess}"/>
+                 <c:out value="${sessionScope.flashSuccess}"/>
             </div>
             <c:remove var="flashSuccess" scope="session"/>
         </c:if>
         <c:if test="${not empty sessionScope.flashError}">
             <div class="flash-error">
-                ❌ <c:out value="${sessionScope.flashError}"/>
+                <c:out value="${sessionScope.flashError}"/>
             </div>
             <c:remove var="flashError" scope="session"/>
         </c:if>
@@ -76,28 +76,28 @@
         <!-- ── STATS ── -->
         <div class="staff-stats-grid">
             <div class="staff-stat-card">
-                <div class="staff-stat-icon">✈️</div>
+                <div class="staff-stat-icon"></div>
                 <div class="staff-stat-info">
                     <p class="staff-stat-value">${totalTodayFlights}</p>
                     <p class="staff-stat-label">Flights Today</p>
                 </div>
             </div>
             <div class="staff-stat-card">
-                <div class="staff-stat-icon">👥</div>
+                <div class="staff-stat-icon"></div>
                 <div class="staff-stat-info">
                     <p class="staff-stat-value">${totalPassengersToday}</p>
                     <p class="staff-stat-label">Passengers Today</p>
                 </div>
             </div>
             <div class="staff-stat-card">
-                <div class="staff-stat-icon">📋</div>
+                <div class="staff-stat-icon"></div>
                 <div class="staff-stat-info">
                     <p class="staff-stat-value">${recentBookings.size()}</p>
                     <p class="staff-stat-label">Recent Bookings</p>
                 </div>
             </div>
             <div class="staff-stat-card">
-                <div class="staff-stat-icon">❌</div>
+                <div class="staff-stat-icon"></div>
                 <div class="staff-stat-info">
                     <p class="staff-stat-value">${cancelledBookings.size()}</p>
                     <p class="staff-stat-label">Cancellations</p>
@@ -108,7 +108,7 @@
         <!-- ── TICKET VERIFICATION ── -->
         <section id="section-ticket" class="staff-section">
             <div class="staff-section-header">
-                <h2>🎫 Ticket Verification</h2>
+                <h2> Ticket Verification</h2>
             </div>
             <div class="staff-section-body">
                 <form action="${pageContext.request.contextPath}/staff/booking"
@@ -117,12 +117,12 @@
                            placeholder="Enter Booking Reference e.g. SKY-A1B2C3"
                            value="<c:out value='${searchRef}'/>"
                            class="staff-search-input" required/>
-                    <button type="submit" class="staff-btn-search">🔍 Search</button>
+                    <button type="submit" class="staff-btn-search"> Search</button>
                 </form>
 
                 <c:if test="${not empty bookingError}">
                     <div class="flash-error" style="margin-top:16px">
-                        ❌ <c:out value="${bookingError}"/>
+                         <c:out value="${bookingError}"/>
                     </div>
                 </c:if>
 
@@ -130,7 +130,7 @@
                     <div class="booking-result">
                         <div class="booking-result-header">
                             <span class="booking-ref-tag">
-                                📋 <c:out value="${booking.booking_ref}"/>
+                                 <c:out value="${booking.booking_ref}"/>
                             </span>
                             <span class="status-badge ${booking.booking_status.toLowerCase()}">
                                 <c:out value="${booking.booking_status}"/>
@@ -184,7 +184,7 @@
         <!-- ── TODAY'S FLIGHTS ── -->
         <section id="section-flights" class="staff-section">
             <div class="staff-section-header">
-                <h2>✈️ Today's Flights</h2>
+                <h2> Today's Flights</h2>
                 <span class="staff-section-count">
                     <strong>${totalTodayFlights}</strong> scheduled
                 </span>
@@ -241,7 +241,7 @@
         <!-- ── UPDATE FLIGHT STATUS ── -->
         <section id="section-status" class="staff-section">
             <div class="staff-section-header">
-                <h2>📢 Update Flight Status</h2>
+                <h2> Update Flight Status</h2>
             </div>
             <div class="staff-section-body">
                 <c:choose>
@@ -285,7 +285,7 @@
                                           rows="3"></textarea>
                             </div>
                             <button type="submit" class="staff-btn-update">
-                                📢 Update Status
+                                 Update Status
                             </button>
                         </form>
                     </c:otherwise>
@@ -296,7 +296,7 @@
         <!-- ── ALL FLIGHTS ── -->
         <section id="section-all-flights" class="staff-section">
             <div class="staff-section-header">
-                <h2>🌐 All Flights</h2>
+                <h2> All Flights</h2>
                 <span class="staff-section-count">
                     <strong>${allFlights.size()}</strong> total flights
                 </span>
@@ -359,7 +359,7 @@
         <!-- ── FLIGHT STATUS HISTORY ── -->
         <section id="section-history" class="staff-section">
             <div class="staff-section-header">
-                <h2>🕓 Flight Status Change History</h2>
+                <h2> Flight Status Change History</h2>
                 <span class="staff-section-count">Last 50 changes</span>
             </div>
             <c:choose>
@@ -415,7 +415,7 @@
         <!-- ── ALL PASSENGERS ── -->
         <section id="section-passengers" class="staff-section">
             <div class="staff-section-header">
-                <h2>👥 All Passengers</h2>
+                <h2> All Passengers</h2>
                 <span class="staff-section-count">
                     <strong>${passengerList.size()}</strong> registered passengers
                 </span>
@@ -464,7 +464,7 @@
         <!-- ── RECENT BOOKINGS ── -->
         <section id="section-bookings" class="staff-section">
             <div class="staff-section-header">
-                <h2>📋 Recent Bookings</h2>
+                <h2> Recent Bookings</h2>
                 <span class="staff-section-count">Last 20 bookings</span>
             </div>
             <c:choose>
@@ -522,7 +522,7 @@
         <!-- ── CANCELLED BOOKINGS ── -->
         <section id="section-cancelled" class="staff-section">
             <div class="staff-section-header">
-                <h2>❌ Cancelled Bookings</h2>
+                <h2> Cancelled Bookings</h2>
                 <span class="staff-section-count">
                     <strong>${cancelledBookings.size()}</strong> cancellations
                 </span>

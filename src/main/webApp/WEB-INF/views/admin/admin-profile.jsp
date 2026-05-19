@@ -50,7 +50,7 @@
             <div class="card-header">
                 <h2>Personal Information</h2>
                 <button class="edit-btn" onclick="toggleEdit()">
-                    <span>✏️</span> Edit
+                    <span>️</span> Edit
                 </button>
             </div>
 
