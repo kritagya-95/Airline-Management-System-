@@ -172,7 +172,7 @@
                 <p>Keep planning your stay after choosing seats, without blocking the flight checkout.</p>
             </div>
             <div class="hotel-addon-actions">
-                <a class="hotel-addon-link" href="${pageContext.request.contextPath}/hotels?city=${flight.dest_city}">View Hotels</a>
+                <a class="hotel-addon-link" href="${pageContext.request.contextPath}/hotels?city=${flight.dest_city}&bookingId=${bookingId}&flightId=${flightId}">View Hotels</a>
                 <button type="button" class="hotel-addon-dismiss" id="dismissHotelAddon">Dismiss</button>
             </div>
         </section>

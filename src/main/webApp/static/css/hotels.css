@@ -24,6 +24,16 @@
     text-transform: uppercase;
 }
 
+.hotels-back-link {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.hotels-back-link:hover {
+    color: #660000;
+    text-decoration: underline;
+}
+
 .hotels-hero h1 {
     color: #1f1f1f;
     font-family: 'Cinzel', serif;

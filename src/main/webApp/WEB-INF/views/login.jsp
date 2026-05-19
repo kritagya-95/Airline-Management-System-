@@ -192,7 +192,6 @@
 </head>
 
 <body>
-<a href="${pageContext.request.contextPath}/home" class="auth-home-link">← Back to Home Page</a>
 <div class="auth-page">
 
     <div class="auth-form">
@@ -246,6 +245,8 @@
                 Not a member yet?
                 <a href="${pageContext.request.contextPath}/register">Register Now</a>
             </p>
+
+            <a href="${pageContext.request.contextPath}/home" class="auth-home-link">&larr; Back to Home Page</a>
         </form>
     </div>
 
