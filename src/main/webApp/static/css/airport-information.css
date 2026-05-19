@@ -37,7 +37,7 @@
     box-shadow: 0 12px 25px rgba(74, 13, 13, 0.12);
 }
 
-/* 🧭 Shared Header Style Utilities */
+/* Shared Header Style Utilities */
 .travel-page-section .airport-card-image,
 .travel-page-section .info-card-image {
     align-items: center;
@@ -59,7 +59,7 @@
     margin: 0 -24px 20px -24px;
 }
 
-/* 📋 Informational & Policy Grid Layout Sections */
+/*  Informational & Policy Grid Layout Sections */
 .travel-page-section .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
