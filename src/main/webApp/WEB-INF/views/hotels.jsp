@@ -83,8 +83,12 @@
 
 <main class="hotels-page">
     <c:set var="isLoggedIn" value="${not empty user}"/>
+    <c:url var="seatSelectionUrl" value="/seat-selection">
+        <c:param name="bookingId" value="${param.bookingId}"/>
+        <c:param name="flightId" value="${param.flightId}"/>
+    </c:url>
     <section class="hotels-hero">
-        <p class="hotels-kicker">Book</p>
+        <a class="hotels-kicker hotels-back-link" href="${seatSelectionUrl}">&larr; Book</a>
         <h1>Hotels</h1>
         <p>Pair your flight with a locally mocked hotel stay for your next SkyLine trip.</p>
     </section>
