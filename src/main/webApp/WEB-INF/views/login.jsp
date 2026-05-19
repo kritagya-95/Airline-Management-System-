@@ -200,6 +200,7 @@
             <%-- Captures the filter query parameters from the URL and hands them to LoginServlet --%>
             <input type="hidden" name="redirect" value="<c:out value='${param.redirect}'/>" />
             <input type="hidden" name="flightId" value="<c:out value='${param.flightId}'/>" />
+            <input type="hidden" name="returnUrl" value="<c:out value='${param.returnUrl}'/>" />
 
             <h1>Log In To Your SkyLine Account</h1>
 

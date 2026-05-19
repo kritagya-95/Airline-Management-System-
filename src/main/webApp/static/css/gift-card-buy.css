@@ -1,0 +1,136 @@
+.gift-buy-panel {
+    background: #fff;
+    border: 1px solid #eadfd5;
+    border-radius: 8px;
+    box-shadow: 0 6px 22px rgba(40, 30, 20, 0.06);
+    display: grid;
+    gap: 28px;
+    grid-template-columns: 320px 1fr;
+    padding: 28px;
+}
+
+.gift-card-visual {
+    align-items: center;
+    background: #8B0000;
+    border-radius: 8px;
+    color: #fff;
+    display: flex;
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 700;
+    justify-content: center;
+    min-height: 190px;
+}
+
+.gift-buy-content h2 {
+    color: #8B0000;
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    margin-bottom: 16px;
+}
+
+.gift-denominations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.gift-style-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.gift-chip,
+.gift-style {
+    background: #fff;
+    border: 1px solid #8B0000;
+    border-radius: 999px;
+    color: #8B0000;
+    cursor: pointer;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 9px 16px;
+}
+
+.gift-chip.selected,
+.gift-chip:hover,
+.gift-style.selected,
+.gift-style:hover {
+    background: #8B0000;
+    color: #fff;
+}
+
+.gift-buy-form {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.gift-buy-form label {
+    color: #555;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    gap: 8px;
+}
+
+.gift-buy-form input {
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    color: #333;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    outline: none;
+    padding: 12px 14px;
+}
+
+.gift-buy-form input:focus {
+    border-color: #8B0000;
+}
+
+.gift-primary-btn {
+    align-self: end;
+    background: #8B0000;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 18px;
+}
+
+.gift-primary-btn:hover {
+    background: #660000;
+}
+
+.gift-buy-confirmation {
+    background: #eef8f1;
+    border: 1px solid #b9e2c3;
+    border-radius: 8px;
+    color: #216d35;
+    display: none;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 16px;
+    padding: 14px;
+}
+
+.gift-buy-confirmation.visible {
+    display: block;
+}
+
+@media (max-width: 860px) {
+    .gift-buy-panel,
+    .gift-buy-form {
+        grid-template-columns: 1fr;
+    }
+}

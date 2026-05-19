@@ -15,7 +15,7 @@
 
 <%@ include file="/WEB-INF/views/fragments/header.jsp" %>
 
-<section class="land-hero">
+<section class="land-hero image-hero">
     <div class="land-hero-inner">
         <span class="land-hero-tag">Be Prepared</span>
         <h1 class="land-hero-title">Travel <span class="land-hero-accent">Guide</span></h1>
@@ -26,7 +26,7 @@
 <section class="travel-page-section">
     <div class="guide-grid">
         <article class="guide-card">
-            <div class="guide-icon">✈️</div>
+            <div class="guide-card-image">Pre-Flight Checklist</div>
             <h2>Pre-Flight Checklist</h2>
             <ul class="guide-list">
                 <li><strong>Check-In:</strong> Complete online check-in 24 to 48 hours before departure.</li>
@@ -36,7 +36,7 @@
         </article>
 
         <article class="guide-card">
-            <div class="guide-icon">🛫</div>
+            <div class="guide-card-image">Airport Navigation</div>
             <h2>Airport Navigation</h2>
             <ul class="guide-list">
                 <li><strong>Arrival Timing:</strong> Arrive 2-3 hours before domestic and 3-4 hours before international flights.</li>
@@ -46,7 +46,7 @@
         </article>
 
         <article class="guide-card">
-            <div class="guide-icon">🛩️</div>
+            <div class="guide-card-image">In-Flight Services & Rights</div>
             <h2>In-Flight Services & Rights</h2>
             <ul class="guide-list">
                 <li><strong>Amenities:</strong> Complimentary drinks, meals & entertainment on long-haul flights.</li>

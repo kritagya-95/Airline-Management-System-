@@ -1,17 +1,29 @@
 /* visa-documents.css */
 .visa-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
     gap: 28px;
     max-width: 1150px;
     margin: 40px auto;
+}
+
+@media (max-width: 480px) {
+    .visa-card {
+        padding: 0 22px 26px;
+    }
+
+    .visa-card-image {
+        margin-left: -22px;
+        margin-right: -22px;
+    }
 }
 
 .visa-card {
     background: #fffdfa;
     border: 1px solid #ede8e0;
     border-radius: 12px;
-    padding: 32px;
+    overflow: hidden;
+    padding: 0 32px 32px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
 }
@@ -19,6 +31,21 @@
 .visa-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 35px rgba(139, 0, 0, 0.15);
+}
+
+.visa-card-image {
+    align-items: center;
+    background: linear-gradient(135deg, #8B0000, #c9a46a);
+    color: #fff;
+    display: flex;
+    font-family: 'Cinzel', serif;
+    font-size: 21px;
+    font-weight: 700;
+    justify-content: center;
+    min-height: 145px;
+    margin: 0 -32px 24px;
+    padding: 18px;
+    text-align: center;
 }
 
 .visa-card h2 {
@@ -33,4 +60,5 @@
     font-size: 15px;
     line-height: 1.7;
     color: #444;
+    margin-bottom: 12px;
 }

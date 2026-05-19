@@ -12,6 +12,7 @@ body {
     font-family: 'Chivo', sans-serif;
     background: #faf7f2;
     color: #333;
+    overflow-x: hidden;
 }
 
 /* ══ LOGO & AUTH UTILITIES ══ */
@@ -337,13 +338,93 @@ body {
 
 /* ══ RESPONSIVE INTERFACES (LAYOUT SECTOR) ══ */
 @media (max-width: 1024px) {
+    .header {
+        gap: 18px;
+        height: auto;
+        min-height: 92px;
+        padding: 18px 24px;
+    }
+
+    .nav-links {
+        gap: 8px;
+        margin-left: 10px;
+    }
+
+    .nav-link {
+        padding: 8px 10px;
+    }
+
+    .header-right {
+        gap: 12px;
+    }
+
     .info-grid { grid-template-columns: repeat(2, 1fr); }
-    .header-search-input { width: 160px; } /* Graceful scaling down for mid-size displays */
+    .header-search-input { width: 120px; }
 }
 
 @media (max-width: 768px) {
-    .header { padding: 0 20px; }
-    .nav-links { display: none; }
+    .header {
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        padding: 16px 18px;
+    }
+
+    .header-logo {
+        flex: 1 1 auto;
+    }
+
+    .logo-text {
+        font-size: 16px;
+    }
+
+    .header-right {
+        flex: 1 1 100%;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+        order: 2;
+    }
+
+    .header-search {
+        flex: 1 1 190px;
+        min-width: 0;
+    }
+
+    .header-search-input {
+        width: 100%;
+    }
+
+    .header-auth {
+        flex: 0 0 auto;
+        gap: 8px;
+    }
+
+    .btn-header-login,
+    .btn-header-signup {
+        padding: 8px 14px;
+    }
+
+    .nav-links {
+        display: flex;
+        flex: 1 1 100%;
+        gap: 8px;
+        margin: 0;
+        order: 3;
+        overflow-x: auto;
+        padding: 2px 0 6px;
+        scrollbar-width: thin;
+    }
+
+    .nav-dropdown {
+        flex: 0 0 auto;
+    }
+
+    .dropdown-menu {
+        left: auto;
+        right: 0;
+    }
+
     .info-section { padding: 36px 30px 30px; }
     .info-grid { grid-template-columns: 1fr 1fr; }
     .prof-footer { padding: 18px 30px; }
@@ -354,5 +435,33 @@ body {
 }
 
 @media (max-width: 480px) {
+    .header {
+        padding: 14px 14px;
+    }
+
+    .header-search,
+    .header-auth {
+        flex: 1 1 100%;
+    }
+
+    .header-auth {
+        justify-content: space-between;
+    }
+
+    .btn-header-login,
+    .btn-header-signup {
+        flex: 1;
+        text-align: center;
+    }
+
+    .nav-link {
+        font-size: 12px;
+        padding: 7px 9px;
+    }
+
+    .dropdown-menu {
+        min-width: 176px;
+    }
+
     .info-grid { grid-template-columns: 1fr; }
 }

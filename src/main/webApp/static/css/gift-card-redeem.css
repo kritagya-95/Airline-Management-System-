@@ -1,0 +1,128 @@
+.gift-redeem-panel {
+    background: #fff;
+    border: 1px solid #eadfd5;
+    border-radius: 8px;
+    box-shadow: 0 6px 22px rgba(40, 30, 20, 0.06);
+    padding: 28px;
+}
+
+.gift-redeem-panel h2 {
+    color: #8B0000;
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    margin-bottom: 16px;
+}
+
+.gift-redeem-form {
+    align-items: end;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr auto;
+}
+
+.gift-redeem-form label {
+    color: #555;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    gap: 8px;
+}
+
+.gift-redeem-form input {
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    color: #333;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    outline: none;
+    padding: 12px 14px;
+}
+
+.gift-redeem-form input:focus {
+    border-color: #8B0000;
+}
+
+.gift-secondary-btn {
+    background: #fff;
+    border: 1px solid #8B0000;
+    border-radius: 6px;
+    color: #8B0000;
+    cursor: pointer;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 18px;
+}
+
+.gift-secondary-btn:hover {
+    background: #fdf0f0;
+}
+
+.gift-redeem-message {
+    border-radius: 8px;
+    display: none;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 14px;
+    padding: 14px;
+}
+
+.gift-redeem-message.success {
+    background: #eef8f1;
+    border: 1px solid #b9e2c3;
+    color: #216d35;
+    display: block;
+}
+
+.gift-redeem-message.error {
+    background: #fff0f0;
+    border: 1px solid #e6b8b8;
+    color: #8B0000;
+    display: block;
+}
+
+.gift-card-payment-details {
+    margin-top: 24px;
+}
+
+.gift-card-payment-summary {
+    background: #faf7f2;
+    border: 1px solid #eadfd5;
+    border-radius: 8px;
+    display: grid;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 18px;
+}
+
+.gift-card-payment-row {
+    align-items: center;
+    color: #555;
+    display: flex;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    justify-content: space-between;
+}
+
+.gift-card-payment-row.deducted {
+    color: #216d35;
+    display: none;
+    font-weight: 700;
+}
+
+.gift-card-payment-row.total {
+    border-top: 1px solid #eadfd5;
+    color: #222;
+    font-weight: 700;
+    margin-top: 4px;
+    padding-top: 12px;
+}
+
+@media (max-width: 640px) {
+    .gift-redeem-form {
+        grid-template-columns: 1fr;
+    }
+}

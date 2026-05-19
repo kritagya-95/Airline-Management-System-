@@ -26,6 +26,7 @@ public class LoginServlet extends HttpServlet {
         // Pass query parameters to the JSP so the form can embed them if they exist
         request.setAttribute("redirect", request.getParameter("redirect"));
         request.setAttribute("flightId", request.getParameter("flightId"));
+        request.setAttribute("returnUrl", request.getParameter("returnUrl"));
         request.setAttribute("rememberedEmail", CookieUtil.getCookieValue(request, REMEMBER_EMAIL_COOKIE));
 
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
@@ -61,10 +62,16 @@ public class LoginServlet extends HttpServlet {
             // Safe lookup for intercept and redirect parameters
             String redirectTarget = request.getParameter("redirect");
             String flightId = request.getParameter("flightId");
+            String returnUrl = request.getParameter("returnUrl");
 
             if ("booking".equals(redirectTarget) && flightId != null && !flightId.trim().isEmpty()) {
                 System.out.println("[Login] Intercept detected. Rerouting user directly to checkout for flight ID: " + flightId);
                 response.sendRedirect(contextPath + "/booking?flightId=" + flightId.trim());
+                return;
+            }
+
+            if (isSafeReturnUrl(returnUrl, contextPath)) {
+                response.sendRedirect(resolveReturnUrl(returnUrl.trim(), contextPath));
                 return;
             }
 
@@ -87,9 +94,27 @@ public class LoginServlet extends HttpServlet {
             // Keep the parameters alive on postback failure so the intercept state isn't lost
             request.setAttribute("redirect", request.getParameter("redirect"));
             request.setAttribute("flightId", request.getParameter("flightId"));
+            request.setAttribute("returnUrl", request.getParameter("returnUrl"));
             request.setAttribute("rememberedEmail", email);
 
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }
+    }
+
+    private boolean isSafeReturnUrl(String returnUrl, String contextPath) {
+        if (returnUrl == null || returnUrl.trim().isEmpty()) {
+            return false;
+        }
+
+        String trimmed = returnUrl.trim();
+        return trimmed.startsWith(contextPath + "/") || (trimmed.startsWith("/") && !trimmed.startsWith("//"));
+    }
+
+    private String resolveReturnUrl(String returnUrl, String contextPath) {
+        if (returnUrl.startsWith(contextPath + "/")) {
+            return returnUrl;
+        }
+
+        return contextPath + returnUrl;
     }
 }

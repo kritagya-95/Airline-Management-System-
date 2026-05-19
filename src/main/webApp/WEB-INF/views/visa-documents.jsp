@@ -26,18 +26,25 @@
 <section class="travel-page-section">
     <div class="visa-grid">
         <div class="visa-card">
+            <div class="visa-card-image">Passport Requirements</div>
             <h2>Passport Requirements</h2>
             <p>Passport must be valid for at least 6 months from the date of return.</p>
+            <p>Make sure the name on your ticket matches your passport exactly, including spelling and middle names where required.</p>
         </div>
         <div class="visa-card">
+            <div class="visa-card-image">Visa Information</div>
             <h2>Visa Information</h2>
             <p>Check visa requirements for your destination country before booking.</p>
+            <p>Transit visas may be required even when you are not leaving the airport, depending on the country and itinerary.</p>
         </div>
         <div class="visa-card">
+            <div class="visa-card-image">Other Documents</div>
             <h2>Other Documents</h2>
             <p>Boarding pass, vaccination certificate (if required), and travel insurance.</p>
+            <p>Carry hotel confirmations, return tickets, and emergency contact details for immigration checks.</p>
         </div>
     </div>
+
 </section>
 
 <%@ include file="/WEB-INF/views/fragments/footer.jsp" %>

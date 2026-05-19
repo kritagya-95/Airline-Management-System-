@@ -1,0 +1,149 @@
+.header-checklist {
+    position: relative;
+}
+
+.header-cart-toggle {
+    align-items: center;
+    background: #fff;
+    border: 1.5px solid #8B0000;
+    border-radius: 50%;
+    color: #8B0000;
+    cursor: pointer;
+    display: flex;
+    font-family: 'Chivo', sans-serif;
+    height: 42px;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    width: 42px;
+}
+
+.header-cart-icon {
+    border: 2px solid #8B0000;
+    border-top: none;
+    display: block;
+    height: 15px;
+    position: relative;
+    width: 19px;
+}
+
+.header-cart-icon::before {
+    border-left: 2px solid #8B0000;
+    border-top: 2px solid #8B0000;
+    content: "";
+    height: 8px;
+    left: -5px;
+    position: absolute;
+    top: -7px;
+    transform: skewX(-16deg);
+    width: 10px;
+}
+
+.header-cart-icon::after {
+    background: radial-gradient(circle at 3px 3px, #8B0000 0 3px, transparent 3px),
+                radial-gradient(circle at 15px 3px, #8B0000 0 3px, transparent 3px);
+    bottom: -8px;
+    content: "";
+    height: 8px;
+    left: -1px;
+    position: absolute;
+    width: 22px;
+}
+
+.header-cart-count {
+    align-items: center;
+    background: #8B0000;
+    border-radius: 999px;
+    color: #fff;
+    display: flex;
+    font-size: 11px;
+    font-weight: 700;
+    height: 19px;
+    justify-content: center;
+    min-width: 19px;
+    padding: 0 6px;
+    position: absolute;
+    right: -6px;
+    top: -6px;
+}
+
+.header-checklist-menu {
+    background: #fff;
+    border: 1px solid #eadfd5;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    display: none;
+    min-width: 310px;
+    padding: 16px;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    z-index: 320;
+}
+
+.header-checklist-menu.open {
+    display: block;
+}
+
+.header-checklist-menu h3 {
+    color: #8B0000;
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.header-checklist-menu ul {
+    display: grid;
+    gap: 10px;
+    list-style: none;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.header-checklist-menu li {
+    background: #faf7f2;
+    border: 1px solid #eadfd5;
+    border-radius: 6px;
+    color: #333;
+    display: grid;
+    gap: 8px;
+    padding: 10px;
+}
+
+.header-checklist-menu li span {
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.header-checklist-menu li button {
+    background: transparent;
+    border: none;
+    color: #8B0000;
+    cursor: pointer;
+    font-family: 'Chivo', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    justify-self: start;
+    padding: 0;
+}
+
+#headerChecklistEmpty {
+    color: #777;
+    font-family: 'Chivo', sans-serif;
+    font-size: 13px;
+    padding: 8px 0 2px;
+}
+
+@media (max-width: 1024px) {
+    .header-cart-toggle {
+        height: 40px;
+        width: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-checklist-menu {
+        right: -120px;
+    }
+}

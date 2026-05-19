@@ -1,7 +1,7 @@
 /* luggage-guidelines.css */
 .luggage-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr));
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
@@ -11,7 +11,8 @@
     background: #fffdfa;
     border: 1px solid #ede8e0;
     border-radius: 12px;
-    padding: 32px;
+    overflow: hidden;
+    padding: 0 32px 32px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
 }
@@ -19,6 +20,21 @@
 .luggage-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 35px rgba(139, 0, 0, 0.12);
+}
+
+.luggage-card-image {
+    align-items: center;
+    background: linear-gradient(135deg, #8B0000, #c9a46a);
+    color: #fff;
+    display: flex;
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    justify-content: center;
+    min-height: 150px;
+    margin: 0 -32px 24px;
+    padding: 18px;
+    text-align: center;
 }
 
 .luggage-card h2 {
@@ -43,8 +59,53 @@
     color: #222;
 }
 
+.luggage-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 34px auto 0;
+}
+
+.luggage-info-card {
+    background: #fffdfa;
+    border: 1px solid #ede8e0;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    padding: 24px;
+}
+
+.luggage-info-card h2 {
+    color: #8B0000;
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.luggage-info-card p {
+    color: #444;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
 @media (max-width: 768px) {
     .luggage-grid {
         grid-template-columns: 1fr;
+    }
+
+    .luggage-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .luggage-card {
+        padding: 0 22px 26px;
+    }
+
+    .luggage-card-image {
+        margin-left: -22px;
+        margin-right: -22px;
     }
 }

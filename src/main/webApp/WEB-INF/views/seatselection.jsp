@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Chivo:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/seatselection.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/hotel-addon-banner.css"/>
 </head>
 <body>
 
@@ -163,9 +164,30 @@
             </c:choose>
         </section>
     </section>
+
+    <c:if test="${not empty flight}">
+        <section class="hotel-addon-banner" id="hotelAddonBanner">
+            <div>
+                <h2>Add a hotel in <c:out value="${flight.dest_city}"/>?</h2>
+                <p>Keep planning your stay after choosing seats, without blocking the flight checkout.</p>
+            </div>
+            <div class="hotel-addon-actions">
+                <a class="hotel-addon-link" href="${pageContext.request.contextPath}/hotels?city=${flight.dest_city}">View Hotels</a>
+                <button type="button" class="hotel-addon-dismiss" id="dismissHotelAddon">Dismiss</button>
+            </div>
+        </section>
+    </c:if>
 </main>
 
 <%@ include file="/WEB-INF/views/fragments/footer.jsp" %>
 
+<script>
+    const dismissHotelAddon = document.getElementById("dismissHotelAddon");
+    if (dismissHotelAddon) {
+        dismissHotelAddon.addEventListener("click", () => {
+            document.getElementById("hotelAddonBanner").classList.add("is-hidden");
+        });
+    }
+</script>
 </body>
 </html>

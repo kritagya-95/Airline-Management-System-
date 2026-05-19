@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Chivo:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/layout.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/booknow.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/gift-card-redeem.css"/>
 </head>
 <body>
 
@@ -156,6 +157,26 @@
                         <strong>NPR <fmt:formatNumber value="${booking.total_fare}" pattern="#,##0.00"/></strong>
                     </button>
                 </form>
+
+                <details class="gift-card-payment-details">
+                    <summary class="secondary-btn">Have a Gift Card?</summary>
+                    <%@ include file="/WEB-INF/views/fragments/gift-card-redeem.jsp" %>
+                </details>
+
+                <div class="gift-card-payment-summary" data-total-fare="<c:out value='${booking.total_fare}'/>">
+                    <div class="gift-card-payment-row">
+                        <span>Flight fare</span>
+                        <strong>NPR <fmt:formatNumber value="${booking.total_fare}" pattern="#,##0.00"/></strong>
+                    </div>
+                    <div class="gift-card-payment-row deducted" id="giftCardDeductedRow">
+                        <span>Gift card deduction</span>
+                        <strong id="giftCardDeductedAmount">NPR 0.00</strong>
+                    </div>
+                    <div class="gift-card-payment-row total">
+                        <span>Estimated payable</span>
+                        <strong id="giftCardEstimatedTotal">NPR <fmt:formatNumber value="${booking.total_fare}" pattern="#,##0.00"/></strong>
+                    </div>
+                </div>
             </section>
         </c:when>
 
@@ -189,5 +210,28 @@
 
 <%@ include file="/WEB-INF/views/fragments/footer.jsp" %>
 
+<script>
+    const paymentSummary = document.querySelector(".gift-card-payment-summary");
+    if (paymentSummary) {
+        const totalFare = Number(paymentSummary.getAttribute("data-total-fare"));
+        const deductedRow = document.getElementById("giftCardDeductedRow");
+        const deductedAmount = document.getElementById("giftCardDeductedAmount");
+        const estimatedTotal = document.getElementById("giftCardEstimatedTotal");
+        const formatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        document.addEventListener("skylineGiftCardApplied", event => {
+            const mockDeductionNpr = Math.min(totalFare, Number(event.detail.deductedAmount) * 100);
+            deductedRow.style.display = "flex";
+            deductedAmount.textContent = "NPR " + formatter.format(mockDeductionNpr);
+            estimatedTotal.textContent = "NPR " + formatter.format(totalFare - mockDeductionNpr);
+        });
+
+        document.addEventListener("skylineGiftCardRemoved", () => {
+            deductedRow.style.display = "none";
+            deductedAmount.textContent = "NPR 0.00";
+            estimatedTotal.textContent = "NPR " + formatter.format(totalFare);
+        });
+    }
+</script>
 </body>
 </html>

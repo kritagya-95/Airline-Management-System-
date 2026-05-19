@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/checklist.css"/>
+
 <header class="header">
   <div class="header-logo">
     <a href="${pageContext.request.contextPath}/" class="logo-link">
@@ -14,8 +16,10 @@
       <div class="dropdown-menu">
         <a href="${pageContext.request.contextPath}/book-flight">Book a Flight</a>
         <a href="${pageContext.request.contextPath}/public-schedule">Flight Schedule</a>
-        <a href="${pageContext.request.contextPath}/add-ons">Add-ons</a>
-        <a href="${pageContext.request.contextPath}/seat-selection">Seat Selection</a>
+        <a href="${pageContext.request.contextPath}/hotels">Hotels</a>
+        <a href="${pageContext.request.contextPath}/gift-cards">Gift Cards</a>
+
+
       </div>
     </div>
 
@@ -48,6 +52,7 @@
   </nav>
 
   <div class="header-right">
+    <%@ include file="/WEB-INF/views/fragments/checklist.jsp" %>
     <div class="header-search">
       <span class="search-icon"></span>
       <input type="text"
@@ -84,4 +89,5 @@
       }
     }
   }
+
 </script>
