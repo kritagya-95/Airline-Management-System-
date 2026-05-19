@@ -33,20 +33,17 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Resolve and attach authenticated user context from session
         User user = (User) SessionUtil.getAttribute(request, "user");
         if (user != null) {
             request.setAttribute("user", user);
         }
 
-        // 2. Query flight lists from database and bind to request scope
-        List<Map<String, Object>> flights = adminDao.getAllFlights();
+        // Show only 9 flights on Home Page
+        List<Map<String, Object>> flights = adminDao.getLimitedFlights(9);
         request.setAttribute("flights", flights);
 
-        // Debug logger to console to verify rows are actively loading upon hits
-        System.out.println("[HomeServlet] Loaded " + (flights != null ? flights.size() : 0) + " flights for home display.");
+        System.out.println("[HomeServlet] Loaded " + flights.size() + " flights for home display.");
 
-        // 3. Forward to the view layer
         request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
     }
 }

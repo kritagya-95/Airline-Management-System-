@@ -80,6 +80,39 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
+    public List<Map<String, Object>> getLimitedFlights(int limit) {
+        String sql = """
+        SELECT f.flight_id, f.flight_number, f.departure_time, f.arrival_time,
+               f.base_economy_fare, f.status,
+               oa.city AS origin_city, da.city AS dest_city,
+               oa.iata_code AS origin_code, da.iata_code AS dest_code,
+               al.airline_name
+        FROM flights f
+        JOIN airports oa ON oa.airport_id = f.origin_airport_id
+        JOIN airports da ON da.airport_id = f.dest_airport_id
+        JOIN airlines al ON al.airline_id = f.airline_id
+        WHERE f.status = 'SCHEDULED'
+        ORDER BY f.departure_time ASC
+        LIMIT ?
+        """;
+
+        List<Map<String, Object>> flights = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, limit);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    flights.add(rowToMap(rs));   // reuse your existing rowToMap if available
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[AdminDaoImpl] getLimitedFlights error: " + e.getMessage());
+        }
+        return flights;
+    }
+
+    @Override
     public boolean updateUserStatus(int userId, String status) {
         String sql = "UPDATE users SET status = ? WHERE user_id = ?";
         try (Connection conn = DBConnection.getConnection();

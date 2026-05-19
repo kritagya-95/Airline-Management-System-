@@ -57,4 +57,6 @@ public interface AdminDao {
 
     // ── Bookings ───────────────────────────────────────────
     List<Map<String, Object>> getRecentBookings(int limit);
+
+    List<Map<String, Object>> getLimitedFlights(int i);
 }
