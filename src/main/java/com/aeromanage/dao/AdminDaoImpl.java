@@ -84,7 +84,7 @@ public class AdminDaoImpl implements AdminDao {
         String sql = """
         SELECT f.flight_id, f.flight_number, f.departure_time, f.arrival_time,
                f.status, f.base_economy_fare, f.base_business_fare,
-               f.flight_image,                    -- ← IMPORTANT: Add this line
+               f.flight_image,                    -- ← IMPORTANT
                al.airline_name,
                oa.iata_code AS origin_code, 
                oa.city AS origin_city,
