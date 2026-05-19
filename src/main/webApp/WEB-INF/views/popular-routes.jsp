@@ -39,22 +39,22 @@
                                     <img src="${pageContext.request.contextPath}/uploads/${r.flight_image}"
                                          alt="${r.origin_city} to ${r.dest_city}">
                                 </c:when>
-                                <c:when test="${r.dest_city == 'Kathmandu' or r.origin_city == 'Kathmandu'}">
+                                <c:when test="${r.dest_city == 'Kathmandu'}">
                                     <img src="${pageContext.request.contextPath}/static/images/Kathmandu.jpg" alt="Kathmandu">
                                 </c:when>
-                                <c:when test="${r.dest_city == 'Dubai' or r.origin_city == 'Dubai'}">
+                                <c:when test="${r.dest_city == 'Dubai'}">
                                     <img src="${pageContext.request.contextPath}/static/images/dubai.jpg" alt="Dubai">
                                 </c:when>
-                                <c:when test="${r.dest_city == 'London' or r.origin_city == 'London'}">
+                                <c:when test="${r.dest_city == 'London'}">
                                     <img src="${pageContext.request.contextPath}/static/images/london.jpg" alt="London">
                                 </c:when>
-                                <c:when test="${r.dest_city == 'New Delhi' or r.origin_city == 'New Delhi'}">
+                                <c:when test="${r.dest_city == 'New Delhi'}">
                                     <img src="${pageContext.request.contextPath}/static/images/Delhi.jpg" alt="Delhi">
                                 </c:when>
-                                <c:when test="${r.dest_city == 'Doha' or r.origin_city == 'Doha'}">
+                                <c:when test="${r.dest_city == 'Doha'}">
                                     <img src="${pageContext.request.contextPath}/static/images/Doha.jpg" alt="Doha">
                                 </c:when>
-                                <c:when test="${r.dest_city == 'Bangkok' or r.origin_city == 'Bangkok'}">
+                                <c:when test="${r.dest_city == 'Bangkok'}">
                                     <img src="${pageContext.request.contextPath}/static/images/Bangkok.jpg" alt="Bangkok">
                                 </c:when>
                                 <c:otherwise>
