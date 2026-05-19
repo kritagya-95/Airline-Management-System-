@@ -21,8 +21,12 @@ public class PopularRoutesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Map<String, Object>> routes = adminDao.getLimitedFlights(9);   // Changed to 9
+        // Show only 9 flights on Popular Routes page
+        List<Map<String, Object>> routes = adminDao.getLimitedFlights(9);
+
         request.setAttribute("routes", routes);
+
+        System.out.println("[PopularRoutesServlet] Showing 9 flights on Popular Routes page.");
 
         request.getRequestDispatcher("/WEB-INF/views/popular-routes.jsp")
                 .forward(request, response);

@@ -87,17 +87,31 @@
                     <article class="flight-card" data-from="<c:out value='${f.origin_city} ${f.origin_code}'/>" data-to="<c:out value='${f.dest_city} ${f.dest_code}'/>">
                         <div class="flight-card-img">
                             <c:choose>
-                                <c:when test="${not empty f.flight_image}"><img src="${pageContext.request.contextPath}/uploads/${f.flight_image}" alt="Flight Path"></c:when>
-                                <c:when test="${f.dest_city == 'Dubai'}"><img src="${pageContext.request.contextPath}/static/images/dubai.jpg" alt="Dubai"></c:when>
-                                <c:when test="${f.dest_city == 'London'}"><img src="${pageContext.request.contextPath}/static/images/london.jpg" alt="London"></c:when>
-                                <c:when test="${f.dest_city == 'Kathmandu'}"><img src="${pageContext.request.contextPath}/static/images/Kathmandu.jpg" alt="Kathmandu"></c:when>
-                                <c:when test="${f.dest_city == 'New Delhi'}"><img src="${pageContext.request.contextPath}/static/images/Delhi.jpg" alt="Delhi"></c:when>
-                                <c:when test="${f.dest_city == 'Doha'}"><img src="${pageContext.request.contextPath}/static/images/Doha.jpg" alt="Doha"></c:when>
-                                <c:when test="${f.dest_city == 'Bangkok'}"><img src="${pageContext.request.contextPath}/static/images/Bangkok.jpg" alt="Bangkok"></c:when>
-                                <c:when test="${f.dest_city == 'Frankfurt'}"><img src="${pageContext.request.contextPath}/static/images/Frankfurt.jpg" alt="Frankfurt"></c:when>
-                                <c:when test="${f.dest_city == 'Madrid'}"><img src="${pageContext.request.contextPath}/static/images/madrid.jpg" alt="Madrid"></c:when>
-                                <c:when test="${f.dest_city == 'Rome'}"><img src="${pageContext.request.contextPath}/static/images/Rome.jpg" alt="Rome"></c:when>
-                                <c:otherwise><img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight Path"></c:otherwise>
+                                <c:when test="${not empty f.flight_image}">
+                                    <img src="${pageContext.request.contextPath}/uploads/${f.flight_image}"
+                                         alt="${f.flight_number}">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'Kathmandu'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Kathmandu.jpg" alt="Kathmandu">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'Dubai'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/dubai.jpg" alt="Dubai">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'London'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/london.jpg" alt="London">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'New Delhi'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Delhi.jpg" alt="Delhi">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'Doha'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Doha.jpg" alt="Doha">
+                                </c:when>
+                                <c:when test="${f.dest_city == 'Bangkok'}">
+                                    <img src="${pageContext.request.contextPath}/static/images/Bangkok.jpg" alt="Bangkok">
+                                </c:when>
+                                <c:otherwise>
+                                    <img src="${pageContext.request.contextPath}/static/images/Air.jpg" alt="Flight">
+                                </c:otherwise>
                             </c:choose>
                         </div>
                         <div class="flight-card-body">
